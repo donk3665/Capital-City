@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import Entities.ActionSpace;
-import Entities.Card;
+import Entities.Game.ActionSpace;
+import Entities.Game.Card;
 import Persistence.LoadAccess;
 import UseCases.ActionSpaceCreationUseCase;
 

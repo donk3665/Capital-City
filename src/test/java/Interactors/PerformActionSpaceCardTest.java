@@ -1,6 +1,6 @@
 package Interactors;
 
-import Entities.*;
+import Entities.Game.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

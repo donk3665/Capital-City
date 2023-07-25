@@ -1,10 +1,12 @@
 package UseCases;
 
+import Entities.Game.Board;
+import Entities.Game.Player;
+import Entities.Game.Property;
 import Interactors.GameCreation;
 import Logic.PlayerLogic;
 import Persistence.LoadAccess;
 import Persistence.LoadFile;
-import Entities.*;
 import org.junit.Test;
 
 import java.io.File;

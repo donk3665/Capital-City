@@ -1,7 +1,7 @@
 package Interactors;
 
-import Entities.CornerTiles;
-import Entities.Player;
+import Entities.Game.CornerTiles;
+import Entities.Game.Player;
 import UseCases.CornerTilePerformActionUseCase;
 
 /**

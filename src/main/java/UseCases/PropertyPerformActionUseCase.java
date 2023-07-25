@@ -1,7 +1,7 @@
 package UseCases;
 
-import Entities.Player;
-import Entities.Property;
+import Entities.Game.Player;
+import Entities.Game.Property;
 
 /**
  * Interface for the performAction method for property logic interactors

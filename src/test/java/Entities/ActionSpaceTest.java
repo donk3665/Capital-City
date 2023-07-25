@@ -1,5 +1,7 @@
 package Entities;
 
+import Entities.Game.ActionSpace;
+import Entities.Game.Card;
 import Interactors.ActionSpaceCreationInteractor;
 import Persistence.LoadAccess;
 import Persistence.LoadFile;

@@ -1,7 +1,7 @@
 package Logic;
 
-import Entities.Player;
-import Entities.Property;
+import Entities.Game.Player;
+import Entities.Game.Property;
 
 import java.util.ArrayList;
 import java.util.HashMap;

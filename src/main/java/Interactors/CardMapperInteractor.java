@@ -1,7 +1,7 @@
 package Interactors;
 
 import java.util.List;
-import Entities.Card;
+import Entities.Game.Card;
 import UseCases.CardMapperUseCase;
 
 import java.util.ArrayList;

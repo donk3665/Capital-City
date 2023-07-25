@@ -1,12 +1,12 @@
 
 package UseCases;
 
-import Entities.Board;
-import Entities.GameLogicTree;
-import Entities.State;
+import Entities.Game.Board;
+import Entities.InternalDataTransfer.InputInformation;
+import Entities.InternalDataTransfer.State;
 import Interactors.GameCreation;
 import Interactors.SavePackager;
-import Logic.InitialNodeLogic.*;
+import Logic.GameNode;
 import Persistence.LoadAccess;
 import Logic.GameLogic;
 import Persistence.SaveAccess;
@@ -21,14 +21,14 @@ import java.util.ArrayList;
  */
 public class UseCaseInteractor{
 
-    private GameLogicTree currentTree;
-    private boolean menuTreeActive = true;
     private GameLogic logicInteractor;
     private final LoadAccess loadAccess;
     private final SaveAccess saveAccess;
     private final GameCreation gameCreation;
     private final SavePackager savePackager;
-    private State currentState;
+
+
+
 
 
     /**
@@ -37,10 +37,10 @@ public class UseCaseInteractor{
     public UseCaseInteractor(LoadAccess loadAccess, SaveAccess saveAccess){
         this.saveAccess = saveAccess;
         this.loadAccess = loadAccess;
-        createTrees();
         this.gameCreation = new GameCreation();
         this.savePackager = new SavePackager();
-        InitialLogic.setCaseInteractor(this);
+        this.logicInteractor = new GameLogic();
+        GameNode.setCaseInteractor(this);
     }
     public LoadAccess getLoadAccess(){
         return loadAccess;
@@ -51,95 +51,28 @@ public class UseCaseInteractor{
      * @return the state that the game is in
      */
     public State getCurrentState() {
-        return this.currentState;
+        return logicInteractor.getCurrentState();
     }
+
+
     /**
      * This method handles the input of the user. <br>It moves through the current tree with the user's input,
      * and uses helper methods to deal with the logic afterwards.
      * @param input the translated input of the user from the input interface
      */
-    public State handleInput(int input){
-        //If the initial menu is open, transverse through this tree
-        if (menuTreeActive){
-            //Moving through the tree depending on the input and the node
-            if (input == -1){
-                //Move backwards in tree
-                currentTree = (GameLogicTree) currentTree.getParent();
-                return currentTree.getPreviousState();
-            }
-            else if (currentTree.isSwitchBlock()){
-                //Move forward in tree to one of the branches
-                currentTree = (GameLogicTree) currentTree.getChildren().get(input);
-            }
-            else{
-                //Move forward in tree
-                currentTree = (GameLogicTree) currentTree.getChildren().get(0);
-            }
-            //performs logic when inside nodes
-            currentState = currentTree.getUseCase().create_state(input);
-        }
-        else{
-            //forwards input to GameLogic once the game has started
-            currentState = handleOtherTrees(input);
-        }
-        //returns to the menu screen
-        if (currentState.isExitToMenu()){
-            return returnToStart();
-        }
-        else if(currentState.isSaveGame()){
-            saveGame();
+    public State handleInput(InputInformation input){
+
+        State currentState = logicInteractor.performInput(input);
+
+        if(currentState.isSaveGame()){
+            saveGame(currentState);
         }
         return currentState;
 
     }
 
-    /**
-     * This method allows the user to exit from the game and return to the initial menu.
-     * @return a State object which gives the current state of the program
-     */
-    public State returnToStart(){
-        menuTreeActive = true;
-        currentTree = (GameLogicTree) currentTree.getMaxParent();
-        return getInitialState();
-    }
-    /**
-     * This method creates the initial menu tree for the program <br>
-     * The tree is for the initialization part of the program, allowing the user
-     * to choose game modes, number of players, etc.
-     */
-    public void createTrees(){
-        //creating first tree
-        GameLogicTree initialMenu = new GameLogicTree(new InitialParentNodeUseCase());
-        GameLogicTree newGame = new GameLogicTree(new NewGameUseCase());
-        GameLogicTree chooseGameMode = new GameLogicTree(new ChooseGameModeUseCase());
-        GameLogicTree numPlayers = new GameLogicTree( new NumberOfPlayersUseCase());
-        GameLogicTree gameLength = new GameLogicTree(new GameLengthUseCase());
-        GameLogicTree createNewGame = new GameLogicTree(new CreateNewGameUseCase());
-        GameLogicTree loadGame = new GameLogicTree(new LoadGameUseCase());
-        GameLogicTree chooseSave = new GameLogicTree(new ChooseSaveUseCase());
-        GameLogicTree createLoadedGame = new GameLogicTree(new CreateLoadedGameUseCase());
 
-        //creating the tree structure
-        gameLength.addChild(createNewGame);
-        numPlayers.addChild(gameLength);
-
-        chooseGameMode.addChild(numPlayers);
-        newGame.addChild(chooseGameMode);
-
-        chooseSave.addChild(createLoadedGame);
-        loadGame.addChild(chooseSave);
-
-        initialMenu.addChild(newGame);
-        initialMenu.addChild(loadGame);
-
-        //indicates that this tree switches with input
-        initialMenu.setIsSwitchBlock(true);
-
-        //adding the tree into an array for later retrieval
-        currentTree = initialMenu;
-
-    }
-    public void saveGame(){
+    public void saveGame(State currentState){
         try{
             String saveReturn = saveAccess.saveGameNewFile(savePackager.getPlayerPropertyData(), savePackager.getStates());
             currentState.setDescription("Successful save in file: "+ saveReturn);
@@ -149,28 +82,6 @@ public class UseCaseInteractor{
         }
     }
 
-    /**
-     * Returns the state object which contains the properties of the root of the current tree and
-     * sets the current tree to the root
-     * @return state object
-     */
-    public State getInitialState(){
-
-        //makes the currentTree the root
-        currentTree = (GameLogicTree) currentTree.getMaxParent();
-        return currentTree.getUseCase().create_state(0);
-    }
-
-
-    /**
-     * This method handles the input of the user in the game part of the program.
-     * <p>
-     */
-    public State handleOtherTrees(int input){
-        //deciding what to do based on node visited
-        return logicInteractor.performInput(input);
-
-    }
 
     public void createNewGame(int[] states){
         Board loadedBoard;
@@ -185,8 +96,7 @@ public class UseCaseInteractor{
      * @param states is an int[] containing save file information
      */
     public void createGame(Board board, int[] states){
-        logicInteractor = new GameLogic(board, states);
-        menuTreeActive = false;
+        logicInteractor.setUpGame(board, states);
     }
 
     /**
@@ -232,13 +142,6 @@ public class UseCaseInteractor{
         return this.gameCreation.getInitialStates(loadedGame);
     }
 
-    /**
-     * Returns the current tree used in this program
-     * @return the current tree
-     */
-    public GameLogicTree getCurrentTree(){
-        return currentTree;
-    }
 
     /**
      * Returns the GameLogic instance used in this object

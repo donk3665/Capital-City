@@ -1,5 +1,6 @@
 package Entities;
 
+import Entities.Game.Card;
 import org.junit.jupiter.api.Test;
 
 import java.util.Objects;

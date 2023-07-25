@@ -1,0 +1,2 @@
+TradeUseCase -> PickItemOpUseCase -> (NothingToTradeUseCase)/PickItemSelfUseCase -> SendTradeUseCase
+-> TradingParentNodeUseCase

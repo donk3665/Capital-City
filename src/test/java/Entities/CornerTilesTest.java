@@ -1,4 +1,5 @@
 package Entities;
+import Entities.Game.*;
 import Interactors.CornerTilePerformActionInteractor;
 import Interactors.GameCreation;
 import UseCases.CornerTilePerformActionUseCase;

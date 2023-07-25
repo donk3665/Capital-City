@@ -2,7 +2,7 @@ package UseCases;
 
 import java.io.IOException;
 
-import Entities.ActionSpace;
+import Entities.Game.ActionSpace;
 
 /**
  * Interface for the action space creation interactor

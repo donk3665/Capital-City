@@ -1,9 +1,9 @@
 package Interactors;
 
-import Entities.Player;
-import Entities.Property;
-import Logic.GeneralGameLogic;
-import Logic.MainTreeNodeLogic.MainTreeNodeLogic;
+import Entities.Game.Player;
+import Entities.Game.Property;
+import Logic.GeneralGameNode;
+import Logic.MainTreeNodeLogic.MainGameNode;
 
 /***
  * This class turns the objects of the game needed for data persistence into their needed forms for
@@ -18,12 +18,12 @@ public class SavePackager {
      */
     public int[] getStates(){
         int[] saveStates = new int[6];
-        int[] gameStates = MainTreeNodeLogic.getStates();
-        saveStates[0] = GeneralGameLogic.getBoard().getPlayers().size();
+        int[] gameStates = MainGameNode.getStates();
+        saveStates[0] = GeneralGameNode.getBoard().getPlayers().size();
         saveStates[1] = gameStates[4];
         saveStates[2] = gameStates[2];
         saveStates[3] = gameStates[3];
-        saveStates[4] = GeneralGameLogic.getCurrentPlayerIndex();
+        saveStates[4] = GeneralGameNode.getCurrentPlayerIndex();
         saveStates[5] = gameStates[1];
 
         return saveStates;
@@ -36,14 +36,14 @@ public class SavePackager {
      */
     public String[][] getPlayerPropertyData(){
         int numberOfLines = 0;
-        for (Player player: GeneralGameLogic.getBoard().getPlayers()){
+        for (Player player: GeneralGameNode.getBoard().getPlayers()){
             numberOfLines += 1;
             numberOfLines += player.getProperties().size();
         }
         String[][] data = new String[numberOfLines][];
         int counter = 0;
         String[] temp;
-        for (Player player: GeneralGameLogic.getBoard().getPlayers()){
+        for (Player player: GeneralGameNode.getBoard().getPlayers()){
             temp = new String[]{player.getName(),String.valueOf(player.getMoney()), String.valueOf(player.isInJail()),
                     String.valueOf(player.getJailCards()), String.valueOf(player.getPosition())};
             data[counter] = temp;

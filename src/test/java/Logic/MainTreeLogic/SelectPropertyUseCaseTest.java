@@ -1,8 +1,12 @@
 package Logic.MainTreeLogic;
 
-import Entities.*;
+import Entities.Game.Board;
+import Entities.Game.Cell;
+import Entities.Game.Player;
+import Entities.Game.Property;
+import Entities.InternalDataTransfer.State;
 import Logic.GameLogic;
-import Logic.MainTreeNodeLogic.SelectPropertyUseCase;
+import Logic.MainTreeNodeLogic.ManagePropertyBranch.SelectActionPropertyUseCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -22,8 +26,8 @@ public class SelectPropertyUseCaseTest {
         cells.add(test_property);
         Board board = new Board(players, cells);
         new GameLogic(playerOne, board);
-        SelectPropertyUseCase selectPropertyUseCase = new SelectPropertyUseCase();
-        State actual = selectPropertyUseCase.create_state(0);
+        SelectActionPropertyUseCase selectPropertyUseCase = new SelectActionPropertyUseCase(null);
+        State actual = selectPropertyUseCase.create_state();
         ArrayList<String> options = new ArrayList<>();
         options.add("Mortgage");
         options.add("Unmortgage");

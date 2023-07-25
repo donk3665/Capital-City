@@ -1,7 +1,7 @@
 package UseCases;
 
-import Entities.Player;
-import Entities.CornerTiles;
+import Entities.Game.Player;
+import Entities.Game.CornerTiles;
 /**
  * Interface for the performAction method for corner tiles logic interactors
  */

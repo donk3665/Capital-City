@@ -2,7 +2,7 @@ package UseCases;
 
 import java.util.HashMap;
 import java.util.List;
-import Entities.Card;
+import Entities.Game.Card;
 
 /**
  * Interface for card mapper interactors

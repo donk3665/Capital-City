@@ -1,45 +1,75 @@
-Initial Menu Parent Node,Welcome to Monopoly++, Would you like to
-New Game,What mode would you like to play?
-Choose Game Mode,How many players?
-Number of Players,How many rounds?
-Game Length,Create the game?
-Create New Game,
-Load Game,What save do you want to load?
-Choose Save,Confirm the load?
-Create Loaded Game,
-Main Tree Parent Node,""
-Trade,Who do you want to trade with?
-Pick Player (Trade),What property do you want from the player?
-Trader/Tradee Has No Properties,Trade cannot be done; one of you have no properties
-Pick Item Of Opponent,What property are you willing to trade?
-Pick Item Of Self,Send the trade?
-Send The Trade,""
-Manage Property,What property do you want to manage?
-User Has No Properties (Manage Properties),You have no properties :(
-Select The Property (Manage Property),What do you want to do with the property?
-Mortgage Property,Are you sure you want to mortgage?
-Un-Mortgage property,
-Build House/Hotel,""
-Already Rolled,You already rolled this round!
-Perform Action,""
-Property Unowned,""
-Buy Property,
-Auction, null
-Auction Tree Parent Node,""
-Steal,What player do you want to steal from?
-Choose Player (Steal),
-End Turn,You can't end your turn, you have negative money
-Settings Menu,Welcome to the settings menu!
-Exit Game,Are you sure you want to exit?
-Save The Game,
-Bankruptcy,Confirm bankruptcy?
-Confirm Action,
-Information Node,
-Low Option,
-Medium Option,
-High Option,
-Fold,""
-Trading Parent Node,
-Accept The Trade,Trade success
-Decline The Trade,Trade failure
-Game Complete,
+SELECT_GAME_TYPE,Welcome to Monopoly++, Would you like to
+SELECT_GAME_MODE,What mode would you like to play?
+SELECT_NUMBER_OF_PLAYERS,How many players?
+NUMBER_OF_ROUNDS,How many rounds?
+CONFIRM_NEW_GAME,Create the game?
+SELECT_SAVE,What save do you want to load?
+CONFIRM_LOADED_GAME,Confirm the load?
+//
+// <Main node names>
+//
+MAIN_PARENT,""
+//
+// <<Bankruptcy nodes>>
+//
+BANKRUPTCY,Confirm bankruptcy?
+//
+// <<End turn nodes>>
+//
+END_TURN,You can't end your turn, you have negative money
+FINISH_GAME, ""
+//
+//  <<Manage property nodes>>
+//
+SELECT_PROPERTY,What property do you want to manage?
+NO_PROPERTIES,You have no properties :(
+SELECT_ACTION_PROPERTY,What do you want to do with the property?
+MORTGAGE,Are you sure you want to mortgage?
+UN_MORTGAGE, ""
+BUILD_PROPERTY,""
+//
+// <<Settings>>
+//
+SETTINGS,Welcome to the settings menu!
+SAVE_GAME, ""
+EXIT_GAME,Are you sure you want to exit?
+//
+// <<Steal nodes>>
+//
+STEAL,What player do you want to steal from?
+PERFORM_STEAL,
+//
+// <<Trade nodes>>
+//
+PICK_PLAYER,Who do you want to trade with?
+PICK_ITEM_OPPONENT,What property do you want from the player?
+NOTHING_TO_TRADE,Trade cannot be done; one of you have no properties
+PICK_ITEM_SELF,What property are you willing to trade?
+SEND_TRADE,Send the trade?
+//
+// <<<Trade opponent nodes>>
+//
+ACCEPT_TRADE,Trade success
+DECLINE_TRADE,Trade failure
+TRADE_OPPONENT_PARENT,
+//
+// <<Roll>>
+//
+ALREADY_ROLLED,You already rolled this round!
+CALL_ACTION,""
+ROLL, ""
+//
+// <<<Empty property nodes>>>
+//
+EMPTY_PROPERTY,""
+BUY_PROPERTY, You brought the property!
+//
+// <<<<Auction tree nodes>>>>
+//
+AUCTION_ENTRY, null
+AUCTION_PARENT,""
+LOW_OPTION, ""
+MEDIUM_OPTION, ""
+HIGH_OPTION, ""
+FOLD,""
+AUCTION_COMPLETE, ""

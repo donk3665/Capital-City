@@ -1,6 +1,6 @@
 package Interactors;
 
-import Entities.*;
+import Entities.Game.*;
 import Persistence.LoadAccess;
 import Persistence.LoadFile;
 

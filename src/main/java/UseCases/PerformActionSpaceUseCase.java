@@ -1,8 +1,8 @@
 package UseCases;
 
-import Entities.Player;
-import Entities.ActionSpace;
-import Entities.Board;
+import Entities.Game.Player;
+import Entities.Game.ActionSpace;
+import Entities.Game.Board;
 
 /**
  * Interface for the performAction method for action space logic interactors

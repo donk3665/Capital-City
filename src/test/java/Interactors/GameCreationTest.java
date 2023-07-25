@@ -1,9 +1,9 @@
 package Interactors;
 
-import Entities.Board;
-import Entities.Cell;
-import Entities.Player;
-import Entities.Property;
+import Entities.Game.Board;
+import Entities.Game.Cell;
+import Entities.Game.Player;
+import Entities.Game.Property;
 import Persistence.LoadAccess;
 import Persistence.LoadFile;
 import org.junit.jupiter.api.Test;

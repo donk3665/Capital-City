@@ -1,0 +1,1 @@
+ManagePropertyUseCase -> (NoPropertiesUseCase)/SelectPropertyUseCase -> BuildPropertyUseCase/MortgageUseCase/UnMortgageUseCase

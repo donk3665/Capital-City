@@ -1,5 +1,9 @@
 package Entities;
 
+import Entities.Game.Board;
+import Entities.Game.Cell;
+import Entities.Game.Player;
+import Entities.Game.Property;
 import Interactors.PropertyPerformActionInteractor;
 import UseCases.PropertyPerformActionUseCase;
 import org.junit.jupiter.api.Assertions;

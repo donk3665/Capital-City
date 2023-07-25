@@ -3,10 +3,10 @@ package Interactors;
 import java.util.Objects;
 import java.util.Random;
 
-import Entities.ActionSpace;
-import Entities.Board;
-import Entities.Card;
-import Entities.Player;
+import Entities.Game.ActionSpace;
+import Entities.Game.Board;
+import Entities.Game.Card;
+import Entities.Game.Player;
 import UseCases.PerformActionSpaceUseCase;
 
 /**
