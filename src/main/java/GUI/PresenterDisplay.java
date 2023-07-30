@@ -1,4 +1,5 @@
 package GUI;
+import Entities.GUI.Screens.Screen;
 import Persistence.LoadFile;
 import Persistence.SaveFile;
 
@@ -10,9 +11,11 @@ import java.io.File;
  * GUI.PresenterDisplay is a class that runs the game loop and presents the options of each turn to each
  * player in the game.
  **/
-public class PresenterDisplay {
+public class PresenterDisplay implements GameLoop{
 
-    boolean runGame = true;
+    OutputInteractor outputControl;
+    GameDisplayInteractor gameFrame;
+    InputInteractor inputControl;
     /**
      * Function that runs the game loop by getting game data from the OutputInteractor and presenting that to the
      * user as their options on each turn through Conversion in the GameDisplayInteractor,
@@ -21,27 +24,27 @@ public class PresenterDisplay {
      **/
     public void playGame(File file){
         UseCaseInteractor interactor = new UseCaseInteractor(new LoadFile(file), new SaveFile(file));
-        InputInteractor inputControl = new InputInteractor(interactor);
-        OutputInteractor outputControl = new OutputInteractor(interactor);
-        GameDisplayInteractor gameFrame = new GameDisplayInteractor();
+        inputControl = new InputInteractor(interactor);
+        outputControl = new OutputInteractor(interactor);
+        gameFrame = new GameDisplayInteractor(this);
 
-        gameFrame.setOutputs(outputControl.getStateOptions(), outputControl.getOutputMessage());
+        Screen.initializeScreen();
+        gameFrame.setOutputs(outputControl.getCurrentState().getId(), outputControl.getStateOptions(), outputControl.getOutputMessage());
+
+        gameLoop();
         gameFrame.displayScreen();
-         while (runGame){
-             try {
-                 boolean didInput = false;
-                 while (!didInput) {
-                     didInput = gameFrame.waitForInput();
-                 }
-                 inputControl.getChoice(gameFrame.getInput());
-                 outputControl.updateState(inputControl.getUpdatedState());
-                 gameFrame.refreshScreen();
-                 gameFrame.setOutputs(outputControl.getStateOptions(), outputControl.getOutputMessage());
-             }
-             catch (Exception e){
-                 System.out.println(e.getMessage());
-                 break;
-             }
+
+    }
+    public void gameLoop(){
+        boolean didInput;
+        didInput = gameFrame.waitForInput();
+        if (didInput) {
+            inputControl.getChoice(gameFrame.getInput());
+            outputControl.updateState(inputControl.getUpdatedState());
+            gameFrame.refreshScreen();
+            gameFrame.setOutputs(outputControl.getCurrentState().getId(), outputControl.getStateOptions(), outputControl.getOutputMessage());
         }
+
+
     }
 }

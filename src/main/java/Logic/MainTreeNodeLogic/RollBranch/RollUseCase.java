@@ -33,7 +33,6 @@ public class RollUseCase extends MainGameNode {
         Board board = getBoard();
         Player currentPlayer = getCurrentPlayer();
 
-        State currentState = new State();
         if (mainStates[1] == 0) {
             //roll the dice and update the position
             PlayerLogic playerLogic = new PlayerLogic(currentPlayer);

@@ -1,5 +1,6 @@
 package Logic.MainTreeNodeLogic.ManagePropertyBranch;
 
+import Entities.Game.OrderedStringHashmap;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
@@ -17,7 +18,7 @@ public class SelectActionPropertyUseCase extends MainGameNode {
         super(NodeNames.SELECT_ACTION_PROPERTY, previousNode);
     }
 
-    HashMap<String, NodeNames> options = new HashMap<>(){
+    OrderedStringHashmap<NodeNames> options = new OrderedStringHashmap<>(){
         {
             put("MORTGAGE", NodeNames.MORTGAGE);
             put("UN-MORTGAGE", NodeNames.UN_MORTGAGE);
@@ -35,7 +36,7 @@ public class SelectActionPropertyUseCase extends MainGameNode {
         currentState.setBackEnable(true);
 
         //the player chooses what to do to the property
-        currentState.addOptionsFromHashmap(options);
+        currentState.addOptions(options.getKeys());
 
         return currentState;
     }

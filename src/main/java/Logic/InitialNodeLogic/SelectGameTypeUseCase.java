@@ -1,5 +1,6 @@
 package Logic.InitialNodeLogic;
 
+import Entities.Game.OrderedStringHashmap;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
@@ -9,30 +10,27 @@ import Logic.NodeNames;
  * This class represents the use case where the game has first initialized.
  */
 public class SelectGameTypeUseCase extends InitialGameNode {
-    public SelectGameTypeUseCase() {
-        super(NodeNames.SELECT_GAME_TYPE, null);
+    public SelectGameTypeUseCase(GameNode previousNode) {
+        super(NodeNames.SELECT_GAME_TYPE, previousNode);
     }
 
+    OrderedStringHashmap<NodeNames> options = new OrderedStringHashmap<>(){
+        {
+            put("NEW_GAME", NodeNames.SELECT_GAME_MODE);
+            put("OLD_GAME", NodeNames.SELECT_SAVE);
+        }
+    };
     @Override
     public State create_state() {
+        //TODO: REMOVE SETBACKENABLE IN OTHER NODES
         State currentState = new State();
-        currentState.addOptions("NEW_GAME", "OLD_GAME");
+        currentState.addOptions(options.getKeys());
         return currentState;
     }
 
     @Override
     public GameNode performInput(InputInformation input) {
-        switch(input.getInput()){
-            case "NEW_GAME" -> {
-                return getFactory().getNode(NodeNames.SELECT_GAME_MODE, this);
-            }
-            case "OLD_GAME" -> {
-                return getFactory().getNode(NodeNames.SELECT_SAVE, this);
-            }
-        }
-        System.err.println("ERROR IN "+ this.getName().toString());
-        System.exit(1);
-        return null;
+        return getFactory().getNode(options.get(input.getInput()), this);
     }
 
 }

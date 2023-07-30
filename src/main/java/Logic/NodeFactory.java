@@ -33,8 +33,20 @@ public class NodeFactory {
         public GameNode getNode(NodeNames name, GameNode beforeNode){
             switch (name){
                 // Initial nodes
-                case INITIAL_PARENT, SELECT_GAME_TYPE -> {
-                    return new SelectGameTypeUseCase();
+                case INITIAL_PARENT -> {
+                    return new InitialParentUseCase();
+                }
+                case CREDITS -> {
+                    return new CreditsUseCase(beforeNode);
+                }
+                case SETTINGS_INITIAL -> {
+                    return new SettingsInitialUseCase(beforeNode);
+                }
+                case QUIT_INITIAL -> {
+                    return new QuitUseCase();
+                }
+                case SELECT_GAME_TYPE -> {
+                    return new SelectGameTypeUseCase(beforeNode);
                 }
                 case SELECT_GAME_MODE -> {
                     return new SelectGameModeUseCase(beforeNode);

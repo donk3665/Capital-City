@@ -1,5 +1,6 @@
 package Logic.InitialNodeLogic;
 
+import Entities.Game.OrderedStringHashmap;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
@@ -14,7 +15,7 @@ public class SelectGameModeUseCase extends InitialGameNode {
     public SelectGameModeUseCase(GameNode beforeNode) {
         super(NodeNames.SELECT_GAME_MODE, beforeNode);
     }
-    HashMap<String, String> options = new HashMap<>(){
+    OrderedStringHashmap<String> options = new OrderedStringHashmap<>(){
         {
             put("NORMAL_MODE", "0");
             put("RICH_MODE", "1");
@@ -27,7 +28,7 @@ public class SelectGameModeUseCase extends InitialGameNode {
         state.setBackEnable(true);
 
         //options associated with the next node
-        state.addOptions(options.keySet().toArray(new String[0]));
+        state.addOptions(options.getKeys());
         return state;
     }
 

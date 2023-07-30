@@ -1,6 +1,7 @@
 package Logic.MainTreeNodeLogic.RollBranch.EmptyPropertyBranch;
 
 import Entities.Game.Board;
+import Entities.Game.OrderedStringHashmap;
 import Entities.Game.Player;
 import Entities.Game.Property;
 import Entities.InternalDataTransfer.InputInformation;
@@ -21,7 +22,7 @@ public class EmptyPropertySpaceUseCase extends MainGameNode {
     }
 
 
-    HashMap<String, NodeNames> options = new HashMap<>(){
+    OrderedStringHashmap<NodeNames> options = new OrderedStringHashmap<>(){
         {
             put("BUY", NodeNames.BUY_PROPERTY);
             put("AUCTION", NodeNames.AUCTION_ENTRY);
@@ -44,7 +45,7 @@ public class EmptyPropertySpaceUseCase extends MainGameNode {
         currentState.setRoll(diceRoll);
         targetProperty = (Property) board.getCell(currentPlayer.getPosition());
         currentState.setCurrentPlayerProperty(targetProperty);
-        currentState.addOptions(options.keySet().toArray(new String[0]));
+        currentState.addOptions(options.getKeys());
 
         return currentState;
     }

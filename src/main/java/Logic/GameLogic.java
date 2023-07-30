@@ -65,6 +65,9 @@ public class GameLogic {
         return setDefaultStateAttributes(currentNode.create_state());
     }
     public State setDefaultStateAttributes(State state){
+        if (currentNode.getPreviousNode() != null){
+            state.setBackEnable(true);
+        }
         state.setId(currentNode.getName());
         state.setPlayer(MainGameNode.getCurrentPlayer());
         return state;

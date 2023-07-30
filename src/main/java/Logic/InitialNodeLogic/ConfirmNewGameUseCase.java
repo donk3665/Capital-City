@@ -26,16 +26,20 @@ public class ConfirmNewGameUseCase extends InitialGameNode {
 
     @Override
     public GameNode performInput(InputInformation input) {
-        int[] states = new int[6];
+        if (input.getInput().equals("Yes")) {
+            int[] states = new int[6];
 
-        states[0] = Integer.parseInt(getSelectedOptions().get(NodeNames.SELECT_NUMBER_OF_PLAYERS));
-        states[1] = Integer.parseInt(getSelectedOptions().get(NodeNames.NUMBER_OF_ROUNDS));
-        states[2] = Integer.parseInt(getSelectedOptions().get(NodeNames.SELECT_GAME_MODE));
-        states[3] = 0;
-        states[4] = 0;
-        states[5] = 0;
-        caseInteractor.createNewGame(states);
-        return getFactory().getNode(NodeNames.MAIN_PARENT, this);
-
+            states[0] = Integer.parseInt(getSelectedOptions().get(NodeNames.SELECT_NUMBER_OF_PLAYERS));
+            states[1] = Integer.parseInt(getSelectedOptions().get(NodeNames.NUMBER_OF_ROUNDS));
+            states[2] = Integer.parseInt(getSelectedOptions().get(NodeNames.SELECT_GAME_MODE));
+            states[3] = 0;
+            states[4] = 0;
+            states[5] = 0;
+            caseInteractor.createNewGame(states);
+            return getFactory().getNode(NodeNames.MAIN_PARENT, this);
+        }
+        else {
+            return getFactory().getNode(NodeNames.SELECT_GAME_TYPE);
+        }
     }
 }

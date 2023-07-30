@@ -1,8 +1,11 @@
 package GUI;
 
 import Buttons.ButtonFactory;
+import Entities.GUI.Screens.GameScreen;
+import Entities.GUI.Screens.ImageButton;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -20,8 +23,8 @@ public class ButtonDisplayInteractor {
     /**
      * Constructor for this class
      */
-    public ButtonDisplayInteractor() {
-        this.buttonFactory = new ButtonFactory();
+    public ButtonDisplayInteractor(GameLoop looper) {
+        this.buttonFactory = new ButtonFactory(looper);
         this.buttonList = new HashMap<>();
     }
 
@@ -37,9 +40,10 @@ public class ButtonDisplayInteractor {
      * returns all the buttons and sets up the hashmap
      * @return the buttons
      */
-    public ArrayList<JButton> getButtons(){
-        ArrayList<JButton> temp = this.buttonFactory.getButtons();
+    public ArrayList<ImageButton> getButtons(){
+        ArrayList<ImageButton> temp = this.buttonFactory.getButtons();
         this.buttonList = this.buttonFactory.getActionPerformed();
+        //TODO: ADD EXIT BUTTON
         return temp;
     }
 

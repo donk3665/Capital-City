@@ -1,5 +1,6 @@
 package Logic.MainTreeNodeLogic.RollBranch.EmptyPropertyBranch.AuctionNodeLogic;
 
+import Entities.Game.OrderedStringHashmap;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
@@ -14,7 +15,7 @@ public class AuctionParent extends AuctionTreeNode {
     public AuctionParent() {
         super(NodeNames.AUCTION_PARENT, null);
     }
-    HashMap<String, NodeNames> options = new HashMap<>(){
+    OrderedStringHashmap<NodeNames> options = new OrderedStringHashmap<>(){
         {
             put("LOW OPTION", NodeNames.LOW_OPTION);
             put("MEDIUM OPTION", NodeNames.MEDIUM_OPTION);
@@ -30,7 +31,7 @@ public class AuctionParent extends AuctionTreeNode {
     @Override
     public State create_state() {
         State currentState = new State();
-        currentState.addOptions(options.keySet().toArray(new String[0]));
+        currentState.addOptions(options.getKeys());
         currentState.setBiddingPot(auctionStates[potIndex]);
         currentState.setBiddingProperty(biddingProperty);
         return currentState;

@@ -2,7 +2,7 @@ import GUI.PresenterDisplay;
 import java.io.File;
 
 public class Main {
-    private final static String persistenceFilePath = "src/gameSaves/";
+    private final static String persistenceFilePath = "src/main/resources/gameSaves/";
 
     /**
      * Entry point to the application

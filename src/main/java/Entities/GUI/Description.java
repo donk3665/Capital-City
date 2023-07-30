@@ -44,11 +44,11 @@ public class Description {
         this.description.setLayout(new FlowLayout());
     }
 
-    /**
-     * Set the bounds of the JLabel
-     */
-    public void setDescriptionBounds(){
-        this.description.setBounds(625, 25, 250, 225);
-        this.description.repaint();
-    }
+//    /**
+//     * Set the bounds of the JLabel
+//     */
+//    public void setDescriptionBounds(){
+//        this.description.setBounds(825, 125, 250, 225);
+//        this.description.repaint();
+//    }
 }

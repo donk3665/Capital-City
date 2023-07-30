@@ -1,5 +1,6 @@
 package Logic.MainTreeNodeLogic.StealBranch;
 
+import Entities.Game.OrderedStringHashmap;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
@@ -18,7 +19,7 @@ public class StealUseCase extends MainGameNode {
         super(NodeNames.STEAL, previousNode);
     }
 
-    HashMap<String, Integer> options = new HashMap<>();
+    OrderedStringHashmap<Integer> options = new OrderedStringHashmap<>();
 
     /**
      * This method creates a States object and adds all the possible list of players that the current player can steal

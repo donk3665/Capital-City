@@ -1,5 +1,6 @@
 package Logic.MainTreeNodeLogic.SettingsBranch;
 
+import Entities.Game.OrderedStringHashmap;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
@@ -16,7 +17,7 @@ public class SettingsMenuUseCase extends MainGameNode {
     public SettingsMenuUseCase(GameNode previousNode) {
         super(NodeNames.SETTINGS, previousNode);
     }
-    HashMap<String, NodeNames> options = new HashMap<>(){
+    OrderedStringHashmap<NodeNames> options = new OrderedStringHashmap<>(){
         {
             put("SAVE", NodeNames.SAVE_GAME);
             put("EXIT_GAME", NodeNames.EXIT_GAME);
@@ -32,7 +33,7 @@ public class SettingsMenuUseCase extends MainGameNode {
         State currentState = new State();
         currentState.setBackEnable(true);
 
-        currentState.addOptions(options.keySet().toArray(new String[0]));
+        currentState.addOptions(options.getKeys());
 
         return currentState;
     }

@@ -1,5 +1,6 @@
 package Logic.MainTreeNodeLogic.TradingBranch;
 
+import Entities.Game.OrderedStringHashmap;
 import Entities.Game.Player;
 import Entities.Game.Property;
 import Entities.InternalDataTransfer.InputInformation;
@@ -20,7 +21,7 @@ public class PickItemSelfUseCase extends MainGameNode {
         super(NodeNames.PICK_ITEM_SELF, previousNode);
     }
 
-    HashMap<String, Integer> options = new HashMap<>();
+    OrderedStringHashmap<Integer> options = new OrderedStringHashmap<>();
     /**
      * This method creates a State object and adds the selected option the current player chooses to it while also
      * up the State object for the following steps after choosing an item from its own inventory.

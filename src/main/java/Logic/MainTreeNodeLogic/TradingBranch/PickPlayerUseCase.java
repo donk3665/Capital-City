@@ -1,5 +1,6 @@
 package Logic.MainTreeNodeLogic.TradingBranch;
 
+import Entities.Game.OrderedStringHashmap;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
@@ -18,7 +19,7 @@ public class PickPlayerUseCase extends MainGameNode {
     public PickPlayerUseCase(GameNode previousNode) {
         super(NodeNames.PICK_PLAYER, previousNode);
     }
-    HashMap<String, Integer> options = new HashMap<>();
+    OrderedStringHashmap<Integer> options = new OrderedStringHashmap<>();
     /**
      * This method creates a State object and adds all the possible list of player that the current player can trade
      * with into the State object that was created and returns it.

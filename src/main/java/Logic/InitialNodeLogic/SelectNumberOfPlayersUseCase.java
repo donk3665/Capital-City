@@ -1,5 +1,6 @@
 package Logic.InitialNodeLogic;
 
+import Entities.Game.OrderedStringHashmap;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
@@ -16,7 +17,7 @@ public class SelectNumberOfPlayersUseCase extends InitialGameNode {
         super(NodeNames.SELECT_NUMBER_OF_PLAYERS, beforeNode);
     }
 
-    HashMap<String, String> options = new HashMap<>(){
+    OrderedStringHashmap<String> options = new OrderedStringHashmap<>(){
         {
             for (int i = 2; i < 9; i++){
                 put("PLAYERS_"+i, String.valueOf(i));
@@ -29,7 +30,7 @@ public class SelectNumberOfPlayersUseCase extends InitialGameNode {
         //getting the mode the user wants
         state.setBackEnable(true);
 
-        state.addOptions(options.keySet().toArray(new String[0]));
+        state.addOptions(options.getKeys());
 
         return state;
     }

@@ -1,5 +1,6 @@
 package Logic.MainTreeNodeLogic;
 
+import Entities.Game.OrderedStringHashmap;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
@@ -14,7 +15,7 @@ public class MainParentNodeUseCase extends MainGameNode {
     public MainParentNodeUseCase() {
         super(NodeNames.MAIN_PARENT, null);
     }
-    HashMap<String, NodeNames> options = new HashMap<>(){
+    OrderedStringHashmap<NodeNames> options = new OrderedStringHashmap<>(){
         {
             put("TRADE", NodeNames.TRADE);
             put("MANAGE_PROPERTY", NodeNames.SELECT_PROPERTY);
@@ -34,7 +35,7 @@ public class MainParentNodeUseCase extends MainGameNode {
     @Override
     public State create_state() {
         State currentState = new State();
-        currentState.addOptions(options.keySet().toArray(new String[0]));
+        currentState.addOptions(options.getKeys());
         return currentState;
     }
 

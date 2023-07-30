@@ -30,8 +30,13 @@ public class ExitGameUseCase extends MainGameNode {
 
     @Override
     public GameNode performInput(InputInformation input) {
-        mainStates[0]= 0;
-        return getFactory().getNode(NodeNames.SELECT_GAME_TYPE, null);
+        if (input.getInput().equals("Yes")) {
+            mainStates[0] = 0;
+            return getFactory().getNode(NodeNames.SELECT_GAME_TYPE, null);
+        }
+        else {
+            return getMainParent();
+        }
     }
 
 }

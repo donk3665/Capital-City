@@ -1,5 +1,6 @@
 package Logic.InitialNodeLogic;
 
+import Entities.Game.OrderedStringHashmap;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
@@ -14,7 +15,7 @@ public class NumberOfRoundsUseCase extends InitialGameNode {
     public NumberOfRoundsUseCase(GameNode previousNode) {
         super(NodeNames.NUMBER_OF_ROUNDS, previousNode);
     }
-    HashMap <String, String> options = new HashMap<>(){
+    OrderedStringHashmap<String> options = new OrderedStringHashmap<>(){
         {
             put("ROUNDS_30", "30");
             put("ROUNDS_60", "60");
@@ -28,7 +29,7 @@ public class NumberOfRoundsUseCase extends InitialGameNode {
         //getting the number of players the user wants
         state.setBackEnable(true);
 
-        state.addOptionsFromHashmap(options);
+        state.addOptions(options.getKeys());
 
         return state;
     }

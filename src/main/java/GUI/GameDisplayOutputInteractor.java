@@ -2,6 +2,8 @@ package GUI;
 
 import Entities.GUI.Description;
 import Entities.GUI.Options;
+import Entities.GUI.Screens.ImageButton;
+import Logic.GameLogic;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -19,19 +21,29 @@ public class GameDisplayOutputInteractor {
      * InstanceVar buttonDisplayHandler: the handler of the buttons on the display
      */
     private final Description description;
+
+    public Description getDescriptionRaw() {
+        return description;
+    }
+    public Options getOptionSegmentRaw(){
+        return optionSegment;
+    }
+
     private final Options optionSegment;
     private ArrayList<String> options;
 
     private final ButtonDisplayInteractor buttonDisplayHandler;
 
+    private GameLoop looper;
     /**
      * The constructor for this class
      */
-    public GameDisplayOutputInteractor(){
+    public GameDisplayOutputInteractor(GameLoop looper){
+        this.looper = looper;
         this.optionSegment = new Options();
         this.description = new Description();
         this.options = new ArrayList<>();
-        this.buttonDisplayHandler = new ButtonDisplayInteractor();
+        this.buttonDisplayHandler = new ButtonDisplayInteractor(looper);
     }
 
     /**
@@ -63,18 +75,20 @@ public class GameDisplayOutputInteractor {
      */
     public void createOptionSegment(){
         this.buttonDisplayHandler.setButtonFactory(this.options);
-        for (JButton button: this.buttonDisplayHandler.getButtons()){
+        for (ImageButton button: this.buttonDisplayHandler.getButtons()){
             this.optionSegment.add(button);
         }
+        //TODO:  REMOVE THIS AFTER GOOD IMPLEMENTATION
+        //this.optionSegment.addToJLabel();
     }
 
     /**
      * Function to return the option segment
      * @return the JLabel that contains all the option buttons for the current state
      */
-    public JLabel getOptionSegment(){
-        return this.optionSegment.getOptions();
-    }
+//    public JLabel getOptionSegment(){
+//        return this.optionSegment.getOptions();
+//    }
 
     /**
      * Clear the option segment for the next state
@@ -106,13 +120,13 @@ public class GameDisplayOutputInteractor {
         this.description.clear();
     }
 
-    /**
-     * Sets the positions for the segments with respect to the display
-     */
-    public void drawSegments(){
-        this.description.setDescriptionBounds();
-        this.optionSegment.setOptionsBounds();
-    }
+//    /**
+//     * Sets the positions for the segments with respect to the display
+//     */
+//    public void drawSegments(){
+//        this.description.setDescriptionBounds();
+//        this.optionSegment.setOptionsBounds();
+//    }
 
     /**
      * function to return the mapping between the buttons and how many times they are pressed

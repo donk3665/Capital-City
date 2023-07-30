@@ -1,6 +1,10 @@
 package GUI;
 
-import Entities.GUI.GameScreen;
+import Entities.GUI.Screens.GameScreen;
+import Entities.GUI.Screens.Screen;
+import Entities.GUI.Screens.ScreenFactory;
+import Logic.GameLogic;
+import Logic.NodeNames;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,20 +21,24 @@ public class GameDisplayInteractor {
      * InstanceVar selectedOutput: The String of the button that
      * is clicked by the user
      */
-    private final GameScreen gameFrame;
+    private Screen gameScreen;
     private final GameDisplayInputInteractor inputHandler;
     private final GameDisplayOutputInteractor labelSegments;
+    private final ScreenFactory screenFactory;
     private String selectedOutput;
+    private GameLoop looper;
 
     /**
      * The constructor for this class, creates the frame and sets the permanent monopoly
      * background and fixes all its size and other properties
      */
-    public GameDisplayInteractor(){
-        this.gameFrame = new GameScreen();
+    public GameDisplayInteractor(GameLoop looper){
+        this.looper = looper;
+        this.screenFactory = new ScreenFactory();
         this.inputHandler = new GameDisplayInputInteractor();
-        this.labelSegments = new GameDisplayOutputInteractor();
+        this.labelSegments = new GameDisplayOutputInteractor(looper);
         this.selectedOutput = "";
+
     }
 
     /**
@@ -47,13 +55,21 @@ public class GameDisplayInteractor {
      * @param outputText: The String of Text shown to the user to
      *                  explain the current context of the game
      */
-    public void setOutputs(ArrayList<String> options, String outputText){
+    public void setOutputs(NodeNames name, ArrayList<String> options, String outputText){
+        gameScreen = screenFactory.getNode(name);
         this.labelSegments.setOptions(options);
         this.labelSegments.createOptionSegment();
         this.labelSegments.createTextSegment(outputText);
-        this.gameFrame.add(this.labelSegments.getTextSegment());
-        this.gameFrame.add(this.labelSegments.getOptionSegment());
-        this.labelSegments.drawSegments();
+
+        //this.gameFrame.add(this.labelSegments.getTextSegment());
+        //this.gameFrame.add(this.labelSegments.getOptionSegment());
+        //TODO: UPDATE THIS
+ //       this.labelSegments.drawSegments();
+        GameScreen.setDescription(labelSegments.getDescriptionRaw());
+        GameScreen.setOptions(labelSegments.getOptionSegmentRaw());
+        gameScreen.initDisplay();
+
+
     }
 
     /**
@@ -88,7 +104,7 @@ public class GameDisplayInteractor {
      * is closed
      */
     public void displayScreen(){
-        this.gameFrame.display();
+        this.gameScreen.display();
     }
 
     /**
@@ -96,9 +112,11 @@ public class GameDisplayInteractor {
      */
     public void refreshScreen(){
         clearLabels();
-        this.gameFrame.remove(this.labelSegments.getTextSegment());
-        this.gameFrame.remove(this.labelSegments.getOptionSegment());
-        this.gameFrame.refresh();
+        //this.gameScreen.remove(this.labelSegments.getTextSegment());
+ //       gameScreen.removeComponents();
+ //       this.gameScreen.remove(this.labelSegments.getOptionSegment());
+ //       this.gameScreen.removeAll(this.labelSegments.getOptionSegmentRaw().getComponents());
+        this.gameScreen.refresh();
     }
 
     /**

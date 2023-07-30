@@ -124,13 +124,7 @@ public class State {
     }
 
 
-    public static String[] getHashmapKeys(HashMap<String,?> hash){
-        return hash.keySet().toArray(new String[0]);
-    }
 
-    public void addOptionsFromHashmap(HashMap<String,?> hash){
-        this.addOptions(getHashmapKeys(hash));
-    }
     /**
      * This method adds an option to the options instance attribute which will be presented to the user(s).
      * @param options TODO: ADD JAVADOC
