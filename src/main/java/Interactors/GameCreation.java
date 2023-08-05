@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class is used to initialize or create a Monopoly board.
@@ -144,7 +145,7 @@ public class GameCreation {
         CornerTiles jail = new JailSpace();
         CornerTiles freeParking = new FreeParking();
         CornerTiles goJail = new GoToJail();
-        LoadAccess loadAccess = new LoadFile(new File("src/save/cards.txt"));
+        LoadAccess loadAccess = new LoadFile(new File(Objects.requireNonNull(getClass().getResource("/save/cards.txt")).getFile()));
         loadAccess.loadCards();
         ActionSpaceCreationInteractor actionSpaceCreationInteractor = new ActionSpaceCreationInteractor(loadAccess);
         ActionSpace communityChest = actionSpaceCreationInteractor.loadComChestCards();

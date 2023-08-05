@@ -71,8 +71,8 @@ public class OutputInteractor {
             case AUCTION_COMPLETE:
                 updateAuctionComplete();
                 break;
-            case STEAL:
-                updateSteal();
+//            case STEAL:
+//                updateSteal();
             case FINISH_GAME:
                 updateEnding();
             case SAVE_GAME:
@@ -96,10 +96,10 @@ public class OutputInteractor {
         String currString = this.currentState.getDescription();
         this.output.modifyStateOutput(NodeNames.FINISH_GAME, currString);
     }
-    public void updateSteal(){
-        String currString = this.currentState.getDescription();
-        this.output.modifyStateOutput(NodeNames.STEAL, currString);
-    }
+//    public void updateSteal(){
+//        String currString = this.currentState.getDescription();
+//        this.output.modifyStateOutput(NodeNames.STEAL, currString);
+//    }
     public void updateParentTrade(){
         String currString = currentState.getPlayer().getName() + ", Incoming trade from player " +
                 currentState.getTradingOpponent().getName() + " requesting for " + currentState.getTradingPlayerProperty().getName() +

@@ -11,8 +11,8 @@ import Logic.NodeNames;
  * This class represents a use case after an action card is drawn.
  */
 public class CallActionUseCase extends MainGameNode {
-    public CallActionUseCase(GameNode previousNode) {
-        super(NodeNames.CALL_ACTION, previousNode );
+    public CallActionUseCase() {
+        super(NodeNames.CALL_ACTION, null );
     }
 
     /**

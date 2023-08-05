@@ -1,11 +1,14 @@
 package Persistence;
 
+import Entities.GUI.Screens.ImageCreator;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 /**
  * Class which is responsible for the loading of files into text files
@@ -119,9 +122,7 @@ public class LoadFile implements LoadAccess{
         // return array of all properties in txt file as Strings
         // GameCreationInteractor will parse Strings to create Property instances
         ArrayList<String[]> allProperties = new ArrayList<>();
-        String path = new File("src/save/properties.txt")
-                .getAbsolutePath();
-        File properties = new File(path);
+        File properties = new File(Objects.requireNonNull(getClass().getResource("/save/properties.txt")).getFile());
         Scanner scan = new Scanner(properties);
 
         while (scan.hasNextLine()) {

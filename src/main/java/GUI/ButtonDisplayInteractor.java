@@ -1,11 +1,8 @@
 package GUI;
 
 import Buttons.ButtonFactory;
-import Entities.GUI.Screens.GameScreen;
 import Entities.GUI.Screens.ImageButton;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 

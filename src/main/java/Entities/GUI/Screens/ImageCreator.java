@@ -7,7 +7,12 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class ImageCreator {
-
+    public static BufferedImage getAndScaleImage(String path, Dimension dimension){
+        return scaleImage(getImageFromPath(path), dimension.width, dimension.height);
+    }
+    public static BufferedImage getAndScaleImage(String path, int width, int height){
+        return scaleImage(getImageFromPath(path), width, height);
+    }
     public static BufferedImage scaleImage(Image image, int width, int height){
         BufferedImage resized = new BufferedImage(width,height, BufferedImage.TRANSLUCENT);
         Graphics2D g2 = resized.createGraphics();

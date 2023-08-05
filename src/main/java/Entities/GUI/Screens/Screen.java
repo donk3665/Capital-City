@@ -13,22 +13,28 @@ public abstract class Screen {
      * InstanceVar gameFrame: JFrame that contains all the contents of the game
      */
     protected static JFrame gameFrame;
+
+
     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+    public static final double width = screenSize.getWidth();
+    public static final double height = screenSize.getHeight();
 
     public static final double widthAdjust = Math.min(screenSize.getWidth()/1920.0, screenSize.getHeight()/1080.0);
     public static final double heightAdjust = Math.min(screenSize.getWidth()/1920.0, screenSize.getHeight()/1080.0);
     static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
     protected static Options options;
     protected static Description description;
-    private final ImagePathFactory imagePathFactory = new ImagePathFactory();
-    private ArrayList<Component> removableComponents = new ArrayList<>();
+    private static final ImagePathFactory imagePathFactory = new ImagePathFactory();
 
     public NodeNames getName() {
         return name;
     }
-    private final NodeNames name;
+    NodeNames name;
 
+    BackgroundPanel backgroundPanel = new BackgroundPanel();
 
+    public static JLayeredPane gamePane = new JLayeredPane();
     /**
      * Constructor that configures the JFrame
      */
@@ -62,14 +68,14 @@ public abstract class Screen {
         return imagePathFactory;
     }
 
-    public void addRemovableComponent(Component component, Object constraints, JPanel connect){
-        removableComponents.add(component);
-        connect.add(component, constraints);
-    }
-
-    public void removeComponents(JPanel jpanel){
-        removeAll(removableComponents, jpanel);
-    }
+//    public void addRemovableComponent(Component component, Object constraints, JPanel connect){
+//        removableComponents.add(component);
+//        connect.add(component, constraints);
+//    }
+//
+//    public void removeComponents(JPanel jpanel){
+//        removeAll(removableComponents, jpanel);
+//    }
 
     /**
      * Remove a component from the Frame
@@ -78,11 +84,11 @@ public abstract class Screen {
     public void remove(Component component, JPanel jpanel){
         jpanel.remove(component);
     }
-    public void removeAll(ArrayList<Component> list, JPanel panel){
-        for (Component c: list){
-            remove(c, panel);
-        }
-    }
+//    public void removeAll(ArrayList<Component> list, JPanel panel){
+//        for (Component c: list){
+//            remove(c, panel);
+//        }
+//    }
     /**
      * Function to show the frame and set it to close on exit
      */

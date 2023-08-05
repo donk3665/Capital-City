@@ -17,8 +17,8 @@ import java.util.HashMap;
  */
 public class EmptyPropertySpaceUseCase extends MainGameNode {
 
-    public EmptyPropertySpaceUseCase(GameNode previousNode) {
-        super(NodeNames.EMPTY_PROPERTY, previousNode);
+    public EmptyPropertySpaceUseCase() {
+        super(NodeNames.EMPTY_PROPERTY, null);
     }
 
 

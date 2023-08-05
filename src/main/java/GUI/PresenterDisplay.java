@@ -5,6 +5,7 @@ import Persistence.SaveFile;
 
 import UseCases.UseCaseInteractor;
 
+import javax.swing.*;
 import java.io.File;
 
 /**
@@ -32,7 +33,7 @@ public class PresenterDisplay implements GameLoop{
         gameFrame.setOutputs(outputControl.getCurrentState().getId(), outputControl.getStateOptions(), outputControl.getOutputMessage());
 
         gameLoop();
-        gameFrame.displayScreen();
+        SwingUtilities.invokeLater(() -> gameFrame.displayScreen());
 
     }
     public void gameLoop(){

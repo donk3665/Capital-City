@@ -85,16 +85,16 @@ public class NodeFactory {
                     return new BuildPropertyUseCase(beforeNode);
                 }
                 case BUY_PROPERTY -> {
-                    return new BuyUseCase(beforeNode);
+                    return new BuyUseCase();
                 }
                 case CALL_ACTION -> {
-                    return new CallActionUseCase(beforeNode);
+                    return new CallActionUseCase();
                 }
                 case PERFORM_STEAL -> {
                     return new PerformStealUseCase(beforeNode);
                 }
                 case EMPTY_PROPERTY -> {
-                    return new EmptyPropertySpaceUseCase(beforeNode);
+                    return new EmptyPropertySpaceUseCase();
                 }
                 case END_TURN -> {
                     return new EndTurnUseCase(beforeNode);

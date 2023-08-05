@@ -35,6 +35,7 @@ public class ConfirmNewGameUseCase extends InitialGameNode {
             states[3] = 0;
             states[4] = 0;
             states[5] = 0;
+            System.err.println(states);
             caseInteractor.createNewGame(states);
             return getFactory().getNode(NodeNames.MAIN_PARENT, this);
         }

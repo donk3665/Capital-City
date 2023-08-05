@@ -1,9 +1,8 @@
 package GUI;
 
-import Entities.GUI.Screens.GameScreen;
+import Entities.GUI.Screens.InitialGameScreen;
 import Entities.GUI.Screens.Screen;
 import Entities.GUI.Screens.ScreenFactory;
-import Logic.GameLogic;
 import Logic.NodeNames;
 
 import java.util.ArrayList;
@@ -26,14 +25,12 @@ public class GameDisplayInteractor {
     private final GameDisplayOutputInteractor labelSegments;
     private final ScreenFactory screenFactory;
     private String selectedOutput;
-    private GameLoop looper;
 
     /**
      * The constructor for this class, creates the frame and sets the permanent monopoly
      * background and fixes all its size and other properties
      */
     public GameDisplayInteractor(GameLoop looper){
-        this.looper = looper;
         this.screenFactory = new ScreenFactory();
         this.inputHandler = new GameDisplayInputInteractor();
         this.labelSegments = new GameDisplayOutputInteractor(looper);
@@ -65,8 +62,8 @@ public class GameDisplayInteractor {
         //this.gameFrame.add(this.labelSegments.getOptionSegment());
         //TODO: UPDATE THIS
  //       this.labelSegments.drawSegments();
-        GameScreen.setDescription(labelSegments.getDescriptionRaw());
-        GameScreen.setOptions(labelSegments.getOptionSegmentRaw());
+        InitialGameScreen.setDescription(labelSegments.getDescriptionRaw());
+        InitialGameScreen.setOptions(labelSegments.getOptionSegmentRaw());
         gameScreen.initDisplay();
 
 
@@ -112,10 +109,6 @@ public class GameDisplayInteractor {
      */
     public void refreshScreen(){
         clearLabels();
-        //this.gameScreen.remove(this.labelSegments.getTextSegment());
- //       gameScreen.removeComponents();
- //       this.gameScreen.remove(this.labelSegments.getOptionSegment());
- //       this.gameScreen.removeAll(this.labelSegments.getOptionSegmentRaw().getComponents());
         this.gameScreen.refresh();
     }
 

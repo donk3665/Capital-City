@@ -15,8 +15,8 @@ import Logic.NodeNames;
  */
 public class BuyUseCase extends MainGameNode {
 
-    public BuyUseCase(GameNode previousNode) {
-        super(NodeNames.BUY_PROPERTY, previousNode);
+    public BuyUseCase() {
+        super(NodeNames.BUY_PROPERTY, null);
     }
 
     /**
