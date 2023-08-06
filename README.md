@@ -1,4 +1,4 @@
-# Capital City
+# Captital City
 
 ## How to play the game
 In the ```src/main/java/Main``` click the play button or run the file and a popup window 
