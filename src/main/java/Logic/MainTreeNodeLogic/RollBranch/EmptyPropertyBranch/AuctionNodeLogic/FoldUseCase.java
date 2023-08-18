@@ -33,12 +33,11 @@ public class FoldUseCase extends AuctionTreeNode {
 
         List<Player> players = getPlayers();
 
-        int returnPlayerIndex = getReturnPlayerIndex();
-
         //fold indicator
         auctionStates[getCurrentPlayerIndex()] = 1;
         auctionComplete = checkAuction();
 
+        switchPlayersAuction();
         //when the auction is complete
         if (auctionComplete != -1){
             //give the winner their property
@@ -47,13 +46,9 @@ public class FoldUseCase extends AuctionTreeNode {
             playerWon.addProperty(biddingProperty);
             playerWon.pay(auctionStates[potIndex]);
 
-
-//          //return to the main tree and correct player
-            setCurrentPlayer(players.get(returnPlayerIndex));
-
             return getFactory().getNode(NodeNames.AUCTION_COMPLETE, this);
         }
-        switchPlayersAuction();
+
         return getFactory().getNode(NodeNames.AUCTION_PARENT, this);
     }
 }

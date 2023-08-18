@@ -33,6 +33,7 @@ public class AuctionEntryUseCase extends AuctionTreeNode {
         biddingProperty = (Property) board.getCell(currentPlayer.getPosition());
         setReturnPlayerIndex(getCurrentPlayerIndex());
         getGameLogicInteractor().setCurrentNode(tempNode);
+        switchPlayersAuction();
 
         return tempNode.create_state();
     }

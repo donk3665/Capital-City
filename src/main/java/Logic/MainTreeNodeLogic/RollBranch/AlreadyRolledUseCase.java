@@ -12,8 +12,8 @@ import Logic.NodeNames;
  */
 public class AlreadyRolledUseCase extends MainGameNode {
 
-    public AlreadyRolledUseCase(GameNode previousNode) {
-        super(NodeNames.ALREADY_ROLLED, previousNode);
+    public AlreadyRolledUseCase() {
+        super(NodeNames.ALREADY_ROLLED, null);
     }
 
     /**

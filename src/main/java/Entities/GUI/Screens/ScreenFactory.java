@@ -4,7 +4,28 @@ import Logic.NodeNames;
 
 public class ScreenFactory {
     private int lastScreen = 0;
-    private GameScreen gameScreen = new GameScreen(null);
+    //private GameScreen gameScreen = new GameScreen();
+
+    private Screen [] screenArray = new Screen[5];
+
+    public ScreenFactory(){
+        screenArray[0] = new InitialGameScreen();
+        screenArray[1] = new CreditsScreen();
+        screenArray[2] = new GameScreen();
+        screenArray[3] = new AuctionScreen();
+        screenArray[4] = new EndingScreen();
+
+       for (Screen screen: screenArray){
+           screen.gamePane.setDoubleBuffered(true);
+           screen.gamePane.setBounds(0,0,1920,1080);
+           screen.setUpGamePane();
+       }
+    }
+
+
+
+
+
 
     public Screen getNode(NodeNames name){
         switch (name){
@@ -12,28 +33,29 @@ public class ScreenFactory {
             case INITIAL_PARENT, SETTINGS_INITIAL, QUIT_INITIAL, SELECT_GAME_TYPE, SELECT_NUMBER_OF_PLAYERS,
                     CONFIRM_LOADED_GAME, CONFIRM_NEW_GAME, SELECT_SAVE, SELECT_GAME_MODE, NUMBER_OF_ROUNDS, NO_SAVES-> {
                 lastScreen = 1;
-                return new InitialGameScreen(name);
+                return screenArray[0];
             }
             case CREDITS -> {
                 lastScreen = 2;
-                return new CreditsScreen(name);
+                return screenArray[1];
             }
 
 //            //game nodes
             case ALREADY_ROLLED, AUCTION_ENTRY, BANKRUPTCY, BUILD_PROPERTY,BUY_PROPERTY, CALL_ACTION, PERFORM_STEAL, EMPTY_PROPERTY, END_TURN, EXIT_GAME,
-                    FINISH_GAME, MAIN_PARENT, SELECT_PROPERTY, MORTGAGE, NO_PROPERTIES, NOTHING_TO_TRADE, PICK_PLAYER, PICK_ITEM_OPPONENT, PICK_ITEM_SELF, ROLL,
+                     MAIN_PARENT, SELECT_PROPERTY, MORTGAGE, NO_PROPERTIES, NOTHING_TO_TRADE, PICK_PLAYER, PICK_ITEM_OPPONENT, PICK_ITEM_SELF, ROLL,
                     SAVE_GAME, SELECT_ACTION_PROPERTY, SEND_TRADE, SETTINGS, STEAL, UN_MORTGAGE, TRADE
                     -> {
-                if (lastScreen == 3){
-                    gameScreen.setRenderMode(1);
-                }
-                else {
-                    gameScreen.setRenderMode(0);
-                }
+//                if (lastScreen == 3){
+//                    ((GameScreen)screenArray[2]).setRenderMode(1);
+//                }
+//                else {
+//                    ((GameScreen)screenArray[2]).setRenderMode(0);
+//                }
                 lastScreen = 3;
-                gameScreen.setName(name);
-                return gameScreen;
+                screenArray[2].setName(name);
+                return screenArray[2];
             }
+
 
 //
 //            //Trade tree nodes
@@ -53,22 +75,13 @@ public class ScreenFactory {
 //                return new TradingOpponentParentNodeUseCase();
 //            }
 //
-//            //Auction tree nodes
-//            case AUCTION_PARENT -> {
-//                return new AuctionParent();
-//            }
-//            case HIGH_OPTION -> {
-//                return new HighOptionUseCase();
-//            }
-//            case MEDIUM_OPTION -> {
-//                return new MediumOptionUseCase();
-//            }
-//            case LOW_OPTION -> {
-//                return new LowOptionUseCase();
-//            }
-//            case AUCTION_COMPLETE -> {
-//                return new AuctionComplete(beforeNode);
-//            }
+            //Auction tree nodes
+            case AUCTION_PARENT, LOW_OPTION, MEDIUM_OPTION, HIGH_OPTION, AUCTION_COMPLETE -> {
+                return screenArray[3];
+            }
+            case FINISH_GAME -> {
+                return screenArray[4];
+            }
 
 
         }

@@ -53,7 +53,7 @@ public class RollUseCase extends MainGameNode {
             } else {
                 //perform the action on the space as well
                 switch (landedOnCell.getType()) {
-                    case "Property" -> {
+                    case PROPERTY -> {
                         PropertyPerformActionUseCase propertyInteractor = new PropertyPerformActionInteractor();
                         assert landedOnCell instanceof Property;
                         Property property = (Property) landedOnCell;
@@ -63,13 +63,13 @@ public class RollUseCase extends MainGameNode {
                             setAnswer(propertyInteractor.performAction(property, currentPlayer));
                         }
                     }
-                    case "Corner Tile" -> {
+                    case CORNER_TILE -> {
                         CornerTilePerformActionUseCase cornerTileInteractor = new CornerTilePerformActionInteractor();
                         assert landedOnCell instanceof CornerTiles;
                         CornerTiles cornerTile = (CornerTiles) landedOnCell;
                         setAnswer(cornerTileInteractor.performAction(currentPlayer, cornerTile));
                     }
-                    case "Action Space" -> {
+                    case ACTION_SPACE -> {
                         PerformActionSpaceUseCase actionSpaceInteractor = new PerformActionSpaceCardInteractor();
                         assert landedOnCell instanceof ActionSpace;
                         ActionSpace actionSpace = (ActionSpace) landedOnCell;

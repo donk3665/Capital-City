@@ -5,19 +5,25 @@ import Logic.NodeNames;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
 
 /**
  * Class to keep track of the frame
  */
 public class InitialGameScreen extends Screen{
 
+
+    private BackgroundPanel mainPanel = new BackgroundPanel();
     /**
      * Constructor that configures the JFrame
      *
      */
-    public InitialGameScreen(NodeNames name) {
-        super(name);
+    public InitialGameScreen() {
     }
+
+
+
+
     public void connectButtons(JPanel connect){
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
@@ -33,7 +39,7 @@ public class InitialGameScreen extends Screen{
         panel.setOpaque(false);
 
 
-        String [] paths = getImagePathFactory().getButtonPaths(getName());
+        String [] paths = getImagePathFactory().getButtonPaths();
 
         for (int i = 0; i < options.getButtons().size(); i++){
             JPanel buttonPanel = new JPanel();
@@ -48,28 +54,28 @@ public class InitialGameScreen extends Screen{
         connect.add(panel, BorderLayout.CENTER);
     }
 
-    // THIS METHOD MUST BE CALLED AFTER ALL BUTTONS AND ELEMENTS ARE ADDED
+
+    public void setUpGamePane(){
+        mainPanel.setLayout(new BorderLayout());
+
+        mainPanel.setBackground(new Color(0,0,0,0));
+        mainPanel.setBackgroundImage(getImagePathFactory().getBackgrounds(0));
+
+        gamePane.add(mainPanel, JLayeredPane.FRAME_CONTENT_LAYER);
+        mainPanel.setBounds(gamePane.getBounds());
+
+    }
+
     @Override
-    public void initDisplay() {
+    public void attachNonStaticComponents() {
+        mainPanel.removeAll();
 
-        gamePane.removeAll();
-        backgroundPanel.setLayout(new BorderLayout());
-        backgroundPanel.setBackground(new Color(0,0,0,0));
-        backgroundPanel.setBackgroundImage(getImagePathFactory().getBackgrounds(0));
+        mainPanel.add(description.getDescription(), BorderLayout.PAGE_START);
+        connectButtons(mainPanel);
 
-        connectButtons(backgroundPanel);
+        mainPanel.validate();
+        mainPanel.getParent().repaint();
 
-        backgroundPanel.add(description.getDescription(), BorderLayout.PAGE_START);
-
-        gamePane.setPreferredSize(new Dimension(1920, 1080));
-        gamePane.add(backgroundPanel, JLayeredPane.FRAME_CONTENT_LAYER);
-        gameFrame.setContentPane(gamePane);
-
-        gameFrame.pack();
-
-        backgroundPanel.setBounds(gamePane.getBounds());
-
-        gameFrame.pack();
 
     }
 

@@ -47,39 +47,6 @@ public class ButtonFactory {
             GeneralButton b = new GeneralButton("B"+i);
             buttonMappings.add(b);
         }
-
-//        Button1 b1 = new Button1();
-//        this.buttonMappings.add(b1);
-//        Button2 b2 = new Button2();
-//        this.buttonMappings.add(b2);
-//        Button3 b3 = new Button3();
-//        this.buttonMappings.add(b3);
-//        Button4 b4 = new Button4();
-//        this.buttonMappings.add(b4);
-//        Button5 b5 = new Button5();
-//        this.buttonMappings.add(b5);
-//        Button6 b6 = new Button6();
-//        this.buttonMappings.add(b6);
-//        Button7 b7 = new Button7();
-//        this.buttonMappings.add(b7);
-//        Button8 b8 = new Button8();
-//        this.buttonMappings.add(b8);
-//        Button9 b9 = new Button9();
-//        this.buttonMappings.add(b9);
-//        Button10 b10 = new Button10();
-//        this.buttonMappings.add(b10);
-//        Button11 b11 = new Button11();
-//        this.buttonMappings.add(b11);
-//        Button12 b12 = new Button12();
-//        this.buttonMappings.add(b12);
-//        Button13 b13 = new Button13();
-//        this.buttonMappings.add(b13);
-//        Button14 b14 = new Button14();
-//        this.buttonMappings.add(b14);
-//        Button15 b15 = new Button15();
-//        this.buttonMappings.add(b15);
-//        Button16 b16 = new Button16();
-//        this.buttonMappings.add(b16);
     }
 
     /**

@@ -8,7 +8,9 @@ import Logic.GameNode;
 import Logic.MainTreeNodeLogic.MainGameNode;
 import Logic.NodeNames;
 
+import javax.management.StringValueExp;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * This class represents the use case where the users want to manage a property.
@@ -18,6 +20,7 @@ public class SelectPropertyUseCase extends MainGameNode {
         super(NodeNames.SELECT_PROPERTY, previousNode);
     }
     GameNode tempNode;
+    HashMap<String, String> options = new HashMap<>();
 
     /**
      * This method creates a State object either containing properties as options or moves to another node when there
@@ -41,8 +44,9 @@ public class SelectPropertyUseCase extends MainGameNode {
         }
 
         //provide options on the properties available
-        for (Property currentPlayerProperty : currentPlayerProperties) {
-            currentState.addOptions(currentPlayerProperty.getName());
+        for( int i = 0; i< currentPlayerProperties.size(); i++) {
+            options.put(currentPlayerProperties.get(i).getName(), String.valueOf(i));
+            currentState.addOptions(currentPlayerProperties.get(i).getName());
         }
         tempNode = getFactory().getNode(NodeNames.SELECT_ACTION_PROPERTY);
         return currentState;
@@ -50,7 +54,7 @@ public class SelectPropertyUseCase extends MainGameNode {
 
     @Override
     public GameNode performInput(InputInformation input) {
-        getSelectedOptions().put(getName(), input.getInput());
+        getSelectedOptions().put(getName(), options.get(input.getInput()));
         return tempNode;
     }
 }

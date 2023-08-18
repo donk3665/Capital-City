@@ -28,8 +28,8 @@ public class GameCreation {
         ArrayList<Player> players = new ArrayList<>();
         ArrayList<Cell> propertiesSoFar;
 
-        for (String name : playersName){
-            Player newPlayer = new Player(name);
+        for (int i = 0; i<playersName.size(); i++){
+            Player newPlayer = new Player(playersName.get(i),i);
             players.add(newPlayer);
         }
 
@@ -66,7 +66,7 @@ public class GameCreation {
         ArrayList<Cell> properties = new ArrayList<>();
         ArrayList<Cell> standardProperties = parsePropertyData(newProperties);
 
-
+        int playerIndexCounter = 0;
         // playerData
         for (String[] instance : gameData.get(0)){
             if (instance.length == 5){
@@ -74,8 +74,9 @@ public class GameCreation {
                 boolean inJail = instance[2].equals("true");
 
                 Player player = new Player(instance[0], Integer.parseInt(instance[1]), inJail,
-                        Integer.parseInt(instance[3]), Integer.parseInt(instance[4]));
+                        Integer.parseInt(instance[3]), Integer.parseInt(instance[4]), playerIndexCounter);
                 players.add(player);
+                playerIndexCounter +=1;
             } else {
                 // Property instance
                 boolean mortgaged = instance[13].equals("true");
@@ -150,19 +151,21 @@ public class GameCreation {
         ActionSpaceCreationInteractor actionSpaceCreationInteractor = new ActionSpaceCreationInteractor(loadAccess);
         ActionSpace communityChest = actionSpaceCreationInteractor.loadComChestCards();
         ActionSpace chance = actionSpaceCreationInteractor.loadChanceCards();
+        ActionSpace luxuryTax = new ActionSpace(new Card("tax","You need to pay $100 in luxury tax!",ActionTypeEnum.TAX,100));
+        ActionSpace incomeTax = new ActionSpace(new Card("tax","You need to pay $200 in income tax!",ActionTypeEnum.TAX,200));
 
         standardProperties.add(0, go);
         standardProperties.add(2, communityChest);
-        standardProperties.add(4, chance);
+        standardProperties.add(4, incomeTax);
         standardProperties.add(7, chance);
         standardProperties.add(10, jail);
-        standardProperties.add(18, communityChest);
-        standardProperties.add(21, freeParking);
-        standardProperties.add(23, chance);
-        standardProperties.add(31, goJail);
-        standardProperties.add(34, communityChest);
-        standardProperties.add(37, chance);
-        standardProperties.add(39, communityChest);
+        standardProperties.add(17, communityChest);
+        standardProperties.add(20, freeParking);
+        standardProperties.add(22, chance);
+        standardProperties.add(30, goJail);
+        standardProperties.add(33, communityChest);
+        standardProperties.add(36, chance);
+        standardProperties.add(38, luxuryTax);
 
         if (!propertiesSoFar.equals(standardProperties)) {
             for (Cell property : propertiesSoFar) {

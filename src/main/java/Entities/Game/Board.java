@@ -1,10 +1,14 @@
 package Entities.Game;
 
+import Entities.ExternalDataTransfer.BasicBoard;
+import Entities.ExternalDataTransfer.BasicPlayer;
+import Logic.MainTreeNodeLogic.RollBranch.EmptyPropertyBranch.AuctionNodeLogic.AuctionTreeNode;
+
 import java.util.*;
 /**
  * Represents a Monopoly board.
  */
-public class Board{
+public class Board implements BasicBoard {
 
     private final List<Player> players;
     private final List<Cell> cells;
@@ -35,6 +39,8 @@ public class Board{
         return this.players;
     }
 
+
+
     /**
      * This method is used to remove a player from Board.
      * @param player The player that must be removed.
@@ -42,11 +48,23 @@ public class Board{
     public void removePlayer(Player player){
         this.players.remove(player);
     }
+
+    @Override
+    public List<BasicPlayer> getBasicPlayers() {
+        return new ArrayList<>(getPlayers());
+    }
+
     /**
      * This method is used to return a List of all the Cell instances on Board.
      * @return This returns cells, a List of all the Cell instances on Board.
      */
     public List<Cell> getCells(){return this.cells;}
+
+    @Override
+    public int[] getAuctionStates() {
+        return AuctionTreeNode.getAuctionStates();
+    }
+
     /**
      * This method is used to return a Cell at a specific position represented by an int value.
      * @param position The position of the cell.

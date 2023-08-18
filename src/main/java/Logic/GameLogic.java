@@ -70,6 +70,7 @@ public class GameLogic {
         }
         state.setId(currentNode.getName());
         state.setPlayer(MainGameNode.getCurrentPlayer());
+        state.setCurrentBoard(GeneralGameNode.getBoard());
         return state;
     }
 

@@ -7,8 +7,10 @@ import java.awt.image.BufferedImage;
 
 public class ImageLabel extends JLabel {
     private BufferedImage image;
+    private String path;
 
 
+    private boolean preserveRatio = false;
 
     public ImageLabel(String label){
         super(label);
@@ -16,8 +18,11 @@ public class ImageLabel extends JLabel {
         setVerticalAlignment(SwingConstants.CENTER);
         setFont(FontCreator.getFontAharoni(60f));
         setForeground(Color.WHITE);
-        setBorder(new EmptyBorder(0,30,0,30));
+        setBorder(new EmptyBorder(0,45,0,30));
 
+    }
+    public void setPreserveRatio(boolean preserveRatio) {
+        this.preserveRatio = preserveRatio;
     }
 
     public void setFontSizeAndColour(float size, Color color){
@@ -26,21 +31,34 @@ public class ImageLabel extends JLabel {
     }
 
     public void setImage(String path) {
+        this.path = path;
         this.image = ImageCreator.getImageFromPath(path);
     }
     @Override
     public Dimension getPreferredSize() {
-        //return new Dimension(image.getWidth(), image.getHeight());
+        if (preserveRatio){
+            return new Dimension(image.getWidth(), image.getHeight());
+        }
         return new Dimension(0,0);
     }
 
     @Override
     public void setBounds(int x, int y, int width, int height){
         super.setBounds(x,y,width,height);
-        if (width != 0 && height != 0) {
-            changeSize(width, height);
+        changeImageSize(width,height);
+    }
+    public void changeImageSize(int width, int height){
+        if (width != 0 && height != 0 && path!=null) {
+            if (preserveRatio) {
+                double widthDifference = width * 1.0 / image.getWidth();
+                double heightDifference = height * 1.0 / image.getHeight();
+                changeSize((int) (image.getWidth() * Math.min(widthDifference, heightDifference)), (int) (image.getHeight() * Math.min(widthDifference, heightDifference)));
+            } else {
+                changeSize(width, height);
+            }
         }
     }
+
     @Override
     public void setBounds(Rectangle rectangle){
         super.setBounds(rectangle);
@@ -51,11 +69,14 @@ public class ImageLabel extends JLabel {
 
     @Override
     public void setPreferredSize(Dimension preferredSize){
-
+        super.setPreferredSize(preferredSize);
+    }
+    public Dimension getImageSize(){
+        return new Dimension(image.getWidth(), image.getHeight());
     }
 
     private void changeSize(int width, int height){
-        this.image =  ImageCreator.scaleImage(image, width, height);
+        this.image =  ImageCreator.getAndScaleImage(path, width, height);
     }
 
 

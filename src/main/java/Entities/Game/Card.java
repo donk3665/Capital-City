@@ -6,14 +6,14 @@ package Entities.Game;
 public class Card {
 
     private final String type;
-    private final String action;
-    private final String actiontype;
+    private final String actionString;
+    private final ActionTypeEnum actionType;
     private final Integer amount;
 
-    public Card(String type, String action, String actiontype, Integer amount) {
+    public Card(String type, String actionString, ActionTypeEnum actionType, Integer amount) {
         this.type = type;
-        this.action = action;
-        this.actiontype = actiontype;
+        this.actionString = actionString;
+        this.actionType = actionType;
         this.amount = amount;
     }
 
@@ -21,12 +21,12 @@ public class Card {
         return this.type;
     }
 
-    public String getAction() {
-        return this.action;
+    public String getActionString() {
+        return this.actionString;
     }
 
-    public String getActionType() {
-        return this.actiontype;
+    public ActionTypeEnum getActionType() {
+        return this.actionType;
     }
 
     public Integer getAmount() {

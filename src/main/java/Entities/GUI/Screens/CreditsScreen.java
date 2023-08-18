@@ -11,25 +11,38 @@ public class CreditsScreen extends Screen{
      *
      * @param name
      */
+    private BackgroundPanel mainPanel = new BackgroundPanel();
 
 
-    public CreditsScreen(NodeNames name) {
-        super(name);
+    public CreditsScreen() {
+
+    }
+
+
+    @Override
+    public void attachNonStaticComponents() {
+        mainPanel.removeAll();
+        options.getButtons().get(0).setImage(getImagePathFactory().getBackButtonPath());
+        mainPanel.add(options.getButtons().get(0), BorderLayout.PAGE_START);
+
     }
 
     @Override
+    public void setUpGamePane() {
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setBackgroundImage(getImagePathFactory().getBackgrounds(1));
+        mainPanel.setOpaque(true);
+
+        gamePane.add(mainPanel, JLayeredPane.FRAME_CONTENT_LAYER);
+        mainPanel.setBounds(gamePane.getBounds());
+
+    }
+
+    //@Override
     public void initDisplay() {
-        backgroundPanel.removeAll();
 
-        backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
 
-        backgroundPanel.setBackgroundImage(getImagePathFactory().getBackgrounds(1));
-        options.getButtons().get(0).setImage(getImagePathFactory().getBackButtonPath());
-        backgroundPanel.add(options.getButtons().get(0), BorderLayout.PAGE_START);
-
-        backgroundPanel.setOpaque(true);
-
-        gameFrame.setContentPane(backgroundPanel);
+        gameFrame.setContentPane(mainPanel);
         gameFrame.pack();
 
     }

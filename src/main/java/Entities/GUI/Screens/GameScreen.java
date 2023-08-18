@@ -1,42 +1,48 @@
 package Entities.GUI.Screens;
 
+import Entities.ExternalDataTransfer.BasicBoard;
+import Entities.ExternalDataTransfer.BasicPlayer;
 import Entities.GUI.Screens.Functions.BoardGrid;
 import Logic.NodeNames;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.util.ArrayList;
+import java.awt.event.ActionListener;
+import java.util.List;
+
 
 public class GameScreen extends Screen{
     /**
      * Constructor that configures the JFrame
      *
-     * @param name
      */
     String[] gameImages = getImagePathFactory().getUIImagePaths();
-    private int renderMode = 0;
-
     JLayeredPane optionBox = null;
-    JPanel optionPanel = null;
-    public void setRenderMode(int renderMode){
-        this.renderMode = renderMode;
+    JPanel optionPanel =  new JPanel();
+    JLayeredPane chatBox = null;
+
+    JTextArea textArea = null;
+
+    BoardGrid overlayGrid = null;
+    BoardGrid buttonGrid = null;
+
+    JPanel overlayPanel = null;
+
+    JLayeredPane board = null;
+
+
+
+
+    public GameScreen() {
+
     }
-    public GameScreen(NodeNames name) {
-        super(name);
-    }
-    public void setName(NodeNames name){
-        this.name = name;
-    }
+
     public void connectButtons(JLayeredPane connect){
-        if (optionPanel != null) {
-            connect.remove(optionPanel);
-        }
-        optionPanel = new JPanel();
-        optionPanel.setBounds(connect.getBounds());
-        optionPanel.setLayout(new GridBagLayout());
+        optionPanel.removeAll();
+
+
+
         GridBagConstraints c = new GridBagConstraints();
 
         c.fill = GridBagConstraints.BOTH;
@@ -48,9 +54,12 @@ public class GameScreen extends Screen{
         c.insets = new Insets(6, 6,6,6);
         optionPanel.setOpaque(false);
 
-        String [] paths = getImagePathFactory().getButtonPaths(getName());
+
+        String [] paths = getImagePathFactory().getButtonPaths();
 
         JPanel[] panelList = new JPanel[options.getButtons().size()];
+
+
         for (int i = 0; i < options.getButtons().size(); i++){
             panelList[i] = new JPanel();
             panelList[i].setLayout(new BorderLayout());
@@ -61,15 +70,15 @@ public class GameScreen extends Screen{
             options.getButtons().get(i).setFontSizeAndColour(24, Color.white);
             optionPanel.add(panelList[i],c );
         }
-        optionPanel.validate();
-//        for (JPanel i: panelList){
-//            i.validate();
-//            System.err.println(i.getBounds());
-//        }
+
+        optionPanel.doLayout();
+
         connect.add(optionPanel);
+
     }
 
     public JPanel addFirstLayer(BackgroundPanel backgroundPanel){
+        backgroundPanel.setLayout(new GridBagLayout());
 
         JPanel infoLabelPanel = new JPanel();
         infoLabelPanel.setOpaque(false);
@@ -93,19 +102,30 @@ public class GameScreen extends Screen{
         c.gridy = 0;
         c.weightx = 1;
 
-        JPanel descriptionLabelPanel = new JPanel();
-        descriptionLabelPanel.setOpaque(false);
-        descriptionLabelPanel.setLayout(new BorderLayout());
 
-        ImageLabel descriptionLabel = new ImageLabel(description.getDescription().getText());
+        JLayeredPane wrappingPane = new JLayeredPane();
+
+        wrappingPane.setOpaque(false);
+
+        ImageLabel descriptionLabel = new ImageLabel("");
+        descriptionLabel.setOpaque(false);
+
+
+        textArea = new JTextArea();
+        textArea.setBorder(new EmptyBorder(30,30,20,30));
+        textArea.setWrapStyleWord(true);
+        textArea.setLineWrap(true);
+        textArea.setOpaque(false);
+        textArea.setEditable(false);
+        textArea.setFont(FontCreator.getFontAharoni(24));
+        textArea.setForeground(Color.WHITE);
+
         descriptionLabel.setImage(gameImages[4]);
 
-        backgroundPanel.add(descriptionLabelPanel, c);
-        descriptionLabelPanel.add(descriptionLabel);
-
-        descriptionLabel.setFontSizeAndColour(24, Color.white);
-
-        descriptionLabelPanel.validate();
+        wrappingPane.add(descriptionLabel, JLayeredPane.FRAME_CONTENT_LAYER);
+        wrappingPane.add(textArea, JLayeredPane.DEFAULT_LAYER);
+        backgroundPanel.add(wrappingPane, c);
+        descriptionLabel.doLayout();
 
 
         c.gridx = 2;
@@ -139,13 +159,18 @@ public class GameScreen extends Screen{
         backgroundPanel.add(bottomHalf, c);
         bottomHalf.add(actualBottomHalf);
 
-        backgroundPanel.validate();
+        backgroundPanel.doLayout();
+        bottomHalf.doLayout();
+
+        descriptionLabel.setBounds(0,0, wrappingPane.getWidth(), wrappingPane.getHeight());
+        textArea.setBounds(0,0, wrappingPane.getWidth(), wrappingPane.getHeight());
         return actualBottomHalf;
     }
 
     private JLayeredPane addLayeredPaneAndBackground(JPanel panel, String imagePath){
         JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setBounds(panel.getBounds());
+
+        layeredPane.setBounds(0,0, panel.getWidth(), panel.getHeight());
         //addResizeListener(layeredPane);
         JPanel jPanel = new JPanel();
         jPanel.setOpaque(false);
@@ -157,28 +182,74 @@ public class GameScreen extends Screen{
         jPanel.add(image);
 
 
-        jPanel.setBounds(layeredPane.getBounds());
-        jPanel.validate();
+        jPanel.setBounds(0,0,layeredPane.getWidth(),layeredPane.getHeight());
+        jPanel.doLayout();
 
         return layeredPane;
     }
 
     public void addBoard(JPanel panel){
-        JLayeredPane board = addLayeredPaneAndBackground(panel, gameImages[0]);
+
+        board = addLayeredPaneAndBackground(panel, gameImages[0]);
+
         JPanel gridPanel = new JPanel();
         gridPanel.setLayout(new GridBagLayout());
-        gridPanel.setBounds(board.getBounds());
+        gridPanel.setBounds(0,0, board.getWidth(), board.getHeight());
         board.add(gridPanel, JLayeredPane.PALETTE_LAYER);
         gridPanel.setOpaque(false);
-        BoardGrid grid = new BoardGrid(gridPanel, false, board);
+
+        buttonGrid = new BoardGrid(gridPanel, false, board);
+
+        overlayPanel = new JPanel();
+        overlayPanel.setLayout(new GridBagLayout());
+        overlayPanel.setBounds(0,0, board.getWidth(), board.getHeight());
+        overlayPanel.setOpaque(false);
+        board.add(overlayPanel, JLayeredPane.DEFAULT_LAYER);
+        overlayGrid = new BoardGrid(overlayPanel, true, board);
 
         //generateBoard(gridPanel);
     }
-    public void generateBoard(JPanel panel){
-        JButton [] tileArray;
 
-
+    private void paintHousesAndHotels(BoardGrid overlayGrid){
+        GridOverlayCreator overlayCreator = new GridOverlayCreator(overlayGrid.getPanelGrid(), getCurrentBoard());
     }
+
+
+    private void connectBoardButtons(JLayeredPane layeredPane, BoardGrid grid){
+        for (Component component: layeredPane.getComponentsInLayer(JLayeredPane.POPUP_LAYER)){
+            layeredPane.remove(component);
+        }
+        JPanel popupPanel = new JPanel();
+        popupPanel.setOpaque(false);
+        popupPanel.setBounds(layeredPane.getWidth()/4,layeredPane.getHeight()/4, layeredPane.getWidth()/2, layeredPane.getHeight()/2);
+
+        layeredPane.add(popupPanel, JLayeredPane.POPUP_LAYER);
+        ImageButton [] buttons = grid.getButtonGrid();
+        //CardShower cardShower = new CardShower()
+
+        for (int i = 0; i< buttons.length; i++){
+            int num = i;
+            for (ActionListener t : buttons[ i].getActionListeners()){
+                buttons[i].removeActionListener(t);
+            }
+            buttons[i].addActionListener(e -> {
+                popupPanel.removeAll();
+                Popup p = new Popup( popupPanel, new CardShower(num, getCurrentBoard().getCells().get(num), getNumPlayersTile(num)).getContentPanel(), true);
+            });
+        }
+    }
+
+    private int getNumPlayersTile(int tile){
+        int counter = 0;
+        List<BasicPlayer> players = getCurrentBoard().getBasicPlayers();
+        for (BasicPlayer player : players) {
+            if (player.getPosition() == tile) {
+                counter += 1;
+            }
+        }
+        return counter;
+    }
+
 
     public void addOptionChatBox(JPanel panel){
 
@@ -203,7 +274,7 @@ public class GameScreen extends Screen{
         bottomPanel.setOpaque(false);
         panel.add(bottomPanel, bottomRightConstraints);
 
-        panel.validate();
+        panel.doLayout();
 
         addOptionBox(topPanel);
 
@@ -211,72 +282,85 @@ public class GameScreen extends Screen{
 
     }
     public void addChatBox(JPanel panel){
-        panel.validate();
+        chatBox = addLayeredPaneAndBackground(panel, gameImages[1]);
+        JPanel chatPanel = new JPanel();
+        chatPanel.setBounds(0,0,chatBox.getWidth(),chatBox.getHeight());
+        chatPanel.setOpaque(false);
+        chatBox.add(chatPanel, JLayeredPane.DEFAULT_LAYER);
 
-        JPanel infoLabelPanel = new JPanel();
-        infoLabelPanel.setOpaque(false);
-        infoLabelPanel.setLayout(new BorderLayout());
-        ImageLabel infoLabel = new ImageLabel("");
-        infoLabel.setImage(gameImages[1]);
-
-        infoLabelPanel.add(infoLabel);
-        panel.add(infoLabelPanel);
+        chatBox.doLayout();
+        if (actualChatBox == null) {
+            actualChatBox = new ChatBox(chatPanel,20);
+            //actualChatBox.execute();
+        }
+        else{
+            actualChatBox.attachPanel(chatPanel,20);
+        }
 
     }
     public void addOptionBox(JPanel panel){
         optionBox = addLayeredPaneAndBackground(panel, gameImages[2]);
-        connectButtons(optionBox);
+        optionPanel.setBounds(0,0,optionBox.getWidth(), optionBox.getHeight());
+        optionPanel.setLayout(new GridBagLayout());
     }
-
-
 
     @Override
-    public void initDisplay() {
-  //      if (renderMode == 0) {
-            gamePane.setDoubleBuffered(true);
-            gamePane.removeAll();
-            backgroundPanel.removeAll();
-            backgroundPanel.setLayout(new GridBagLayout());
-            backgroundPanel.setBackgroundImage(getImagePathFactory().getBackgrounds(2));
-            gamePane.add(backgroundPanel, JLayeredPane.FRAME_CONTENT_LAYER);
-            gameFrame.setContentPane(gamePane);
+    public void setUpGamePane() {
+        BackgroundPanel mainPanel = new BackgroundPanel();
 
-            backgroundPanel.setBounds(gamePane.getBounds());
+        mainPanel.setBackgroundImage(getImagePathFactory().getBackgrounds(2));
+        gamePane.add(mainPanel, JLayeredPane.FRAME_CONTENT_LAYER);
 
-            JPanel boardOptionPanel = addFirstLayer(backgroundPanel);
 
-            backgroundPanel.validate();
+        mainPanel.setBounds(gamePane.getBounds());
+        JPanel boardOptionPanel = addFirstLayer(mainPanel);
 
-            GridBagConstraints bottomHalfConstraints = new GridBagConstraints();
-            bottomHalfConstraints.gridx = 0;
-            bottomHalfConstraints.gridy = 0;
-            bottomHalfConstraints.weighty = 1;
-            bottomHalfConstraints.weightx = 1;
-            bottomHalfConstraints.insets = new Insets(0, 0, 0, 10);
-            bottomHalfConstraints.fill = GridBagConstraints.BOTH;
 
-            JPanel leftPanel = new JPanel();
-            leftPanel.setOpaque(false);
-            leftPanel.setLayout(new BorderLayout());
+        mainPanel.doLayout();
 
-            boardOptionPanel.add(leftPanel, bottomHalfConstraints);
+        GridBagConstraints bottomHalfConstraints = new GridBagConstraints();
+        bottomHalfConstraints.gridx = 0;
+        bottomHalfConstraints.gridy = 0;
+        bottomHalfConstraints.weighty = 1;
+        bottomHalfConstraints.weightx = 1;
+        bottomHalfConstraints.insets = new Insets(0, 0, 0, 10);
+        bottomHalfConstraints.fill = GridBagConstraints.BOTH;
 
-            bottomHalfConstraints.gridx = 1;
-            bottomHalfConstraints.weightx = 0.7;
-            bottomHalfConstraints.insets = new Insets(0, 0, 0, 0);
-            JPanel rightPanel = new JPanel();
-            rightPanel.setLayout(new GridBagLayout());
-            rightPanel.setOpaque(false);
-            boardOptionPanel.add(rightPanel, bottomHalfConstraints);
+        JPanel leftPanel = new JPanel();
+        leftPanel.setOpaque(false);
+        leftPanel.setLayout(new BorderLayout());
 
-            boardOptionPanel.validate();
+        boardOptionPanel.add(leftPanel, bottomHalfConstraints);
 
-            addBoard(leftPanel);
+        bottomHalfConstraints.gridx = 1;
+        bottomHalfConstraints.weightx = 0.7;
+        bottomHalfConstraints.insets = new Insets(0, 0, 0, 0);
+        JPanel rightPanel = new JPanel();
+        rightPanel.setLayout(new GridBagLayout());
+        rightPanel.setOpaque(false);
+        boardOptionPanel.add(rightPanel, bottomHalfConstraints);
 
-            addOptionChatBox(rightPanel);
+        boardOptionPanel.doLayout();
 
-            //gameFrame.pack();
+        addBoard(leftPanel);
 
+        addOptionChatBox(rightPanel);
 
     }
+    @Override
+    public void attachNonStaticComponents() {
+
+        for (Component component: optionBox.getComponentsInLayer(JLayeredPane.DEFAULT_LAYER)){
+            optionBox.remove(component);
+        }
+
+        connectButtons(optionBox);
+        textArea.setText(description.getDescription().getText());
+        paintHousesAndHotels(overlayGrid);
+        connectBoardButtons(board, buttonGrid);
+
+    }
+
+
+
 }

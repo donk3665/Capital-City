@@ -1,6 +1,10 @@
 package GUI;
 
+import Entities.ExternalDataTransfer.BasicBoard;
+import Entities.ExternalDataTransfer.BasicPlayer;
 import Entities.ExternalDataTransfer.Output;
+import Entities.Game.Board;
+import Entities.Game.Player;
 import Entities.InternalDataTransfer.State;
 import Interactors.StateOutputReader;
 import Logic.NodeNames;
@@ -19,6 +23,8 @@ public class OutputInteractor {
      */
     private final Output output;
     private State currentState;
+
+
 
     /**
      * The Constructor for the OutputInteractor Class
@@ -135,12 +141,11 @@ public class OutputInteractor {
      * Function to get the options the user has based on the state
      * @return the ArrayList of options in the current state
      */
-    public ArrayList<String> getStateOptions(){
-        ArrayList<String> currOptions = new ArrayList<>(this.currentState.getOptions());
+    public void updateStateOptions(){
         if (this.currentState.isBackEnable()){
-            currOptions.add("BACK");
+            currentState.addOptions("BACK");
         }
-        return currOptions;
+
     }
 
     /**

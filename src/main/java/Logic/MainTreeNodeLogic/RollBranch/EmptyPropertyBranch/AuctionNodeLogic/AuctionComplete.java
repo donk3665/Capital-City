@@ -1,13 +1,16 @@
 package Logic.MainTreeNodeLogic.RollBranch.EmptyPropertyBranch.AuctionNodeLogic;
 
+import Entities.Game.Player;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
 import Logic.NodeNames;
 
+import java.util.List;
+
 public class AuctionComplete extends AuctionTreeNode {
-    public AuctionComplete(GameNode previousNode) {
-        super(NodeNames.AUCTION_COMPLETE, previousNode);
+    public AuctionComplete() {
+        super(NodeNames.AUCTION_COMPLETE,null);
     }
 
     @Override
@@ -15,6 +18,7 @@ public class AuctionComplete extends AuctionTreeNode {
         State currentState = new State();
         currentState.setPlayerWon(playerWon);
         currentState.setBiddingPot(auctionStates[potIndex]);
+        currentState.setBiddingProperty(biddingProperty);
         currentState.addOptions("Ok");
 
         return currentState;
@@ -22,6 +26,10 @@ public class AuctionComplete extends AuctionTreeNode {
 
     @Override
     public GameNode performInput(InputInformation input) {
+        List<Player> players = getPlayers();
+        int returnPlayerIndex = getReturnPlayerIndex();
+        //return to the main tree and correct player
+        setCurrentPlayer(players.get(returnPlayerIndex));
         return getMainParent();
     }
 }

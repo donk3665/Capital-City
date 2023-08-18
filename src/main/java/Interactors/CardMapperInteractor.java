@@ -1,6 +1,8 @@
 package Interactors;
 
 import java.util.List;
+
+import Entities.Game.ActionTypeEnum;
 import Entities.Game.Card;
 import UseCases.CardMapperUseCase;
 
@@ -27,9 +29,9 @@ public class CardMapperInteractor implements CardMapperUseCase {
             String type = arr[0];
             if (Objects.equals(type, "jail")) {
                 String action = arr[1];
-                String actiontype = arr[2];
+                ActionTypeEnum actionType = ActionTypeEnum.valueOf(arr[2]);
                 Integer amount = Integer.parseInt(arr[3]);
-                Card card = new Card(type, action, actiontype, amount);
+                Card card = new Card(type, action, actionType, amount);
                 cards.add(card);
             }
         }
@@ -51,9 +53,9 @@ public class CardMapperInteractor implements CardMapperUseCase {
             String type = arr[0];
             if (Objects.equals(type, "chance")) {
                 String action = arr[1];
-                String actiontype = arr[2];
+                ActionTypeEnum actionType = ActionTypeEnum.valueOf(arr[2]);
                 Integer amount = Integer.parseInt(arr[3]);
-                Card card = new Card(type, action, actiontype, amount);
+                Card card = new Card(type, action, actionType, amount);
                 cards.add(card);
             }
         }
@@ -75,9 +77,9 @@ public class CardMapperInteractor implements CardMapperUseCase {
             String type = arr[0];
             if (Objects.equals(type, "comchest")) {
                 String action = arr[1];
-                String actiontype = arr[2];
+                ActionTypeEnum actionType = ActionTypeEnum.valueOf(arr[2]);
                 Integer amount = Integer.parseInt(arr[3]);
-                Card card = new Card(type, action, actiontype, amount);
+                Card card = new Card(type, action, actionType, amount);
                 cards.add(card);
             }
         }

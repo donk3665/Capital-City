@@ -1,11 +1,13 @@
 package Entities.Game;
 
+import Entities.ExternalDataTransfer.BasicPlayer;
+
 import java.util.ArrayList;
 
 /**
  * A class representing a player in the game of Monopoly
  */
-public class Player {
+public class Player implements BasicPlayer {
     /**
      * InstanceVar name: the name of the player
      * InstanceVar money: the amount of money the player has
@@ -20,6 +22,7 @@ public class Player {
     private boolean inJail;
     private int jailCards;
     private int position;
+    private int playerIndex;
 
     /**
      * Global Variables representing constant values
@@ -36,13 +39,14 @@ public class Player {
      * This is the constructor method for new player instances
      * @param name this parameter is for the name of the player
      */
-    public Player(String name) {
+    public Player(String name, int playerIndex) {
         this.name = name;
         this.money = STARTING_MONEY;
         this.properties = new ArrayList<>();
         this.inJail = false;
         this.jailCards = STARTING_JAILCARDS;
         this.position = STARTING_POSITION;
+        this.playerIndex = playerIndex;
     }
 
     /**
@@ -54,13 +58,14 @@ public class Player {
      * @param jailCards the number of get out of jail free cards owned by the player
      * @param position the player's current position on the board
      */
-    public Player(String name, int money, boolean inJail, int jailCards, int position) {
+    public Player(String name, int money, boolean inJail, int jailCards, int position, int playerIndex) {
         this.name = name;
         this.money = money;
         this.properties = new ArrayList<>();
         this.inJail = inJail;
         this.jailCards = jailCards;
         this.position = position;
+        this.playerIndex = playerIndex;
     }
 
     /**
@@ -221,6 +226,10 @@ public class Player {
         return properties;
     }
 
+    @Override
+    public int getPlayerIndex() {
+        return playerIndex;
+    }
 
 
     /**

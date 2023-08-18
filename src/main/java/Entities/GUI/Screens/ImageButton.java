@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 public class ImageButton extends JButton {
     private BufferedImage image;
-
+    private String path;
 
     public ImageButton(String label){
         super(label);
@@ -20,6 +20,7 @@ public class ImageButton extends JButton {
     }
 
     public void setImage(String path) {
+        this.path = path;
         this.image = ImageCreator.getImageFromPath(path);
         setContentAreaFilled(false);
         setFocusPainted(false);
@@ -32,12 +33,12 @@ public class ImageButton extends JButton {
     @Override
     public void setBounds(int x, int y, int width, int height){
         super.setBounds(x,y,width,height);
-        if (width != 0 && height != 0) {
+        if (width != 0 && height != 0 && path!=null) {
             changeSize(width, height);
         }
     }
     private void changeSize(int width, int height){
-        this.image =  ImageCreator.scaleImage(image, width, height);
+        this.image =  ImageCreator.getAndScaleImage(path, width, height);
     }
 
 

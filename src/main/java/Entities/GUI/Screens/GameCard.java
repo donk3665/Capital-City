@@ -17,8 +17,7 @@ public class GameCard extends JLabel {
     @Override
     public void setBounds(Rectangle dimension){
         super.setBounds(dimension);
-        BufferedImage image = ImageCreator.getImageFromPath("/Images/card.jpg");
-        setIcon(new ImageIcon(ImageCreator.scaleImage(image, (int) dimension.getWidth(), (int) dimension.getHeight())));
+        setIcon(new ImageIcon(ImageCreator.getAndScaleImage("/Images/card.jpg", (int) dimension.getWidth(), (int) dimension.getHeight())));
     }
 
 

@@ -2,37 +2,52 @@ package Entities.GUI.Screens.Functions;
 
 import Entities.GUI.Screens.ImageButton;
 import Entities.GUI.Screens.ImageLabel;
+import Entities.GUI.Screens.WeightlessPanel;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class BoardGrid {
-    private ImageLabel[] imageGrid;
-    private ImageLabel[] innerImageGrid;
+
+    private WeightlessPanel[] panelGrid;
+    private WeightlessPanel[] innerPanelGrid;
     private ImageButton[] buttonGrid;
     private ImageButton[] innerButtonGrid;
     private JPanel centerPanel = new JPanel();
     private JPanel masterPanel;
     private JLayeredPane boardPane;
     private boolean isLabel;
+
+    public WeightlessPanel[] getPanelGrid() {
+        return panelGrid;
+    }
+    public ImageButton[] getButtonGrid() {
+        return buttonGrid;
+    }
+
     public BoardGrid(JPanel masterPanel, boolean isLabel, JLayeredPane boardPane){
+
         this.isLabel = isLabel;
         this.boardPane = boardPane;
         this.masterPanel = masterPanel;
         centerPanel.setOpaque(false);
+
         centerPanel.setLayout(new GridBagLayout());
-        System.err.println(masterPanel.getBounds());
+        //System.err.println(masterPanel.getBounds());
         if (isLabel) {
-            imageGrid = new ImageLabel[40];
-            innerImageGrid = new ImageLabel[4];
-            for (int i = 0; i<imageGrid.length; i++){
-                imageGrid[i] = new ImageLabel("");
-                if (i< innerImageGrid.length){
-                    innerImageGrid[i] = new ImageLabel("");
+            panelGrid = new WeightlessPanel[40];
+            innerPanelGrid = new WeightlessPanel[4];
+            for (int i = 0; i< panelGrid.length; i++){
+                panelGrid[i] = new WeightlessPanel();
+                panelGrid[i].setOpaque(false);
+                if (i< innerPanelGrid.length){
+                    innerPanelGrid[i] = new WeightlessPanel();
+                    innerPanelGrid[i].setOpaque(false);
                 }
             }
-            componentGenerateGrid(imageGrid);
-            componentGenerateInterior(innerImageGrid);
+            componentGenerateGrid(panelGrid);
+            componentGenerateInterior(innerPanelGrid);
         }
         else {
             buttonGrid = new ImageButton[40];

@@ -25,7 +25,7 @@ public class Description {
      * @param textOutput: the text to be put into the Label
      */
     public void setDescription(String textOutput) {
-        this.description.setText("<HTML>" + textOutput + "<HTML>");
+        this.description.setText(textOutput);
     }
 
     /**

@@ -3,10 +3,7 @@ package Interactors;
 import java.util.Objects;
 import java.util.Random;
 
-import Entities.Game.ActionSpace;
-import Entities.Game.Board;
-import Entities.Game.Card;
-import Entities.Game.Player;
+import Entities.Game.*;
 import UseCases.PerformActionSpaceUseCase;
 
 /**
@@ -32,7 +29,7 @@ public class PerformActionSpaceCardInteractor implements PerformActionSpaceUseCa
      * @return the message
      */
     public String advanceAction(Player player, Card card) {
-            String action = card.getAction();
+            String action = card.getActionString();
             int randomNumberOfSteps = new Random().nextInt(15);
             player.move(randomNumberOfSteps);
             action = " " + action + " " + randomNumberOfSteps + " steps.";
@@ -50,7 +47,7 @@ public class PerformActionSpaceCardInteractor implements PerformActionSpaceUseCa
      * @return the message
      */
     public String getPaidAction(Player player, Card card) {
-        String action = " " + card.getAction();
+        String action = " " + card.getActionString();
         player.changeMoney(card.getAmount());
         return action;
     }
@@ -62,7 +59,7 @@ public class PerformActionSpaceCardInteractor implements PerformActionSpaceUseCa
      * @return the message
      */
     public String payAction(Player player, Card card) {
-        String action = " " + card.getAction();
+        String action = " " + card.getActionString();
         player.pay(card.getAmount());
         return action;
     }
@@ -75,7 +72,7 @@ public class PerformActionSpaceCardInteractor implements PerformActionSpaceUseCa
      * @return the message
      */
     public String payAllAction(Player player, Board board, Card card) {
-        String action = " " + card.getAction();
+        String action = " " + card.getActionString();
         for (int i = 0; i < board.getPlayers().size(); i++) {
             player.pay(board.getPlayers().get(i), card.getAmount());
         }
@@ -89,7 +86,7 @@ public class PerformActionSpaceCardInteractor implements PerformActionSpaceUseCa
      * @return the message
      */
     public String goToJailAction(Player player, Card card) {
-        String action = " " + card.getAction();
+        String action = " " + card.getActionString();
         player.setInJail(true);
         player.setPosition(10);
         return action;
@@ -102,10 +99,23 @@ public class PerformActionSpaceCardInteractor implements PerformActionSpaceUseCa
      * @return the message
      */
     public String getOutOfJailAction(Player player, Card card) {
-        String action = " " + card.getAction();
+        String action = " " + card.getActionString();
         player.setJailCards(player.getJailCards() + 1);
         return action;
     }
+
+    /**
+     * Performs the pay tax card action of the card, adds one to the users jail cards
+     * @param player the player
+     * @param card the card
+     * @return the message
+     */
+    public String payTaxAction(Player player, Card card) {
+        String action = " " + card.getActionString();
+        player.pay(card.getAmount());
+        return action;
+    }
+
 
     /**
      * Aggregates all the actions of the card and the main perform action method
@@ -115,20 +125,29 @@ public class PerformActionSpaceCardInteractor implements PerformActionSpaceUseCa
      */
     public String performAction(ActionSpace actionSpace, Player player, Board board) {
         Card card = generateRandomCard(actionSpace);
-        String actionType = card.getActionType();
-        if (Objects.equals(actionType, "advance")) {
-            return advanceAction(player, card);
-        } else if (Objects.equals(actionType, "getPaid")) {
-            return getPaidAction(player, card);
-        } else if (Objects.equals(actionType, "pay")) {
-            return payAction(player, card);
-        } else if (Objects.equals(actionType, "payAll")) {
-            return payAllAction(player, board, card);
-        } else if (Objects.equals(actionType, "goToJail")) {
-            return goToJailAction(player, card);
-        } else {
-            return getOutOfJailAction(player, card);
+        ActionTypeEnum actionType = card.getActionType();
+
+        switch (actionType){
+            case ADVANCE -> {
+                return advanceAction(player, card);
+            }
+            case GET_PAID -> {
+                return getPaidAction(player, card);
+            }
+            case PAY -> {
+                return payAction(player, card);
+            }
+            case PAY_ALL -> {
+                return payAllAction(player, board, card);
+            }
+            case GO_TO_JAIL -> {
+                return goToJailAction(player, card);
+            }
+            case TAX -> {
+                return payTaxAction(player,card);
+            }
         }
+        return getOutOfJailAction(player, card);
     }
 
 }

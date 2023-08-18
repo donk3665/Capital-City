@@ -6,6 +6,7 @@ import Entities.Game.Property;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
+import Logic.MainTreeNodeLogic.EndTurnBranch.FinishGameUseCase;
 import Logic.MainTreeNodeLogic.MainGameNode;
 import Logic.NodeNames;
 
@@ -15,9 +16,9 @@ import java.util.ArrayList;
  * This class represents a use case when a player in the game is bankrupt.
  */
 public class BankruptcyUseCase extends MainGameNode {
-
-    public BankruptcyUseCase(GameNode previousNode) {
-        super(NodeNames.BANKRUPTCY, previousNode);
+    String [] options = new String[]{"Yes","No"};
+    public BankruptcyUseCase() {
+        super(NodeNames.BANKRUPTCY, null);
     }
 
     /**
@@ -28,12 +29,18 @@ public class BankruptcyUseCase extends MainGameNode {
     @Override
     public State create_state() {
         State currentState = new State();
-        Player currentPlayer = getCurrentPlayer();
-        Board board = getBoard();
+        currentState.addOptions(options);
+        return currentState;
+    }
 
-        if (mainStates[0] == 1) {
-            mainStates[0] = 0;
+    @Override
+    public GameNode performInput(InputInformation input) {
 
+        if (input.getInput().equals(options[0])){
+            mainStates[1] = 0;
+
+            Player currentPlayer = getCurrentPlayer();
+            Board board = getBoard();
             //removing all player connection with the board
             ArrayList<Property> currentPlayerProperties = currentPlayer.getProperties();
             for (Property targetedProperty : currentPlayerProperties) {
@@ -46,24 +53,9 @@ public class BankruptcyUseCase extends MainGameNode {
             board.removePlayer(currentPlayer);
 
             if (board.getPlayers().size() == 1){
-                //go into node
-                return currentState;
+                return getFactory().getNode(NodeNames.FINISH_GAME);
             }
-
-            //changing the player and turning the state back to normal
-            mainStates[0] = 0;
-            mainStates[1] = 0;
-
-        } else {
-            //confirmation node setup
-            currentState.addOptions("Yes");
-            currentState.addOptions("No");
         }
-        return currentState;
-    }
-
-    @Override
-    public GameNode performInput(InputInformation input) {
         return getMainParent();
     }
 

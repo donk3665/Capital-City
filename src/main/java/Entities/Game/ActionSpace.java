@@ -1,5 +1,6 @@
 package Entities.Game;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,10 +17,15 @@ public class ActionSpace extends Cell{
         this.cards = cards.get(key);
         this.type = key;
     }
+    public ActionSpace(Card card){
+        cards = new ArrayList<>();
+        cards.add(card);
+        this.type = card.getType();
+    }
 
     @Override
-    public String getType() {
-        return "Action Space";
+    public CellEnum getType() {
+        return CellEnum.ACTION_SPACE;
     }
 
     public String getActionType() {

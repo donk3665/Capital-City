@@ -1,8 +1,11 @@
 package GUI;
 
+import Entities.ExternalDataTransfer.BasicBoard;
+import Entities.ExternalDataTransfer.BasicPlayer;
 import Entities.GUI.Screens.InitialGameScreen;
 import Entities.GUI.Screens.Screen;
 import Entities.GUI.Screens.ScreenFactory;
+import Entities.GUIDataTransfer.GUIInterface;
 import Logic.NodeNames;
 
 import java.util.ArrayList;
@@ -21,6 +24,7 @@ public class GameDisplayInteractor {
      * is clicked by the user
      */
     private Screen gameScreen;
+    private BasicPlayer currentPlayer;
     private final GameDisplayInputInteractor inputHandler;
     private final GameDisplayOutputInteractor labelSegments;
     private final ScreenFactory screenFactory;
@@ -48,24 +52,23 @@ public class GameDisplayInteractor {
 
     /**
      * Function that adds the outputs to the Display
-     * @param options: The Arraylist of options that the user has
+     * @param state: The interface which the GUI has access to
      * @param outputText: The String of Text shown to the user to
      *                  explain the current context of the game
      */
-    public void setOutputs(NodeNames name, ArrayList<String> options, String outputText){
-        gameScreen = screenFactory.getNode(name);
-        this.labelSegments.setOptions(options);
+    public void setOutputs(GUIInterface state, String outputText){
+        gameScreen = screenFactory.getNode(state.getId());
+        this.labelSegments.setOptions(state.getOptions());
         this.labelSegments.createOptionSegment();
         this.labelSegments.createTextSegment(outputText);
 
-        //this.gameFrame.add(this.labelSegments.getTextSegment());
-        //this.gameFrame.add(this.labelSegments.getOptionSegment());
-        //TODO: UPDATE THIS
- //       this.labelSegments.drawSegments();
-        InitialGameScreen.setDescription(labelSegments.getDescriptionRaw());
-        InitialGameScreen.setOptions(labelSegments.getOptionSegmentRaw());
-        gameScreen.initDisplay();
+        Screen.setDescription(labelSegments.getDescriptionRaw());
+        Screen.setOptions(labelSegments.getOptionSegmentRaw());
+        Screen.setCurrentBoard(state.getCurrentBoard());
+        Screen.setCurrentPlayer(state.getPlayer());
+        Screen.setState(state);
 
+        gameScreen.attachPanel();
 
     }
 

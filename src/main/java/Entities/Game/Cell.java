@@ -9,6 +9,8 @@ package Entities.Game;
  * Represents a cell on the Monopoly board.
  */
 public abstract class Cell {
-    public abstract String getType();
+    public abstract CellEnum getType();
+
+
 }
 

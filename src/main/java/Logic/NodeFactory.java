@@ -64,7 +64,7 @@ public class NodeFactory {
                     return new ConfirmNewGameUseCase();
                 }
                 case CONFIRM_LOADED_GAME -> {
-                    return new ConfirmLoadedGameUseCase(beforeNode);
+                    return new ConfirmLoadedGameUseCase();
                 }
                 case NO_SAVES -> {
                     return new NoSavesUseCase();
@@ -73,13 +73,13 @@ public class NodeFactory {
 
                 //game nodes
                 case ALREADY_ROLLED -> {
-                    return new AlreadyRolledUseCase(beforeNode);
+                    return new AlreadyRolledUseCase();
                 }
                 case AUCTION_ENTRY -> {
                     return new AuctionEntryUseCase(beforeNode);
                 }
                 case BANKRUPTCY -> {
-                    return new BankruptcyUseCase(beforeNode);
+                    return new BankruptcyUseCase();
                 }
                 case BUILD_PROPERTY -> {
                     return new BuildPropertyUseCase(beforeNode);
@@ -179,7 +179,7 @@ public class NodeFactory {
                     return new LowOptionUseCase();
                 }
                 case AUCTION_COMPLETE -> {
-                    return new AuctionComplete(beforeNode);
+                    return new AuctionComplete();
                 }
 
 

@@ -68,6 +68,8 @@ public class Property extends Cell {
         this.mortgaged = mortgaged;
     }
 
+
+    //TODO: perhaps make this private
     /**
      * Sets the number of houses on this property
      * @param houses number of houses on this property
@@ -204,25 +206,33 @@ public class Property extends Cell {
      */
     public String addHouse(Player currentPlayer, int houses) {
         PlayerLogic logic = new PlayerLogic(currentPlayer);
-        if (!currentPlayer.getProperties().contains(this)) {
-            return ("not owned");
-        } else if (!logic.ownedPropertySets().contains(this.colour)) {
-            return ("not owned set");
-        } else if (currentPlayer.getMoney() < this.houseCost * houses) {
-            return ("not enough money");
+//        if (!currentPlayer.getProperties().contains(this)) {
+//            return ("not owned");
+//        } else if (!logic.ownedPropertySets().contains(this.colour)) {
+//            return ("not owned set");
+//        } else if (currentPlayer.getMoney() < this.houseCost * houses) {
+//            return ("not enough money");
+//        } else {
+//            this.houses += houses;
+//            currentPlayer.pay(getHouseCost());
+//            if (this.houses == 5) {
+//                return ("hotel");
+//            } else {
+//                return ("house");
+//            }
+//        }
+        this.houses += houses;
+        currentPlayer.pay(getHouseCost());
+        if (this.houses == 5) {
+            return ("hotel");
         } else {
-            this.houses += houses;
-            currentPlayer.pay(getHouseCost());
-            if (this.houses == 5) {
-                return ("hotel");
-            } else {
-                return ("house");
-            }
+            return ("house");
         }
+        //TODO: IMPLEMENT THIS FUNCTION
     }
 
     @Override
-    public String getType() {
-        return "Property";
+    public CellEnum getType() {
+        return CellEnum.PROPERTY;
     }
 }

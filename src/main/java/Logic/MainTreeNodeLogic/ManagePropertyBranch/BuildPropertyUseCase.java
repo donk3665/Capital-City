@@ -31,7 +31,7 @@ public class BuildPropertyUseCase extends MainGameNode {
         State currentState = new State();
         Player currentPlayer = getCurrentPlayer();
 
-        Property targetProperty = currentPlayer.getProperties().get(Integer.parseInt(getSelectedOptions().get(NodeNames.SELECT_ACTION_PROPERTY)));
+        Property targetProperty = currentPlayer.getProperties().get(Integer.parseInt(getSelectedOptions().get(NodeNames.SELECT_PROPERTY)));
 
         //builds a house on the chosen property
         PlayerLogic playerLogic = new PlayerLogic(currentPlayer);

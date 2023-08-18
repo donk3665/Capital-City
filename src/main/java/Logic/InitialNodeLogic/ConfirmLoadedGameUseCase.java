@@ -12,8 +12,8 @@ import java.io.IOException;
  * This class represents the use case where the player has chosen a save file to load.
  */
 public class ConfirmLoadedGameUseCase extends InitialGameNode {
-    public ConfirmLoadedGameUseCase(GameNode previousNode) {
-        super(NodeNames.CONFIRM_LOADED_GAME, previousNode);
+    public ConfirmLoadedGameUseCase() {
+        super(NodeNames.CONFIRM_LOADED_GAME, null);
     }
     @Override
     public State create_state() {

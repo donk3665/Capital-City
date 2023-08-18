@@ -22,6 +22,7 @@ public abstract class AuctionTreeNode extends GeneralGameNode {
 
     static int auctionComplete = -1;
 
+
     public AuctionTreeNode(NodeNames name, GameNode previousNode) {
         super(name, previousNode);
     }
@@ -70,5 +71,8 @@ public abstract class AuctionTreeNode extends GeneralGameNode {
             playerNum = (playerNum + 1) % getPlayers().size();
         } while (auctionStates[playerNum] != 0);
         setCurrentPlayer(getPlayers().get(playerNum));
+    }
+    public static int[] getAuctionStates(){
+        return auctionStates;
     }
 }

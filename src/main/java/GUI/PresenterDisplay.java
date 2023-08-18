@@ -30,11 +30,14 @@ public class PresenterDisplay implements GameLoop{
         gameFrame = new GameDisplayInteractor(this);
 
         Screen.initializeScreen();
-        gameFrame.setOutputs(outputControl.getCurrentState().getId(), outputControl.getStateOptions(), outputControl.getOutputMessage());
+
+
+        outputControl.updateStateOptions();
+        gameFrame.setOutputs(outputControl.getCurrentState(), outputControl.getOutputMessage());
 
         gameLoop();
         SwingUtilities.invokeLater(() -> gameFrame.displayScreen());
-
+        //gameFrame.displayScreen();
     }
     public void gameLoop(){
         boolean didInput;
@@ -43,8 +46,9 @@ public class PresenterDisplay implements GameLoop{
             inputControl.getChoice(gameFrame.getInput());
             outputControl.updateState(inputControl.getUpdatedState());
             gameFrame.refreshScreen();
-            gameFrame.setOutputs(outputControl.getCurrentState().getId(), outputControl.getStateOptions(), outputControl.getOutputMessage());
-        }
+
+            outputControl.updateStateOptions();
+            gameFrame.setOutputs(outputControl.getCurrentState(), outputControl.getOutputMessage());        }
 
 
     }

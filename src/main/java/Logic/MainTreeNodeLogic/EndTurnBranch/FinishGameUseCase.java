@@ -21,12 +21,17 @@ public class FinishGameUseCase extends MainGameNode {
     @Override
     public State create_state() {
         State currentState = new State();
-        currentState.addOptions("Ok");
+        currentState.addOptions("Exit");
 
         // The case that there is only one player in the player array
-
+        if (getPlayers().size() == 1) {
+            List<Player> players = getPlayers();
+            Player winningPlayer = players.get(0);
+            String winningString = winningPlayer.getName() + " won the game!!!";
+            currentState.setDescription(winningString);
+        }
         // handles the case where the max turns are met
-        if (mainStates[3] >= mainStates[4]) {
+        else if (mainStates[3] >= mainStates[4]) {
             List<Player> players = getPlayers();
             String player_with_most_money = "";
             int max_money = 0;
@@ -37,12 +42,6 @@ public class FinishGameUseCase extends MainGameNode {
                 }
             }
             currentState.setDescription("Max turn reaches, " + player_with_most_money + " has the most money and wins the game.");
-
-        } else if (getPlayers().size() == 1) {
-            List<Player> players = getPlayers();
-            Player winningPlayer = players.get(0);
-            String winningString = winningPlayer.getName() + " won the game!!!";
-            currentState.setDescription(winningString);
         }
 
         mainStates[0] = 1;
@@ -52,6 +51,6 @@ public class FinishGameUseCase extends MainGameNode {
 
     @Override
     public GameNode performInput(InputInformation input) {
-        return getMainParent();
+        return getFactory().getNode(NodeNames.INITIAL_PARENT);
     }
 }

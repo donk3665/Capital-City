@@ -1,18 +1,19 @@
 
 package Entities.InternalDataTransfer;
 
+import Entities.ExternalDataTransfer.BasicBoard;
+import Entities.GUIDataTransfer.GUIInterface;
 import Entities.Game.Player;
 import Entities.Game.Property;
 import Logic.NodeNames;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 /**
  * This class represents an object that stores information relating to the state of the game in different scenarios.
  */
-public class State {
+public class State implements GUIInterface {
 
 
     private static Player player;
@@ -39,6 +40,14 @@ public class State {
     private NodeNames id;
     private final ArrayList<String> options = new ArrayList<>();
 
+    private BasicBoard currentBoard;
+    public BasicBoard getCurrentBoard() {
+        return currentBoard;
+    }
+
+    public void setCurrentBoard(BasicBoard currentBoard) {
+        this.currentBoard = currentBoard;
+    }
 
     /**
      * This method returns the roll value stored in the State object which corresponds to value of the dice rolled by
