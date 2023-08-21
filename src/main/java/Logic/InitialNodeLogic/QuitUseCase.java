@@ -3,6 +3,7 @@ package Logic.InitialNodeLogic;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 
 public class QuitUseCase extends InitialGameNode{{
@@ -22,7 +23,7 @@ public class QuitUseCase extends InitialGameNode{{
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
         if (input.getInput().equals(options[0])){
             System.exit(0);
         }

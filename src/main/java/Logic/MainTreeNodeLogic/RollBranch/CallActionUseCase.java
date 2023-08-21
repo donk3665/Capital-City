@@ -5,6 +5,7 @@ import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
 import Logic.MainTreeNodeLogic.MainGameNode;
 import Logic.MainTreeNodeLogic.MainParentNodeUseCase;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 
 /**
@@ -33,7 +34,7 @@ public class CallActionUseCase extends MainGameNode {
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
         return new MainParentNodeUseCase();
     }
 }

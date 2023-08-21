@@ -9,6 +9,7 @@ import java.io.IOException;
  */
 public class SaveFile implements SaveAccess {
     private File file;
+    private final String saveLocation;
 
     /**
      * Constructor for SaveFile which implements load and save game functionality.
@@ -18,6 +19,7 @@ public class SaveFile implements SaveAccess {
      */
     public SaveFile(File file) {
         this.file = file;
+        this.saveLocation = file.getAbsolutePath();
     }
 
 
@@ -37,9 +39,9 @@ public class SaveFile implements SaveAccess {
 
     public String saveGameNewFile(String[][] playerData, int[] mainStates) throws IOException{
         LoadAccess load = new LoadFile(new File(""));
-        String[] allSaves = load.checkSaves(file.getAbsolutePath());
+        String[] allSaves = load.checkSaves(saveLocation);
         int numberOfFiles = allSaves.length;
-        String path = file.getAbsolutePath()+ "/save" + numberOfFiles +".txt";
+        String path = saveLocation + "/save" + numberOfFiles +".txt";
         file = new File(path);
         return saveGame(playerData, mainStates);
     }

@@ -6,7 +6,7 @@ public class ScreenFactory {
     private int lastScreen = 0;
     //private GameScreen gameScreen = new GameScreen();
 
-    private Screen [] screenArray = new Screen[5];
+    private Screen [] screenArray = new Screen[6];
 
     public ScreenFactory(){
         screenArray[0] = new InitialGameScreen();
@@ -14,6 +14,7 @@ public class ScreenFactory {
         screenArray[2] = new GameScreen();
         screenArray[3] = new AuctionScreen();
         screenArray[4] = new EndingScreen();
+        screenArray[5] = new ConnectionScreen();
 
        for (Screen screen: screenArray){
            screen.gamePane.setDoubleBuffered(true);
@@ -30,7 +31,7 @@ public class ScreenFactory {
     public Screen getNode(NodeNames name){
         switch (name){
             // Initial nodes
-            case INITIAL_PARENT, SETTINGS_INITIAL, QUIT_INITIAL, SELECT_GAME_TYPE, SELECT_NUMBER_OF_PLAYERS,
+            case INITIAL_PARENT, SETTINGS_INITIAL, QUIT_INITIAL,SELECT_GAME_LOBBY, SELECT_GAME_TYPE, SELECT_NUMBER_OF_PLAYERS,
                     CONFIRM_LOADED_GAME, CONFIRM_NEW_GAME, SELECT_SAVE, SELECT_GAME_MODE, NUMBER_OF_ROUNDS, NO_SAVES-> {
                 lastScreen = 1;
                 return screenArray[0];
@@ -38,6 +39,10 @@ public class ScreenFactory {
             case CREDITS -> {
                 lastScreen = 2;
                 return screenArray[1];
+            }
+            case MULTIPLAYER_LOBBY -> {
+                lastScreen = 3;
+                return screenArray[5];
             }
 
 //            //game nodes
@@ -51,7 +56,7 @@ public class ScreenFactory {
 //                else {
 //                    ((GameScreen)screenArray[2]).setRenderMode(0);
 //                }
-                lastScreen = 3;
+                lastScreen = 4;
                 screenArray[2].setName(name);
                 return screenArray[2];
             }

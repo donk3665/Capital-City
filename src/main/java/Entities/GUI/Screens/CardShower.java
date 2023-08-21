@@ -7,7 +7,7 @@ import Entities.Game.Property;
 import javax.swing.*;
 import java.awt.*;
 
-public class CardShower {
+public class CardShower implements ContentPanelInterface{
     private JPanel contentPanel;
 
     private static CardPathFactory factory = new CardPathFactory();

@@ -3,6 +3,7 @@ package Logic.InitialNodeLogic;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 
 public class NoSavesUseCase extends InitialGameNode{
@@ -19,7 +20,7 @@ public class NoSavesUseCase extends InitialGameNode{
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
         return getFactory().getNode(NodeNames.SELECT_GAME_TYPE);
     }
 }

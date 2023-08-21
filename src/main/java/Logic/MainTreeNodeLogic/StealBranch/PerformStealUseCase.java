@@ -5,6 +5,7 @@ import Entities.Game.Player;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
 import Logic.MainTreeNodeLogic.MainGameNode;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 import Logic.PlayerLogic;
 
@@ -40,7 +41,7 @@ public class PerformStealUseCase extends MainGameNode {
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
         return getMainParent();
     }
 

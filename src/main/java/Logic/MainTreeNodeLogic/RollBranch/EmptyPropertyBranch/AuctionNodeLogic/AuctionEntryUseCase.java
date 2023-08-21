@@ -7,6 +7,7 @@ import Entities.Game.Property;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 
 /**
@@ -39,7 +40,7 @@ public class AuctionEntryUseCase extends AuctionTreeNode {
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
         return tempNode.performInput(input);
     }
 }

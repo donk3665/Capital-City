@@ -54,12 +54,16 @@ public class GameLogic {
     public State getCurrentState(){
         return setDefaultStateAttributes(currentNode.create_state());
     }
+
+    public void returnToMenu(){
+        currentNode= GeneralGameNode.getFactory().getNode(NodeNames.INITIAL_PARENT);
+    }
     public State performInput(InputInformation input){
         if (input == null){
             currentNode = currentNode.getPreviousNode();
         }
         else {
-            currentNode = currentNode.performInput(input);
+            currentNode = (GameNode) currentNode.performInput(input);
 
         }
         return setDefaultStateAttributes(currentNode.create_state());

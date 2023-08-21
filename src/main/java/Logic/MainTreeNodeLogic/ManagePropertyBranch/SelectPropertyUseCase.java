@@ -6,6 +6,7 @@ import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
 import Logic.MainTreeNodeLogic.MainGameNode;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 
 import javax.management.StringValueExp;
@@ -53,7 +54,7 @@ public class SelectPropertyUseCase extends MainGameNode {
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
         getSelectedOptions().put(getName(), options.get(input.getInput()));
         return tempNode;
     }

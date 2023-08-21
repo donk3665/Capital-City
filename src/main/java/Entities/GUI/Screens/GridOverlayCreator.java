@@ -147,7 +147,7 @@ public class GridOverlayCreator {
         area2.setBackground(new Color(0,0,0,0)); ;
         area2.setEditable(false);
         area2.setFont(FontCreator.getFontAharoni(12));
-        area2.setText(String.valueOf( ((Property) cell).getRent()));
+        area2.setText(String.valueOf( ((Property) cell).getPrice()));
 
         panel2.add(area2);
 

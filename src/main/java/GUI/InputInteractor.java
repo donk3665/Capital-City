@@ -28,6 +28,9 @@ public class InputInteractor {
         this.interactor = interactor;
         this.currentState = interactor.getCurrentState();
     }
+    public void setCurrentStateFromInteractor(){
+        this.currentState = interactor.getCurrentState();
+    }
 
     /**
      * Function returns the state that the game is in

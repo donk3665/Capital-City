@@ -6,6 +6,7 @@ import Entities.GUI.Description;
 import Entities.GUI.Options;
 import Entities.GUIDataTransfer.GUIInterface;
 import Entities.Game.Cell;
+import GUI.PresenterDisplay;
 import Logic.NodeNames;
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +20,6 @@ public abstract class Screen {
      * InstanceVar gameFrame: JFrame that contains all the contents of the game
      */
     protected static JFrame gameFrame;
-
     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     public static final double width = screenSize.getWidth();
@@ -51,7 +51,7 @@ public abstract class Screen {
 
     NodeNames name;
 
-    //BackgroundPanel mainPanel = new BackgroundPanel();
+
 
     protected JLayeredPane gamePane = new JLayeredPane();
 
@@ -77,12 +77,18 @@ public abstract class Screen {
         Screen.currentBoard = currentBoard;
     }
 
-
+    private static PresenterDisplay presenterDisplay;
     /**
      * Constructor that configures the JFrame
      */
     public Screen() {
 
+    }
+    public static void setPresenterDisplay(PresenterDisplay display){
+        presenterDisplay = display;
+    }
+    public static PresenterDisplay getPresenterDisplay() {
+        return presenterDisplay;
     }
 
     public static void initializeScreen() {
@@ -157,5 +163,11 @@ public abstract class Screen {
         }
         System.err.println("MISSING CELL");
         return -1;
+    }
+    public void callSave(){
+        getPresenterDisplay().saveGame();
+    }
+    public void exitToMenu(){
+        getPresenterDisplay().exitToMenu();
     }
 }

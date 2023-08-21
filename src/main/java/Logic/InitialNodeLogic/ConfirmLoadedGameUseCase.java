@@ -4,6 +4,7 @@ import Entities.Game.Board;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class ConfirmLoadedGameUseCase extends InitialGameNode {
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
         if (input.getInput().equals("Yes")){
 
             String loadFile = getSelectedOptions().get(NodeNames.SELECT_SAVE);

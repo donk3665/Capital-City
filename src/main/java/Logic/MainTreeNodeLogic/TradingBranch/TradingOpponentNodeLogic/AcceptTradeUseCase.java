@@ -5,6 +5,7 @@ import Entities.Game.Player;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 
 /**
@@ -35,7 +36,7 @@ public class AcceptTradeUseCase extends TradingTreeNode {
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
         return getMainParent();
     }
 }

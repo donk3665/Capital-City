@@ -48,6 +48,9 @@ public class MyColor {
             case "yellow":
                 color = colorArray[1];
                 break;
+            case "green":
+                color = colorArray[3];
+                break;
         }
         return color;
     }

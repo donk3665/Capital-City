@@ -11,9 +11,9 @@ import Logic.MainTreeNodeLogic.RollBranch.AlreadyRolledUseCase;
 import Logic.MainTreeNodeLogic.RollBranch.EmptyPropertyBranch.AuctionNodeLogic.*;
 import Logic.MainTreeNodeLogic.RollBranch.EmptyPropertyBranch.BuyUseCase;
 import Logic.MainTreeNodeLogic.RollBranch.EmptyPropertyBranch.EmptyPropertySpaceUseCase;
-import Logic.MainTreeNodeLogic.SettingsBranch.ExitGameUseCase;
-import Logic.MainTreeNodeLogic.SettingsBranch.SaveGameUseCase;
-import Logic.MainTreeNodeLogic.SettingsBranch.SettingsMenuUseCase;
+import Entities.GUI.SettingsBranch.ExitGameUseCase;
+import Entities.GUI.SettingsBranch.SaveGameUseCase;
+import Entities.GUI.SettingsBranch.SettingsMenuUseCase;
 import Logic.MainTreeNodeLogic.StealBranch.PerformStealUseCase;
 import Logic.MainTreeNodeLogic.StealBranch.StealUseCase;
 import Logic.MainTreeNodeLogic.TradingBranch.*;
@@ -44,6 +44,12 @@ public class NodeFactory {
                 }
                 case QUIT_INITIAL -> {
                     return new QuitUseCase();
+                }
+                case SELECT_GAME_LOBBY -> {
+                    return new SelectGameLobbyUseCase(beforeNode);
+                }
+                case MULTIPLAYER_LOBBY -> {
+                    return new MultiplayerUseCase(beforeNode);
                 }
                 case SELECT_GAME_TYPE -> {
                     return new SelectGameTypeUseCase(beforeNode);
@@ -99,9 +105,9 @@ public class NodeFactory {
                 case END_TURN -> {
                     return new EndTurnUseCase(beforeNode);
                 }
-                case EXIT_GAME -> {
-                    return new ExitGameUseCase(beforeNode);
-                }
+//                case EXIT_GAME -> {
+//                    return new ExitGameUseCase(beforeNode);
+//                }
                 case FINISH_GAME -> {
                     return new FinishGameUseCase();
                 }
@@ -129,18 +135,18 @@ public class NodeFactory {
                 case ROLL -> {
                     return new RollUseCase(beforeNode);
                 }
-                case SAVE_GAME -> {
-                    return new SaveGameUseCase(beforeNode);
-                }
+//                case SAVE_GAME -> {
+//                    return new SaveGameUseCase(beforeNode);
+//                }
                 case SELECT_ACTION_PROPERTY -> {
                     return new SelectActionPropertyUseCase(beforeNode);
                 }
                 case SEND_TRADE -> {
                     return new SendTradeUseCase(beforeNode);
                 }
-                case SETTINGS -> {
-                    return new SettingsMenuUseCase(beforeNode);
-                }
+//                case SETTINGS -> {
+//                    return new SettingsMenuUseCase(beforeNode);
+//                }
                 case STEAL -> {
                     return new StealUseCase(beforeNode);
                 }

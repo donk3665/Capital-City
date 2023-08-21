@@ -4,6 +4,7 @@ import Entities.Game.OrderedStringHashmap;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 
 import java.util.HashMap;
@@ -35,7 +36,7 @@ public class NumberOfRoundsUseCase extends InitialGameNode {
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
         getSelectedOptions().put(getName(), options.get(input.getInput()));
         //        if (input != 3){
 //            this.getSelectedOptions().put("GameLength", lengthMap.get(input) * getSelectedOptions().get("NumOfPlayers"));

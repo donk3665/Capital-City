@@ -54,6 +54,8 @@ public class UseCaseInteractor{
         return logicInteractor.getCurrentState();
     }
 
+    public void exitToMenu(){logicInteractor.returnToMenu();}
+
 
     /**
      * This method handles the input of the user. <br>It moves through the current tree with the user's input,
@@ -64,21 +66,21 @@ public class UseCaseInteractor{
 
         State currentState = logicInteractor.performInput(input);
 
-        if(currentState.isSaveGame()){
-            saveGame(currentState);
-        }
+//        if(currentState.isSaveGame()){
+//            saveGame(currentState);
+//        }
         return currentState;
 
     }
 
 
-    public void saveGame(State currentState){
+    public String saveGame(){
         try{
             String saveReturn = saveAccess.saveGameNewFile(savePackager.getPlayerPropertyData(), savePackager.getStates());
-            currentState.setDescription("Successful save in file: "+ saveReturn);
+            return "Successful save in file: "+ saveReturn;
         }
         catch (Exception IOException){
-            currentState.setDescription("Save failed");
+            return "Save failed";
         }
     }
 

@@ -7,23 +7,20 @@ import Logic.GameNode;
 import Logic.NodeInterface;
 import Logic.NodeNames;
 
-/**
- * This class represents the use case where the game has first initialized.
- */
-public class SelectGameTypeUseCase extends InitialGameNode {
-    public SelectGameTypeUseCase(GameNode previousNode) {
-        super(NodeNames.SELECT_GAME_TYPE, previousNode);
+public class SelectGameLobbyUseCase extends InitialGameNode {
+
+    public SelectGameLobbyUseCase(GameNode beforeNode) {
+        super(NodeNames.SELECT_GAME_LOBBY, beforeNode);
     }
 
     OrderedStringHashmap<NodeNames> options = new OrderedStringHashmap<>(){
         {
-            put("NEW_GAME", NodeNames.SELECT_GAME_MODE);
-            put("OLD_GAME", NodeNames.SELECT_SAVE);
+            put("SINGLE_PLAYER", NodeNames.SELECT_GAME_TYPE);
+            put("MULTIPLAYER", NodeNames.MULTIPLAYER_LOBBY);
         }
     };
     @Override
     public State create_state() {
-        //TODO: REMOVE SETBACKENABLE IN OTHER NODES
         State currentState = new State();
         currentState.addOptions(options.getKeys());
         return currentState;

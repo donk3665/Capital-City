@@ -5,6 +5,7 @@ import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
 import Logic.MainTreeNodeLogic.MainGameNode;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 
 import java.util.HashMap;
@@ -42,7 +43,7 @@ public class SelectActionPropertyUseCase extends MainGameNode {
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
         return getFactory().getNode(options.get(input.getInput()));
     }
 }

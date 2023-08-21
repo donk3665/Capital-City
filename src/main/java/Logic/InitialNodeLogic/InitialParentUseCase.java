@@ -4,6 +4,7 @@ import Entities.Game.OrderedStringHashmap;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 
 public class InitialParentUseCase extends InitialGameNode {
@@ -14,7 +15,7 @@ public class InitialParentUseCase extends InitialGameNode {
 
     OrderedStringHashmap<NodeNames> options = new OrderedStringHashmap<>(){
         {
-            put("PLAY", NodeNames.SELECT_GAME_TYPE);
+            put("PLAY", NodeNames.SELECT_GAME_LOBBY);
             put("SETTINGS", NodeNames.SETTINGS_INITIAL);
             put("CREDITS", NodeNames.CREDITS);
             put("QUIT", NodeNames.QUIT_INITIAL);
@@ -28,7 +29,7 @@ public class InitialParentUseCase extends InitialGameNode {
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
         return getFactory().getNode(options.get(input.getInput()), this);
     }
 

@@ -5,6 +5,7 @@ import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
 
+import Logic.NodeInterface;
 import Logic.NodeNames;
 
 import java.util.HashMap;
@@ -36,7 +37,7 @@ public class SelectNumberOfPlayersUseCase extends InitialGameNode {
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
         getSelectedOptions().put(getName(), options.get(input.getInput()));
         return getFactory().getNode(NodeNames.NUMBER_OF_ROUNDS, this);
     }

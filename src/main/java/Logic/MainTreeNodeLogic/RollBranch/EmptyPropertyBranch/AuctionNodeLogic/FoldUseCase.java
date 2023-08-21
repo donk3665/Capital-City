@@ -4,6 +4,7 @@ import Entities.InternalDataTransfer.InputInformation;
 import Entities.Game.Player;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class FoldUseCase extends AuctionTreeNode {
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
 
         List<Player> players = getPlayers();
 

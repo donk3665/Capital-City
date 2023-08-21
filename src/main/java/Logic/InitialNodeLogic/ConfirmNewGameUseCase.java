@@ -3,6 +3,7 @@ package Logic.InitialNodeLogic;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 
 /**
@@ -25,7 +26,7 @@ public class ConfirmNewGameUseCase extends InitialGameNode {
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
         if (input.getInput().equals("Yes")) {
             int[] states = new int[6];
 

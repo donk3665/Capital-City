@@ -3,6 +3,7 @@ package Logic.MainTreeNodeLogic.RollBranch.EmptyPropertyBranch.AuctionNodeLogic;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 
 /**
@@ -24,7 +25,7 @@ public class HighOptionUseCase extends AuctionTreeNode {
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
         auctionStates[potIndex] += HIGH_OPTION;
         switchPlayersAuction();
         return getFactory().getNode(NodeNames.AUCTION_PARENT, this);

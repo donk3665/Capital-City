@@ -4,6 +4,7 @@ import Entities.Game.OrderedStringHashmap;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class MainParentNodeUseCase extends MainGameNode {
             put("ROLL", NodeNames.ROLL);
             put("STEAL", NodeNames.STEAL);
             put("END_TURN", NodeNames.END_TURN);
-            put("SETTINGS", NodeNames.SETTINGS);
+//            put("SETTINGS", NodeNames.SETTINGS);
             put("BANKRUPTCY", NodeNames.BANKRUPTCY);
         }
     };
@@ -40,7 +41,7 @@ public class MainParentNodeUseCase extends MainGameNode {
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
         return getFactory().getNode(options.get(input.getInput()), this);
     }
 }

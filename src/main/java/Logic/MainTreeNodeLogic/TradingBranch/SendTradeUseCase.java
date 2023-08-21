@@ -4,6 +4,7 @@ import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
 import Logic.MainTreeNodeLogic.MainGameNode;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 
 /**
@@ -29,7 +30,7 @@ public class SendTradeUseCase extends MainGameNode {
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
 
         // if the input is 0, is if the trade is to be sent. Otherwise, the trade will not be sent.
         if (input.getInput().equals(options[0])) {

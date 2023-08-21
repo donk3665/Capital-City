@@ -17,6 +17,8 @@ public class PresenterDisplay implements GameLoop{
     OutputInteractor outputControl;
     GameDisplayInteractor gameFrame;
     InputInteractor inputControl;
+
+    UseCaseInteractor interactor;
     /**
      * Function that runs the game loop by getting game data from the OutputInteractor and presenting that to the
      * user as their options on each turn through Conversion in the GameDisplayInteractor,
@@ -24,20 +26,19 @@ public class PresenterDisplay implements GameLoop{
      * to further handle state changes based on their option choice.
      **/
     public void playGame(File file){
-        UseCaseInteractor interactor = new UseCaseInteractor(new LoadFile(file), new SaveFile(file));
+        interactor = new UseCaseInteractor(new LoadFile(file), new SaveFile(file));
         inputControl = new InputInteractor(interactor);
         outputControl = new OutputInteractor(interactor);
         gameFrame = new GameDisplayInteractor(this);
 
         Screen.initializeScreen();
-
+        Screen.setPresenterDisplay(this);
 
         outputControl.updateStateOptions();
         gameFrame.setOutputs(outputControl.getCurrentState(), outputControl.getOutputMessage());
 
         gameLoop();
         SwingUtilities.invokeLater(() -> gameFrame.displayScreen());
-        //gameFrame.displayScreen();
     }
     public void gameLoop(){
         boolean didInput;
@@ -50,6 +51,18 @@ public class PresenterDisplay implements GameLoop{
             outputControl.updateStateOptions();
             gameFrame.setOutputs(outputControl.getCurrentState(), outputControl.getOutputMessage());        }
 
+    }
+    public String saveGame(){
+        return interactor.saveGame();
+    }
+    public void exitToMenu(){
+        interactor.exitToMenu();
+        inputControl.setCurrentStateFromInteractor();
 
+        outputControl.updateState(inputControl.getCurrentState());
+        gameFrame.refreshScreen();
+
+        outputControl.updateStateOptions();
+        gameFrame.setOutputs(outputControl.getCurrentState(), outputControl.getOutputMessage());
     }
 }

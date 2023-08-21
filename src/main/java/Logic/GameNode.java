@@ -11,7 +11,7 @@ import java.util.HashMap;
  * An interface for the different use cases to create a State object containing relevant information to a specific use
  * case.
  */
-public abstract class GameNode {
+public abstract class GameNode implements NodeInterface{
     private static GameLogic gameLogicInteractor;
     public GameLogic getGameLogicInteractor(){
         return gameLogicInteractor;
@@ -52,9 +52,6 @@ public abstract class GameNode {
         return name;
     }
 
-    public abstract State create_state();
-
-    public abstract GameNode performInput(InputInformation input);
 
     /**
      * This method returns a HashMap object stored in the selectedOptions instance attribute.

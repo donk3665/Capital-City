@@ -4,6 +4,7 @@ import Entities.Game.OrderedStringHashmap;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 
 import java.util.Objects;
@@ -27,7 +28,7 @@ public class SettingsInitialUseCase extends InitialGameNode{
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
         for (int i = 0; i<2; i ++){
             if (Objects.equals(input.getInput(), options[0])){
                 sounds[i] = !sounds[i];

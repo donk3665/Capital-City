@@ -8,6 +8,7 @@ import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
 import Logic.MainTreeNodeLogic.EndTurnBranch.FinishGameUseCase;
 import Logic.MainTreeNodeLogic.MainGameNode;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class BankruptcyUseCase extends MainGameNode {
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
 
         if (input.getInput().equals(options[0])){
             mainStates[1] = 0;

@@ -8,6 +8,7 @@ import Interactors.PerformActionSpaceCardInteractor;
 import Interactors.PropertyPerformActionInteractor;
 import Logic.GameNode;
 import Logic.MainTreeNodeLogic.MainGameNode;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 import UseCases.CornerTilePerformActionUseCase;
 import UseCases.PerformActionSpaceUseCase;
@@ -88,7 +89,7 @@ public class RollUseCase extends MainGameNode {
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
         return null;
     }
 }

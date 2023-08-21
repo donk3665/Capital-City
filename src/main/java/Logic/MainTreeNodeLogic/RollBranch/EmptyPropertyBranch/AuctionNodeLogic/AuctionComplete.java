@@ -4,6 +4,7 @@ import Entities.Game.Player;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class AuctionComplete extends AuctionTreeNode {
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
         List<Player> players = getPlayers();
         int returnPlayerIndex = getReturnPlayerIndex();
         //return to the main tree and correct player

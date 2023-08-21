@@ -1,9 +1,8 @@
 package Entities.GUI.Screens;
 
-import Entities.ExternalDataTransfer.BasicBoard;
 import Entities.ExternalDataTransfer.BasicPlayer;
 import Entities.GUI.Screens.Functions.BoardGrid;
-import Logic.NodeNames;
+import Entities.GUI.SettingsController.SettingsFunction;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -135,6 +134,7 @@ public class GameScreen extends Screen{
         settingsButtonPanel.setOpaque(false);
         settingsButtonPanel.setLayout(new BorderLayout());
         ImageButton settingsButton = new ImageButton("");
+        addSettingsButton(settingsButton);
         settingsButton.setImage(gameImages[5]);
         c.insets = new Insets(0,0,50,0);
 
@@ -166,12 +166,24 @@ public class GameScreen extends Screen{
         textArea.setBounds(0,0, wrappingPane.getWidth(), wrappingPane.getHeight());
         return actualBottomHalf;
     }
+    private void addSettingsButton(ImageButton button){
+        JPanel popupPanel = new JPanel();
+        popupPanel.setOpaque(false);
+        gamePane.add(popupPanel,JLayeredPane.POPUP_LAYER);
+
+        popupPanel.setBounds(gamePane.getWidth()/4,gamePane.getHeight()/4, gamePane.getWidth()/2, gamePane.getHeight()/2);
+
+        SettingsFunction function = new SettingsFunction(popupPanel, this);
+        button.addActionListener(e ->{
+            function.createPopup(null);
+        });
+    }
 
     private JLayeredPane addLayeredPaneAndBackground(JPanel panel, String imagePath){
         JLayeredPane layeredPane = new JLayeredPane();
 
         layeredPane.setBounds(0,0, panel.getWidth(), panel.getHeight());
-        //addResizeListener(layeredPane);
+
         JPanel jPanel = new JPanel();
         jPanel.setOpaque(false);
         jPanel.setLayout(new BorderLayout());
@@ -207,7 +219,6 @@ public class GameScreen extends Screen{
         board.add(overlayPanel, JLayeredPane.DEFAULT_LAYER);
         overlayGrid = new BoardGrid(overlayPanel, true, board);
 
-        //generateBoard(gridPanel);
     }
 
     private void paintHousesAndHotels(BoardGrid overlayGrid){
@@ -225,7 +236,6 @@ public class GameScreen extends Screen{
 
         layeredPane.add(popupPanel, JLayeredPane.POPUP_LAYER);
         ImageButton [] buttons = grid.getButtonGrid();
-        //CardShower cardShower = new CardShower()
 
         for (int i = 0; i< buttons.length; i++){
             int num = i;
@@ -291,7 +301,6 @@ public class GameScreen extends Screen{
         chatBox.doLayout();
         if (actualChatBox == null) {
             actualChatBox = new ChatBox(chatPanel,20);
-            //actualChatBox.execute();
         }
         else{
             actualChatBox.attachPanel(chatPanel,20);
@@ -360,6 +369,8 @@ public class GameScreen extends Screen{
         connectBoardButtons(board, buttonGrid);
 
     }
+
+
 
 
 

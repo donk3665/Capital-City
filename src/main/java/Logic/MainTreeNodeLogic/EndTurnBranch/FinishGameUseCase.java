@@ -5,6 +5,7 @@ import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
 import Entities.Game.Player;
 import Logic.MainTreeNodeLogic.MainGameNode;
+import Logic.NodeInterface;
 import Logic.NodeNames;
 
 import java.util.List;
@@ -50,7 +51,7 @@ public class FinishGameUseCase extends MainGameNode {
     }
 
     @Override
-    public GameNode performInput(InputInformation input) {
+    public NodeInterface performInput(InputInformation input) {
         return getFactory().getNode(NodeNames.INITIAL_PARENT);
     }
 }
