@@ -1,12 +1,12 @@
 package Entities.GUI.Screens;
 
-import Entities.GUI.Screens.Functions.CardPathFactory;
+import Entities.GUI.Screens.ScreenElements.*;
 import Logic.NodeNames;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-//TODO FIX THIS INTO PROPER SCREEN
+
 
 public class AuctionScreen extends Screen{
     /**
@@ -47,6 +47,7 @@ public class AuctionScreen extends Screen{
         addOptionBox(secondMiddlePanel);
         addCard(cardPanel);
         gameFrame.getContentPane().validate();
+        setRecentChatBox(auctionChatBox);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class AuctionScreen extends Screen{
         BackgroundPanel mainPanel = new BackgroundPanel();
         mainPanel.setBackgroundImage(getImagePathFactory().getBackgrounds(3));
         gamePane.add(mainPanel, JLayeredPane.FRAME_CONTENT_LAYER);
-        mainPanel.setBounds(0,0, 1920, 1080);
+        mainPanel.setBounds(0,0, (int) Screen.width, (int) Screen.height);
 
 
         JPanel bottomHalf = addFirstLayer(mainPanel);
@@ -92,6 +93,17 @@ public class AuctionScreen extends Screen{
 
         addCardAndChat(bottomPanel);
     }
+
+    @Override
+    public void handleAsynchronousInput(String input) {
+        String [] splitMessage = input.split("\s+");
+        switch (splitMessage[0]){
+            case "UNLOCK_CHAT" ->{
+                auctionChatBox.addMultiplayerSupport(getListener());
+            }
+        }
+    }
+
     public void addCardAndChat(JPanel panel){
 
         panel.setLayout(new GridBagLayout());

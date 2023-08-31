@@ -1,8 +1,8 @@
 package Entities.GUI.SettingsController;
 
-import Entities.GUI.Screens.ImageButton;
-import Entities.GUI.Screens.OptionPanel;
-import Entities.GUI.Screens.Popup;
+import Entities.GUI.Screens.ScreenElements.ImageButton;
+import Entities.GUI.Screens.ScreenElements.OptionPanel;
+import Entities.GUI.Screens.ScreenElements.Popup;
 import Entities.GUI.Screens.Screen;
 import Entities.GUI.SettingsBranch.GUINodeInterface;
 import Entities.GUI.SettingsBranch.SettingsMenuUseCase;

@@ -1,7 +1,5 @@
 package Persistence;
 
-import Entities.GUI.Screens.ImageCreator;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -109,6 +107,19 @@ public class LoadFile implements LoadAccess{
         gameInfo.add(savedTree);
 
         return gameInfo;
+    }
+
+    @Override
+    public ArrayList<String> getRawData(String filePath) throws FileNotFoundException {
+        ArrayList<String> data = new ArrayList<>();
+        File gameData = new File(file.getPath() + "/" + filePath);
+        Scanner scan = new Scanner(gameData);
+
+        while (scan.hasNextLine()) {
+            String line =scan.nextLine();
+            data.add(line);
+        }
+        return data;
     }
 
 

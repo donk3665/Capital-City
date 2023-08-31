@@ -1,4 +1,4 @@
-package Entities.GUI.Screens.Functions;
+package Entities.GUI.Screens.ScreenElements;
 
 import java.util.HashMap;
 

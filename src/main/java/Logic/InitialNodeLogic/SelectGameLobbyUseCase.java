@@ -21,6 +21,7 @@ public class SelectGameLobbyUseCase extends InitialGameNode {
     };
     @Override
     public State create_state() {
+        multiplayer = false;
         State currentState = new State();
         currentState.addOptions(options.getKeys());
         return currentState;

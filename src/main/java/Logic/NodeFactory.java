@@ -51,6 +51,15 @@ public class NodeFactory {
                 case MULTIPLAYER_LOBBY -> {
                     return new MultiplayerUseCase(beforeNode);
                 }
+                case HOST_GAME -> {
+                    return new HostUseCase();
+                }
+                case JOIN_GAME -> {
+                    return new JoinUseCase();
+                }
+                case SELECT_GAME_CLIENT -> {
+                    return new ClientUseCase(beforeNode);
+                }
                 case SELECT_GAME_TYPE -> {
                     return new SelectGameTypeUseCase(beforeNode);
                 }

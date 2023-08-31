@@ -1,8 +1,7 @@
-package Entities.GUI.Screens;
+package Entities.GUI.Screens.ScreenElements;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class GameCard extends JLabel {
     private final String header;

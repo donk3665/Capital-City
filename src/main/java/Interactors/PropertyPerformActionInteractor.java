@@ -6,6 +6,12 @@ import UseCases.PropertyPerformActionUseCase;
 
 
 public class PropertyPerformActionInteractor implements PropertyPerformActionUseCase {
+
+    private ServerListener listener;
+    public PropertyPerformActionInteractor(ServerListener listener){
+        this.listener = listener;
+    }
+
     /**
      * This method overrides performAction from the PropertyPerformActionUseCase interface and allows actions to be performed on a player
      * when they land on a property cell. The action (e.g. pay rent) is determined by whether the player owns this property.
@@ -20,6 +26,8 @@ public class PropertyPerformActionInteractor implements PropertyPerformActionUse
             return " You landed on a property you own";
         } else {
             currentPlayer.pay(property.getOwner(), property.getRent());
+            listener.writeIfMultiplayer("INFO: PAID " + property.getRent() + " " + property.getOwner().getPlayerIndex());
+
             return " Paid $" + property.getRent() + " to " + property.getOwner().getName() +
                     " for landing on " + property.getName();
         }

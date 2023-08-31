@@ -1,12 +1,12 @@
-package Entities.GUI.Screens;
+package Entities.GUI.Screens.ScreenElements;
 
-import Logic.NodeNames;
+import Entities.GUI.Screens.Screen;
 
 import javax.swing.*;
 
 public class ImagePathFactory {
 
-    private final ImageIcon[] bgs = new ImageIcon[5];
+    private final ImageIcon[] bgs = new ImageIcon[7];
 
     public String getBackButtonPath(){
         return "/Images/BackButton.png";
@@ -14,11 +14,13 @@ public class ImagePathFactory {
 
 
     public ImagePathFactory(){
-        bgs[0] = new ImageIcon(ImageCreator.getAndScaleImage("/backgrounds/Bg1.jpg", 1920, 1080));
-        bgs[1] = new ImageIcon(ImageCreator.getAndScaleImage("/backgrounds/credits.jpg", 1920, 1080));
-        bgs[2] = new ImageIcon(ImageCreator.getAndScaleImage("/backgrounds/inGameBg.jpg", 1920, 1080));
-        bgs[3] = new ImageIcon(ImageCreator.getAndScaleImage("/backgrounds/AuctionBg.jpg", 1920, 1080));
-        bgs[4] = new ImageIcon(ImageCreator.getAndScaleImage("/backgrounds/winBg.jpg", 1920, 1080));
+        bgs[0] = new ImageIcon(ImageCreator.getAndScaleImage("/backgrounds/Bg1.jpg", (int) Screen.width, (int) Screen.height));
+        bgs[1] = new ImageIcon(ImageCreator.getAndScaleImage("/backgrounds/credits.jpg", (int) Screen.width, (int) Screen.height));
+        bgs[2] = new ImageIcon(ImageCreator.getAndScaleImage("/backgrounds/inGameBg.jpg", (int) Screen.width, (int) Screen.height));
+        bgs[3] = new ImageIcon(ImageCreator.getAndScaleImage("/backgrounds/AuctionBg.jpg", (int) Screen.width, (int) Screen.height));
+        bgs[4] = new ImageIcon(ImageCreator.getAndScaleImage("/backgrounds/winBg.jpg", (int) Screen.width, (int) Screen.height));
+        bgs[5] = new ImageIcon(ImageCreator.getAndScaleImage("/backgrounds/connectionBg.jpg", (int) Screen.width, (int) Screen.height));
+        bgs[6] = new ImageIcon(ImageCreator.getAndScaleImage("/backgrounds/joinBg.jpg", (int) Screen.width, (int) Screen.height));
     }
 
     public String[] getButtonPaths(){
@@ -82,6 +84,20 @@ public class ImagePathFactory {
         };
         return paths;
     }
+    public String[] getConnectionImagePaths(){
+        String[] paths = new String[]{
+                "/Images/InGameAssets/ConnectionAssets/Picture5.png","/Images/InGameAssets/ConnectionAssets/Picture6.png","/Images/InGameAssets/ConnectionAssets/Picture7.png"
+        };
+        return paths;
+    }
+    public String[] getJoinImagePaths(){
+        String[] paths = new String[]{
+                "/Images/InGameAssets/JoinAssets/Picture3.png","/Images/InGameAssets/JoinAssets/Picture4.png"
+        };
+        return paths;
+    }
+
+
     public static String getPlayerIconPath(int playerIndex){
         return "/Images/InGameAssets/Icons/Picture"+playerIndex+".png";
     }

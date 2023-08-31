@@ -14,6 +14,25 @@ public class SelectSaveUseCase extends InitialGameNode {
         super(NodeNames.SELECT_SAVE, beforeNode);
     }
     GameNode node;
+    private String[] getSavesWithoutTemp(String[] saves){
+        String [] returnStrings;
+        returnStrings = new String[saves.length];
+        for (String str: saves){
+            if (str.equals("temp.txt")){
+                returnStrings = new String[saves.length-1];
+            }
+        }
+        int counter = 0;
+        for (String save : saves) {
+            if (!save.equals("temp.txt")) {
+                returnStrings[counter] = save;
+                counter++;
+            }
+        }
+
+        return returnStrings;
+    }
+
     @Override
     public State create_state() {
         State state = new State();
@@ -28,12 +47,13 @@ public class SelectSaveUseCase extends InitialGameNode {
             getGameLogicInteractor().setCurrentNode(node);
         }
         else {
-            state.addOptions(allSaves);
+            state.addOptions(getSavesWithoutTemp(allSaves));
         }
         return state;
     }
     @Override
     public NodeInterface performInput(InputInformation input) {
+        InitialGameNode.saveFile = input.getInput();
         getSelectedOptions().put(getName(), input.getInput());
         return getFactory().getNode(NodeNames.CONFIRM_LOADED_GAME, this);
     }

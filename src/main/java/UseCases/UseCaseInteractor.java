@@ -1,12 +1,17 @@
 
 package UseCases;
 
+import Entities.GUI.Network.StringInterpreter;
 import Entities.Game.Board;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Interactors.GameCreation;
 import Interactors.SavePackager;
+import Interactors.ServerListener;
 import Logic.GameNode;
+import Logic.GeneralGameNode;
+import Logic.InitialNodeLogic.InitialGameNode;
+import Logic.NodeNames;
 import Persistence.LoadAccess;
 import Logic.GameLogic;
 import Persistence.SaveAccess;
@@ -23,13 +28,22 @@ public class UseCaseInteractor{
 
     private GameLogic logicInteractor;
     private final LoadAccess loadAccess;
+
     private final SaveAccess saveAccess;
     private final GameCreation gameCreation;
     private final SavePackager savePackager;
+    private boolean multiplayer = false;
+    private ServerListener listener;
 
+    public ServerListener getListener() {
+        return listener;
+    }
 
+    public void setListener(ServerListener listener) {
+        this.listener = listener;
+    }
 
-
+    private StringInterpreter interpreter;
 
     /**
      * Constructor for the UseCaseInteractor.
@@ -40,7 +54,53 @@ public class UseCaseInteractor{
         this.gameCreation = new GameCreation();
         this.savePackager = new SavePackager();
         this.logicInteractor = new GameLogic();
+        this.interpreter = new StringInterpreter(logicInteractor);
         GameNode.setCaseInteractor(this);
+    }
+    public void interpretInnerMessages(String[] message){
+        interpreter.interpretString(message);
+    }
+    public SaveAccess getSaveAccess() {
+        return saveAccess;
+    }
+    public void beginSequence(){
+        if (InitialGameNode.savedGame){
+            String loadFile = InitialGameNode.saveFile;
+            //getSelectedOptions().get(NodeNames.SELECT_SAVE);
+            ArrayList<String> lines = null;
+            try {
+                lines = getLoadAccess().getRawData(loadFile);
+            }
+            catch (FileNotFoundException e){
+                System.err.println("FILE NOT FOUND");
+                System.exit(1);
+            }
+            for (String line: lines){
+                getListener().write("LOAD_DATA ¶" + line);
+            }
+        }
+        else {
+            int [] states = InitialGameNode.states;
+            getListener().write("STATES " +states[0] + " " + states[1] + " " + states[2] + " " + states[3] + " " + states[4] + " " + states[5]);
+        }
+        setMultiplayer(true);
+        getListener().write("INITIALIZE_GAME");
+        InitialGameNode.createGame();
+        getListener().write("READY");
+    }
+
+//    public boolean isTurn(){
+//        return GeneralGameNode.isTurn();
+//    }
+    public void setMultiplayer(boolean multiplayer) {
+        this.multiplayer = multiplayer;
+        logicInteractor.setMultiplayer(multiplayer);
+    }
+//    public static void setClient(String name){
+//        GeneralGameNode.setClientPlayer(name);
+//    }
+    public void setClient(int index){
+        GeneralGameNode.setClientPlayer(index);
     }
     public LoadAccess getLoadAccess(){
         return loadAccess;
@@ -56,6 +116,9 @@ public class UseCaseInteractor{
 
     public void exitToMenu(){logicInteractor.returnToMenu();}
 
+    public void forceNodeSwitch(NodeNames node){
+        logicInteractor.forceNodeSwitch(node);
+    }
 
     /**
      * This method handles the input of the user. <br>It moves through the current tree with the user's input,
@@ -63,14 +126,8 @@ public class UseCaseInteractor{
      * @param input the translated input of the user from the input interface
      */
     public State handleInput(InputInformation input){
-
         State currentState = logicInteractor.performInput(input);
-
-//        if(currentState.isSaveGame()){
-//            saveGame(currentState);
-//        }
         return currentState;
-
     }
 
 
@@ -85,11 +142,11 @@ public class UseCaseInteractor{
     }
 
 
-    public void createNewGame(int[] states){
-        Board loadedBoard;
-        loadedBoard = loadFiles(states[0], states[2]);
-        createGame(loadedBoard, states);
-    }
+//    public void createNewGame(int[] states){
+//        Board loadedBoard;
+//        loadedBoard = loadFiles(states[0], states[2]);
+//        createGame(loadedBoard, states);
+//    }
 
     /**
      * This method allows the user to create a game, new or loaded, by loading the files
@@ -98,7 +155,7 @@ public class UseCaseInteractor{
      * @param states is an int[] containing save file information
      */
     public void createGame(Board board, int[] states){
-        logicInteractor.setUpGame(board, states);
+        logicInteractor.setUpGame(board, states, multiplayer);
     }
 
     /**
@@ -111,7 +168,7 @@ public class UseCaseInteractor{
             ArrayList<String[]> newProperties = this.loadAccess.loadProperties();
             ArrayList<String> playerNames = new ArrayList<>();
             for (int i = 0; i < numberOfPlayers; i++) {
-                playerNames.add("Player " + i);
+                playerNames.add("Player" + i);
             }
             Board newBoard = this.gameCreation.createNewBoard(playerNames, newProperties);
             gameCreation.initializeMode(newBoard, mode);

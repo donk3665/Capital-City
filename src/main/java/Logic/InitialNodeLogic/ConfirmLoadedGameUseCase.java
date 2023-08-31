@@ -18,6 +18,7 @@ public class ConfirmLoadedGameUseCase extends InitialGameNode {
     }
     @Override
     public State create_state() {
+        savedGame = true;
         State state = new State();
 
         //options associated with the next node
@@ -31,18 +32,20 @@ public class ConfirmLoadedGameUseCase extends InitialGameNode {
         if (input.getInput().equals("Yes")){
 
             String loadFile = getSelectedOptions().get(NodeNames.SELECT_SAVE);
-            Board board = null;
-            int[] initialStates = new int[0];
+            states = null;
 
             try  {
-                board = caseInteractor.loadSavedBoard(loadFile);
-                initialStates = caseInteractor.loadInitialStates(loadFile);
+                loadBoardAndStates(loadFile);
             }
             catch (IOException exception){
                 System.err.println("IO error");
                 System.exit(1);
             }
-            caseInteractor.createGame(board, initialStates);
+
+            if (multiplayer){
+                return getFactory().getNode(NodeNames.HOST_GAME, this);
+            }
+            createGame();
             return getFactory().getNode(NodeNames.MAIN_PARENT, this);
         }
         else{

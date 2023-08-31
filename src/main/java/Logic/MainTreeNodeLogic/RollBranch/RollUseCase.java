@@ -6,13 +6,10 @@ import Entities.InternalDataTransfer.State;
 import Interactors.CornerTilePerformActionInteractor;
 import Interactors.PerformActionSpaceCardInteractor;
 import Interactors.PropertyPerformActionInteractor;
-import Logic.GameNode;
+import Logic.*;
 import Logic.MainTreeNodeLogic.MainGameNode;
-import Logic.NodeInterface;
-import Logic.NodeNames;
 import UseCases.CornerTilePerformActionUseCase;
 import UseCases.PerformActionSpaceUseCase;
-import Logic.PlayerLogic;
 import UseCases.PropertyPerformActionUseCase;
 
 /**
@@ -42,6 +39,9 @@ public class RollUseCase extends MainGameNode {
             //get the space landed on
             Cell landedOnCell = board.getCell(currentPlayer.getPosition());
 
+
+            getCaseInteractor().getListener().writeIfMultiplayer("INFO: MOVE " + currentPlayer.getPosition());
+
             /*
             if the space is a property and has no owner, transverse to a branch, otherwise,
             transverse to another
@@ -55,7 +55,7 @@ public class RollUseCase extends MainGameNode {
                 //perform the action on the space as well
                 switch (landedOnCell.getType()) {
                     case PROPERTY -> {
-                        PropertyPerformActionUseCase propertyInteractor = new PropertyPerformActionInteractor();
+                        PropertyPerformActionUseCase propertyInteractor = new PropertyPerformActionInteractor(getCaseInteractor().getListener());
                         assert landedOnCell instanceof Property;
                         Property property = (Property) landedOnCell;
                         if (property.getMortgageStatus()) {
@@ -63,15 +63,16 @@ public class RollUseCase extends MainGameNode {
                         } else {
                             setAnswer(propertyInteractor.performAction(property, currentPlayer));
                         }
+
                     }
                     case CORNER_TILE -> {
-                        CornerTilePerformActionUseCase cornerTileInteractor = new CornerTilePerformActionInteractor();
+                        CornerTilePerformActionUseCase cornerTileInteractor = new CornerTilePerformActionInteractor(getCaseInteractor().getListener());
                         assert landedOnCell instanceof CornerTiles;
                         CornerTiles cornerTile = (CornerTiles) landedOnCell;
                         setAnswer(cornerTileInteractor.performAction(currentPlayer, cornerTile));
                     }
                     case ACTION_SPACE -> {
-                        PerformActionSpaceUseCase actionSpaceInteractor = new PerformActionSpaceCardInteractor();
+                        PerformActionSpaceUseCase actionSpaceInteractor = new PerformActionSpaceCardInteractor(getCaseInteractor().getListener());
                         assert landedOnCell instanceof ActionSpace;
                         ActionSpace actionSpace = (ActionSpace) landedOnCell;
                         setAnswer(actionSpaceInteractor.performAction(actionSpace, currentPlayer, board));

@@ -1,6 +1,6 @@
 package Entities.GUI;
 
-import Entities.GUI.Screens.ImageButton;
+import Entities.GUI.Screens.ScreenElements.ImageButton;
 
 import java.util.ArrayList;
 

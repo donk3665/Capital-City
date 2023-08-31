@@ -17,21 +17,18 @@ public class State implements GUIInterface {
 
 
     private static Player player;
-
+    private static Player clientPlayer;
     public Player getPlayerWon() {
         return playerWon;
     }
-
     public void setPlayerWon(Player playerWon) {
         this.playerWon = playerWon;
     }
-
     private Player playerWon;
     private Player tradingPlayer;
     private boolean backEnable;
     private String description;
     private boolean saveGame;
-
     private String roll;
     private Property currentPlayerProperty;
     private Property tradingPlayerProperty;
@@ -39,15 +36,33 @@ public class State implements GUIInterface {
     private int biddingPot;
     private NodeNames id;
     private final ArrayList<String> options = new ArrayList<>();
-
     private BasicBoard currentBoard;
+
+    public boolean isTurn() {
+        return turn;
+    }
+
+    public void setTurn(boolean turn) {
+        this.turn = turn;
+    }
+
+    private boolean turn = false;
+
+    private boolean startConnection = false;
+    public boolean isStartConnection() {
+        return startConnection;
+    }
+    public void setStartConnection(boolean startConnection) {
+        this.startConnection = startConnection;
+    }
     public BasicBoard getCurrentBoard() {
         return currentBoard;
     }
-
     public void setCurrentBoard(BasicBoard currentBoard) {
         this.currentBoard = currentBoard;
     }
+
+
 
     /**
      * This method returns the roll value stored in the State object which corresponds to value of the dice rolled by
@@ -164,6 +179,22 @@ public class State implements GUIInterface {
      */
     public void setPlayer(Player player2) {
         player = player2;
+    }
+
+    /**
+     * This method returns a Player instance stored in the clientPlayer instance attribute.
+     * @return a Player instance stored in the player instance attribute.
+     */
+    public Player getClientPlayer() {
+        return clientPlayer;
+    }
+
+    /**
+     * This method sets the clientPlayer instance attribute.
+     * @param player2 a Player instance that is to be stored in the player instance attribute.
+     */
+    public void setClientPlayer(Player player2) {
+        clientPlayer = player2;
     }
 
     /**

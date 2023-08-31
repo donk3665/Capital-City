@@ -1,4 +1,4 @@
-package Entities.GUI.Screens;
+package Entities.GUI.Screens.ScreenElements;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +20,7 @@ public class ImagePanel extends JPanel {
     public void setImage(BufferedImage image) {
         this.image = image;
     }
+
 
     @Override
     protected void paintComponent(Graphics g) {

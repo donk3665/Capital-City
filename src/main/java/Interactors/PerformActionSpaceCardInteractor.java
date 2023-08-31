@@ -10,7 +10,13 @@ import UseCases.PerformActionSpaceUseCase;
  * This class generates and performs the correct action when a player draws an action card.
  */
 public class PerformActionSpaceCardInteractor implements PerformActionSpaceUseCase{
-    
+
+    private ServerListener listener;
+    public PerformActionSpaceCardInteractor(ServerListener listener){
+        this.listener = listener;
+    }
+
+
     /**
      * Generates a random card from the action space
      * @param actionSpace the action space

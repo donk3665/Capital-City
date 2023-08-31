@@ -1,4 +1,4 @@
-package Entities.GUI.Screens;
+package Entities.GUI.Screens.ScreenElements;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,12 +31,21 @@ public class Popup {
         constraints.weightx = 1;
         constraints.fill = GridBagConstraints.BOTH;
 
+        WeightlessPanel topWrappingPanel = new WeightlessPanel();
+        topWrappingPanel.setOpaque(false);
+        topWrappingPanel.setLayout(new BorderLayout());
         ImagePanel topPanel = new ImagePanel();
-        basePanel.add(topPanel,constraints);
+
+        topWrappingPanel.add(topPanel);
+        basePanel.add(topWrappingPanel,constraints);
 
         constraints.gridy = 1;
         constraints.weighty = 1;
-        basePanel.add(content, constraints);
+        WeightlessPanel contentWrappingPanel = new WeightlessPanel();
+        contentWrappingPanel.setOpaque(false);
+        contentWrappingPanel.setLayout(new BorderLayout());
+        contentWrappingPanel.add(content);
+        basePanel.add(contentWrappingPanel, constraints);
 
         basePanel.validate();
         addExitStrip(topPanel);

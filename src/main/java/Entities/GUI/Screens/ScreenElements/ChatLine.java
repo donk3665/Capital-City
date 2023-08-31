@@ -1,13 +1,7 @@
-package Entities.GUI.Screens.Functions;
-
-import Entities.GUI.Screens.*;
-import Entities.Game.Property;
+package Entities.GUI.Screens.ScreenElements;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;

@@ -1,14 +1,10 @@
 package GUI;
 
-import Entities.ExternalDataTransfer.BasicBoard;
-import Entities.ExternalDataTransfer.BasicPlayer;
-import Entities.GUI.Screens.InitialGameScreen;
 import Entities.GUI.Screens.Screen;
 import Entities.GUI.Screens.ScreenFactory;
 import Entities.GUIDataTransfer.GUIInterface;
-import Logic.NodeNames;
+import Interactors.ServerListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -24,7 +20,6 @@ public class GameDisplayInteractor {
      * is clicked by the user
      */
     private Screen gameScreen;
-    private BasicPlayer currentPlayer;
     private final GameDisplayInputInteractor inputHandler;
     private final GameDisplayOutputInteractor labelSegments;
     private final ScreenFactory screenFactory;
@@ -40,6 +35,9 @@ public class GameDisplayInteractor {
         this.labelSegments = new GameDisplayOutputInteractor(looper);
         this.selectedOutput = "";
 
+    }
+    public ScreenFactory getScreenFactory(){
+        return screenFactory;
     }
 
     /**
@@ -66,10 +64,17 @@ public class GameDisplayInteractor {
         Screen.setOptions(labelSegments.getOptionSegmentRaw());
         Screen.setCurrentBoard(state.getCurrentBoard());
         Screen.setCurrentPlayer(state.getPlayer());
+        Screen.setClientPlayer(state.getClientPlayer());
         Screen.setState(state);
 
+        gameScreen.attachNonStaticComponents();
         gameScreen.attachPanel();
-
+    }
+    public void refreshTurnChangeOptions(){
+        gameScreen.attachNonStaticComponents();
+    }
+    public void setScreenListener(ServerListener listener){
+        Screen.setListener(listener);
     }
 
     /**

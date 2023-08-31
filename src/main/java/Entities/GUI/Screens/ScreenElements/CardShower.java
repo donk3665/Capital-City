@@ -1,13 +1,13 @@
-package Entities.GUI.Screens;
+package Entities.GUI.Screens.ScreenElements;
 
-import Entities.GUI.Screens.Functions.CardPathFactory;
+import Entities.GUI.Screens.ContentPanelInterface;
 import Entities.Game.Cell;
 import Entities.Game.Property;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class CardShower implements ContentPanelInterface{
+public class CardShower implements ContentPanelInterface {
     private JPanel contentPanel;
 
     private static CardPathFactory factory = new CardPathFactory();

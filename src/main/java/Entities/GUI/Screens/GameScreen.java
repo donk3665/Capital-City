@@ -1,7 +1,8 @@
 package Entities.GUI.Screens;
 
 import Entities.ExternalDataTransfer.BasicPlayer;
-import Entities.GUI.Screens.Functions.BoardGrid;
+import Entities.GUI.Screens.ScreenElements.*;
+import Entities.GUI.Screens.ScreenElements.Popup;
 import Entities.GUI.SettingsController.SettingsFunction;
 
 import javax.swing.*;
@@ -29,7 +30,7 @@ public class GameScreen extends Screen{
     JPanel overlayPanel = null;
 
     JLayeredPane board = null;
-
+    static ChatBox actualChatBox;
 
 
 
@@ -37,10 +38,11 @@ public class GameScreen extends Screen{
 
     }
 
-    public void connectButtons(JLayeredPane connect){
+    public boolean connectButtons(JLayeredPane connect){
+        if (!getState().isTurn()){
+            return false;
+        }
         optionPanel.removeAll();
-
-
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -60,19 +62,22 @@ public class GameScreen extends Screen{
 
 
         for (int i = 0; i < options.getButtons().size(); i++){
-            panelList[i] = new JPanel();
+            panelList[i] = new WeightlessPanel();
             panelList[i].setLayout(new BorderLayout());
             c.gridy = i%4;
             c.gridx =  i/4;
+            //System.out.println(options.getButtons().get(i).getText());
             options.getButtons().get(i).setImage(paths[i]);
             panelList[i].add(options.getButtons().get(i));
             options.getButtons().get(i).setFontSizeAndColour(24, Color.white);
             optionPanel.add(panelList[i],c );
+            //panelList[i].validate();
         }
 
-        optionPanel.doLayout();
+        optionPanel.validate();
 
         connect.add(optionPanel);
+        return true;
 
     }
 
@@ -244,7 +249,7 @@ public class GameScreen extends Screen{
             }
             buttons[i].addActionListener(e -> {
                 popupPanel.removeAll();
-                Popup p = new Popup( popupPanel, new CardShower(num, getCurrentBoard().getCells().get(num), getNumPlayersTile(num)).getContentPanel(), true);
+                Entities.GUI.Screens.ScreenElements.Popup p = new Popup( popupPanel, new CardShower(num, getCurrentBoard().getCells().get(num), getNumPlayersTile(num)).getContentPanel(), true);
             });
         }
     }
@@ -356,18 +361,30 @@ public class GameScreen extends Screen{
         addOptionChatBox(rightPanel);
 
     }
+
+    @Override
+    public void handleAsynchronousInput(String input) {
+        String [] splitMessage = input.split("\s+");
+        switch (splitMessage[0]){
+            case "UNLOCK_CHAT" ->{
+                actualChatBox.addMultiplayerSupport(getListener());
+            }
+        }
+    }
+
     @Override
     public void attachNonStaticComponents() {
+        textArea.setText("");
 
         for (Component component: optionBox.getComponentsInLayer(JLayeredPane.DEFAULT_LAYER)){
             optionBox.remove(component);
         }
-
-        connectButtons(optionBox);
-        textArea.setText(description.getDescription().getText());
+        if (connectButtons(optionBox)){
+            textArea.setText(description.getDescription().getText());
+        }
         paintHousesAndHotels(overlayGrid);
         connectBoardButtons(board, buttonGrid);
-
+        setRecentChatBox(actualChatBox);
     }
 
 

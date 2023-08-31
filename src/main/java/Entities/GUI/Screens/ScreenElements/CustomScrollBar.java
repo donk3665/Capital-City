@@ -1,4 +1,4 @@
-package Entities.GUI.Screens;
+package Entities.GUI.Screens.ScreenElements;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicScrollBarUI;

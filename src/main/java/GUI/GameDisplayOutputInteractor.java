@@ -2,8 +2,7 @@ package GUI;
 
 import Entities.GUI.Description;
 import Entities.GUI.Options;
-import Entities.GUI.Screens.ImageButton;
-import Logic.GameLogic;
+import Entities.GUI.Screens.ScreenElements.ImageButton;
 
 import javax.swing.*;
 import java.util.ArrayList;

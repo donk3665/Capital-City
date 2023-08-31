@@ -1,6 +1,6 @@
 package Buttons;
 
-import Entities.GUI.Screens.ImageButton;
+import Entities.GUI.Screens.ScreenElements.ImageButton;
 import GUI.GameLoop;
 
 import java.util.ArrayList;
@@ -60,7 +60,6 @@ public class ButtonFactory {
             ImageButton temp = new ImageButton(this.buttonStrings.get(i) );
             int finalI = i;
             this.actionPerformed.put(this.buttonMappings.get(i).pressedButton(), 0);
-            //TODO HAVE THE ACTION LISTENER CAUSE SOMETHING TO HAPPEN RATHER THAN THE CURRENT INFINITE LOOP
             temp.addActionListener(e -> {
                         this.actionPerformed.replace(this.buttonMappings.get(finalI).pressedButton(), 1);
                         looper.gameLoop();
@@ -68,10 +67,7 @@ public class ButtonFactory {
             );
             returnedButtons.add(temp);
         }
-//        //TODO: ADD AN EXIT BUTTON
-//        JButton exit = new JButton("Exit");
-//        exit.addActionListener(e -> System.exit(0));
-//        returnedButtons.add(exit);
+
 
         return returnedButtons;
     }

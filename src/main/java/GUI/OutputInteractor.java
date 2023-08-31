@@ -24,8 +24,6 @@ public class OutputInteractor {
     private final Output output;
     private State currentState;
 
-
-
     /**
      * The Constructor for the OutputInteractor Class
      * @param interactor: gets the initial state of the game
@@ -48,6 +46,11 @@ public class OutputInteractor {
     }
     public State getCurrentState(){
         return this.currentState;
+    }
+
+
+    public boolean getStartThread(){
+        return currentState.isStartConnection();
     }
 
     /**

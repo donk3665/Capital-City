@@ -1,4 +1,4 @@
-package Entities.GUI.Screens;
+package Entities.GUI.Screens.ScreenElements;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,6 +7,19 @@ import java.awt.image.BufferedImage;
 public class ImageButton extends JButton {
     private BufferedImage image;
     private String path;
+    private String id;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    public void setSuperPreservedSize(boolean superPreservedSize) {
+        this.superPreservedSize = superPreservedSize;
+    }
+
+    private boolean superPreservedSize = false;
 
     public ImageButton(String label){
         super(label);
@@ -27,7 +40,9 @@ public class ImageButton extends JButton {
     }
     @Override
     public Dimension getPreferredSize() {
-        //return new Dimension(image.getWidth(), image.getHeight());
+        if (superPreservedSize){
+            return super.getPreferredSize();
+        }
         return new Dimension(0,0);
     }
     @Override

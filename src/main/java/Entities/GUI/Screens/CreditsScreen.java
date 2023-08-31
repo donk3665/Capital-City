@@ -1,6 +1,6 @@
 package Entities.GUI.Screens;
 
-import Logic.NodeNames;
+import Entities.GUI.Screens.ScreenElements.BackgroundPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,6 +35,11 @@ public class CreditsScreen extends Screen{
 
         gamePane.add(mainPanel, JLayeredPane.FRAME_CONTENT_LAYER);
         mainPanel.setBounds(gamePane.getBounds());
+
+    }
+
+    @Override
+    public void handleAsynchronousInput(String input) {
 
     }
 

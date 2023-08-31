@@ -1,5 +1,9 @@
 package GUI;
 import Entities.GUI.Screens.Screen;
+import Entities.GUI.Screens.ScreenElements.ImageButton;
+import Interactors.ServerListener;
+import Logic.InitialNodeLogic.InitialGameNode;
+import Logic.NodeNames;
 import Persistence.LoadFile;
 import Persistence.SaveFile;
 
@@ -7,6 +11,8 @@ import UseCases.UseCaseInteractor;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 /**
  * GUI.PresenterDisplay is a class that runs the game loop and presents the options of each turn to each
@@ -17,8 +23,9 @@ public class PresenterDisplay implements GameLoop{
     OutputInteractor outputControl;
     GameDisplayInteractor gameFrame;
     InputInteractor inputControl;
-
     UseCaseInteractor interactor;
+    ServerListener listener;
+    Thread listenerThread;
     /**
      * Function that runs the game loop by getting game data from the OutputInteractor and presenting that to the
      * user as their options on each turn through Conversion in the GameDisplayInteractor,
@@ -30,6 +37,8 @@ public class PresenterDisplay implements GameLoop{
         inputControl = new InputInteractor(interactor);
         outputControl = new OutputInteractor(interactor);
         gameFrame = new GameDisplayInteractor(this);
+        listener = new ServerListener(interactor, gameFrame, this);
+        listenerThread = new Thread(listener);
 
         Screen.initializeScreen();
         Screen.setPresenterDisplay(this);
@@ -39,6 +48,8 @@ public class PresenterDisplay implements GameLoop{
 
         gameLoop();
         SwingUtilities.invokeLater(() -> gameFrame.displayScreen());
+
+
     }
     public void gameLoop(){
         boolean didInput;
@@ -46,6 +57,9 @@ public class PresenterDisplay implements GameLoop{
         if (didInput) {
             inputControl.getChoice(gameFrame.getInput());
             outputControl.updateState(inputControl.getUpdatedState());
+            if (outputControl.getStartThread()){
+                startListener();
+            }
             gameFrame.refreshScreen();
 
             outputControl.updateStateOptions();
@@ -65,4 +79,27 @@ public class PresenterDisplay implements GameLoop{
         outputControl.updateStateOptions();
         gameFrame.setOutputs(outputControl.getCurrentState(), outputControl.getOutputMessage());
     }
+    public void forceNodeSwitch(NodeNames node){
+        interactor.forceNodeSwitch(node);
+        inputControl.setCurrentStateFromInteractor();
+
+        outputControl.updateState(inputControl.getCurrentState());
+        gameFrame.refreshScreen();
+
+        outputControl.updateStateOptions();
+        gameFrame.setOutputs(outputControl.getCurrentState(), outputControl.getOutputMessage());
+    }
+    public void refreshTurnChangeOptions(){
+        gameFrame.refreshTurnChangeOptions();
+    }
+    public void startListener(){
+        if (!listenerThread.isAlive()){
+            listenerThread.start();
+        }
+    }
+//    public boolean isTurn(){
+//        return interactor.isTurn();
+//    }
+
+
 }

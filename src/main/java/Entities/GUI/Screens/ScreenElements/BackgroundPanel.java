@@ -1,4 +1,6 @@
-package Entities.GUI.Screens;
+package Entities.GUI.Screens.ScreenElements;
+
+import Entities.GUI.Screens.Screen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +19,7 @@ public class BackgroundPanel extends JPanel {
 //
 //    }
     public BackgroundPanel(){
-        setPreferredSize(new Dimension(1920,1080));
+        setPreferredSize(new Dimension((int) Screen.width,(int) Screen.height));
     }
     public void setBackgroundImage(ImageIcon image){
         bg = image;

@@ -11,4 +11,6 @@ public interface SaveAccess {
     String saveGame(String[][] playerData, int[] mainStates) throws IOException;
     File getFile();
     boolean checkFile();
+    void addTempLine(String line);
+    void writeTempFile() throws IOException;
 }

@@ -1,6 +1,6 @@
 package Entities.GUI.Screens;
 
-import Entities.GUI.Screens.Functions.CardPathFactory;
+import Entities.GUI.Screens.ScreenElements.*;
 import Logic.NodeNames;
 
 import javax.swing.*;
@@ -43,6 +43,7 @@ public class EndingScreen extends Screen{
         buttonPanel.add(options.getButtons().get(0));
         icon.setImage(ImagePathFactory.getPlayerIconPath(getState().getPlayer().getPlayerIndex()));
         gameFrame.getContentPane().validate();
+        setRecentChatBox(endingChatBox);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class EndingScreen extends Screen{
         BackgroundPanel mainPanel = new BackgroundPanel();
         mainPanel.setBackgroundImage(getImagePathFactory().getBackgrounds(4));
         gamePane.add(mainPanel, JLayeredPane.FRAME_CONTENT_LAYER);
-        mainPanel.setBounds(0,0, 1920, 1080);
+        mainPanel.setBounds(0,0, (int) Screen.width, (int) Screen.height);
 
         JPanel bottomHalf = addFirstLayer(mainPanel);
         bottomHalf.setLayout(new GridBagLayout());
@@ -80,6 +81,17 @@ public class EndingScreen extends Screen{
 
         addChatAndText(bottomPanel);
     }
+
+    @Override
+    public void handleAsynchronousInput(String input) {
+        String [] splitMessage = input.split("\s+");
+        switch (splitMessage[0]){
+            case "UNLOCK_CHAT" ->{
+                endingChatBox.addMultiplayerSupport(getListener());
+            }
+        }
+    }
+
     public void addChatAndText(JPanel panel){
         panel.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();

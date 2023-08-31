@@ -1,16 +1,16 @@
-package Entities.GUI.Screens;
+package Entities.GUI.Screens.ScreenElements;
 
-import Logic.NodeNames;
+import Entities.GUI.Screens.Screen;
+import Entities.GUI.Screens.ScreenElements.BackgroundPanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.beans.PropertyChangeEvent;
 
 /**
  * Class to keep track of the frame
  */
-public class InitialGameScreen extends Screen{
+public class InitialGameScreen extends Screen {
 
 
     private BackgroundPanel mainPanel = new BackgroundPanel();
@@ -63,6 +63,11 @@ public class InitialGameScreen extends Screen{
 
         gamePane.add(mainPanel, JLayeredPane.FRAME_CONTENT_LAYER);
         mainPanel.setBounds(gamePane.getBounds());
+
+    }
+
+    @Override
+    public void handleAsynchronousInput(String input) {
 
     }
 

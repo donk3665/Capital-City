@@ -23,7 +23,6 @@ public class MainParentNodeUseCase extends MainGameNode {
             put("ROLL", NodeNames.ROLL);
             put("STEAL", NodeNames.STEAL);
             put("END_TURN", NodeNames.END_TURN);
-//            put("SETTINGS", NodeNames.SETTINGS);
             put("BANKRUPTCY", NodeNames.BANKRUPTCY);
         }
     };

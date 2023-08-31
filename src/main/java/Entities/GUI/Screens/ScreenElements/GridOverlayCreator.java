@@ -1,4 +1,4 @@
-package Entities.GUI.Screens;
+package Entities.GUI.Screens.ScreenElements;
 
 import Entities.ExternalDataTransfer.BasicBoard;
 import Entities.ExternalDataTransfer.BasicPlayer;

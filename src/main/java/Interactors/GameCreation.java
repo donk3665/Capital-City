@@ -24,15 +24,17 @@ public class GameCreation {
      */
     public Board createNewBoard(ArrayList<String> playersName, ArrayList<String[]> properties) throws IOException {
         // This method is to create a brand-new game and initialize a new Board.
-
         ArrayList<Player> players = new ArrayList<>();
-        ArrayList<Cell> propertiesSoFar;
 
         for (int i = 0; i<playersName.size(); i++){
             Player newPlayer = new Player(playersName.get(i),i);
             players.add(newPlayer);
         }
-
+        return createNewBoardHelper(players, properties);
+    }
+    public Board createNewBoardHelper(ArrayList<Player> players, ArrayList<String[]> properties) throws IOException {
+        // This method is to create a brand-new game and initialize a new Board.
+        ArrayList<Cell> propertiesSoFar;
         propertiesSoFar = parsePropertyData(properties);
         List<Cell> cells = createCells(propertiesSoFar, propertiesSoFar);
 

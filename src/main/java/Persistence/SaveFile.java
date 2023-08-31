@@ -3,6 +3,7 @@ package Persistence;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Class which is responsible for the saving of files into text files
@@ -10,6 +11,8 @@ import java.io.IOException;
 public class SaveFile implements SaveAccess {
     private File file;
     private final String saveLocation;
+
+    private ArrayList<String> tempLines;
 
     /**
      * Constructor for SaveFile which implements load and save game functionality.
@@ -20,6 +23,7 @@ public class SaveFile implements SaveAccess {
     public SaveFile(File file) {
         this.file = file;
         this.saveLocation = file.getAbsolutePath();
+        tempLines = new ArrayList<>();
     }
 
 
@@ -35,7 +39,23 @@ public class SaveFile implements SaveAccess {
         return this.file.isFile();
     }
 
+    public void addTempLine(String line) {
+        tempLines.add(line);
 
+    }
+    public void writeTempFile() throws IOException{
+        File tempFile = new File(saveLocation + "/temp.txt");
+        if (!tempFile.createNewFile()){
+            tempFile.delete();
+            tempFile.createNewFile();
+        }
+        FileWriter fos = new FileWriter(tempFile.getPath());
+        for (String line: tempLines){
+            fos.write(line);
+        }
+        fos.close();
+        tempLines.clear();
+    }
 
     public String saveGameNewFile(String[][] playerData, int[] mainStates) throws IOException{
         LoadAccess load = new LoadFile(new File(""));

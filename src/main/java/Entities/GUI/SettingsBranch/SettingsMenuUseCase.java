@@ -26,7 +26,7 @@ public class SettingsMenuUseCase implements GUINodeInterface {
             {
                 put("SAVE", new SaveGameUseCase(currentScreen));
                 put("EXIT_GAME", new ExitGameUseCase(currentScreen));
-
+                put("BACK", null);
             }
         };
     }

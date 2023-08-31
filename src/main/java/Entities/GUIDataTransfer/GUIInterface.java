@@ -21,5 +21,7 @@ public interface GUIInterface {
     Property getBiddingProperty();
 
     Player getPlayer();
+    Player getClientPlayer();
+    boolean isTurn();
 
 }

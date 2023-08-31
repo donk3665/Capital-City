@@ -1,7 +1,7 @@
 package GUI;
 
 import Buttons.ButtonFactory;
-import Entities.GUI.Screens.ImageButton;
+import Entities.GUI.Screens.ScreenElements.ImageButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +40,6 @@ public class ButtonDisplayInteractor {
     public ArrayList<ImageButton> getButtons(){
         ArrayList<ImageButton> temp = this.buttonFactory.getButtons();
         this.buttonList = this.buttonFactory.getActionPerformed();
-        //TODO: ADD EXIT BUTTON
         return temp;
     }
 

@@ -1,11 +1,6 @@
-package Entities.GUI.Screens.Functions;
-
-import Entities.GUI.Screens.ImageButton;
-import Entities.GUI.Screens.ImageLabel;
-import Entities.GUI.Screens.WeightlessPanel;
+package Entities.GUI.Screens.ScreenElements;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class BoardGrid {

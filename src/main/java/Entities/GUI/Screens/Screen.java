@@ -4,34 +4,35 @@ import Entities.ExternalDataTransfer.BasicBoard;
 import Entities.ExternalDataTransfer.BasicPlayer;
 import Entities.GUI.Description;
 import Entities.GUI.Options;
+import Entities.GUI.Screens.ScreenElements.ChatBox;
+import Entities.GUI.Screens.ScreenElements.ImagePathFactory;
 import Entities.GUIDataTransfer.GUIInterface;
 import Entities.Game.Cell;
+import Entities.Stupid;
 import GUI.PresenterDisplay;
+import Interactors.ServerListener;
 import Logic.NodeNames;
+
 import javax.swing.*;
 import java.awt.*;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.List;
 
-
 public abstract class Screen {
+
     /**
      * InstanceVar gameFrame: JFrame that contains all the contents of the game
      */
     protected static JFrame gameFrame;
-    static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[Stupid.getMonitorAppear()];
+    static Dimension screenSize = new Dimension(device.getDisplayMode().getWidth(), device.getDisplayMode().getHeight());
 
     public static final double width = screenSize.getWidth();
     public static final double height = screenSize.getHeight();
-
     public static final double widthAdjust = Math.min(screenSize.getWidth() / 1920.0, screenSize.getHeight() / 1080.0);
     public static final double heightAdjust = Math.min(screenSize.getWidth() / 1920.0, screenSize.getHeight() / 1080.0);
-    static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
     protected static Options options;
     protected static Description description;
     private static final ImagePathFactory imagePathFactory = new ImagePathFactory();
-
     private static GUIInterface state;
 
     public GUIInterface getState() {
@@ -51,15 +52,23 @@ public abstract class Screen {
 
     NodeNames name;
 
-
-
     protected JLayeredPane gamePane = new JLayeredPane();
 
     protected static BasicBoard currentBoard;
 
     protected static BasicPlayer currentPlayer;
 
-    protected static ChatBox actualChatBox;
+    public static BasicPlayer getClientPlayer() {
+        return clientPlayer;
+    }
+
+    public static void setClientPlayer(BasicPlayer clientPlayer) {
+        Screen.clientPlayer = clientPlayer;
+    }
+
+    protected static BasicPlayer clientPlayer;
+
+
 
     public static BasicPlayer getCurrentPlayer() {
         return currentPlayer;
@@ -78,11 +87,44 @@ public abstract class Screen {
     }
 
     private static PresenterDisplay presenterDisplay;
+
+    private static ServerListener listener;
+
+    private static int tempIndex;
+
+    private static String tempName;
+
+    public static int getTempIndex() {
+        return tempIndex;
+    }
+
+    public static void setTempIndex(int tempIndex2) {
+        tempIndex = tempIndex2;
+    }
+
+    public static String getTempName() {
+        return tempName;
+    }
+
+    public static void setTempName(String tempName2) {
+        tempName = tempName2;
+    }
+
+    public static ChatBox getRecentChatBox() {
+        return recentChatBox;
+    }
+
+    public static void setRecentChatBox(ChatBox recentChatBox) {
+        Screen.recentChatBox = recentChatBox;
+    }
+
+    public static ChatBox recentChatBox;
+
+
     /**
      * Constructor that configures the JFrame
      */
     public Screen() {
-
     }
     public static void setPresenterDisplay(PresenterDisplay display){
         presenterDisplay = display;
@@ -99,8 +141,15 @@ public abstract class Screen {
         gameFrame.setResizable(false);
     }
 
+    public static ServerListener getListener() {
+        return listener;
+    }
+
+    public static void setListener(ServerListener listener) {
+        Screen.listener = listener;
+    }
+
     public void attachPanel() {
-        attachNonStaticComponents();
         gameFrame.setContentPane(gamePane);
     }
 
@@ -153,6 +202,7 @@ public abstract class Screen {
 
 
     public abstract void setUpGamePane();
+    public abstract void handleAsynchronousInput(String input);
 
     public int getCellIndex(Cell cell){
         List<Cell> cellList = currentBoard.getCells();
@@ -169,5 +219,11 @@ public abstract class Screen {
     }
     public void exitToMenu(){
         getPresenterDisplay().exitToMenu();
+    }
+
+    public void addDisconnectListener(JButton button){
+        button.addActionListener(e->{
+            getListener().write("DISCONNECT");
+        });
     }
 }

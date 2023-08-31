@@ -2,7 +2,6 @@ package Logic.InitialNodeLogic;
 
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
-import Logic.GameNode;
 import Logic.NodeInterface;
 import Logic.NodeNames;
 
@@ -15,8 +14,10 @@ public class ConfirmNewGameUseCase extends InitialGameNode {
         super(NodeNames.CONFIRM_NEW_GAME, null);
     }
 
+
     @Override
     public State create_state() {
+        savedGame = false;
         State state = new State();
 
         //options associated with the next node
@@ -25,10 +26,12 @@ public class ConfirmNewGameUseCase extends InitialGameNode {
         return state;
     }
 
+
+
     @Override
     public NodeInterface performInput(InputInformation input) {
         if (input.getInput().equals("Yes")) {
-            int[] states = new int[6];
+            states = new int[6];
 
             states[0] = Integer.parseInt(getSelectedOptions().get(NodeNames.SELECT_NUMBER_OF_PLAYERS));
             states[1] = Integer.parseInt(getSelectedOptions().get(NodeNames.NUMBER_OF_ROUNDS));
@@ -36,8 +39,13 @@ public class ConfirmNewGameUseCase extends InitialGameNode {
             states[3] = 0;
             states[4] = 0;
             states[5] = 0;
-            System.err.println(states);
-            caseInteractor.createNewGame(states);
+           // System.err.println(states);
+            if (multiplayer){
+                states[0] = -1;
+                return getFactory().getNode(NodeNames.HOST_GAME, this);
+            }
+            createNewBoard();
+            createGame();
             return getFactory().getNode(NodeNames.MAIN_PARENT, this);
         }
         else {

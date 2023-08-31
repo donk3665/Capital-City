@@ -10,6 +10,8 @@ import java.util.List;
  */
 public interface LoadAccess {
     ArrayList<ArrayList<String[]>> loadGame(String file) throws FileNotFoundException;
+
+    ArrayList<String> getRawData(String file)throws FileNotFoundException;
     String[] checkSaves(String folderPath);
     File getFile();
 
