@@ -45,15 +45,15 @@ public class BankruptcyUseCase extends MainGameNode {
             //removing all player connection with the board
             ArrayList<Property> currentPlayerProperties = currentPlayer.getProperties();
             for (Property targetedProperty : currentPlayerProperties) {
-                targetedProperty.setOwner(null);
-                targetedProperty.setHouses(0);
-                targetedProperty.setMortgageStatus(false);
+                targetedProperty.resetProperty();
             }
+
             //switching the player before removing the original player
             changePlayers();
             board.removePlayer(currentPlayer);
-
+            getCaseInteractor().getListener().writeIfMultiplayer("BANKRUPTCY " + currentPlayer.getPlayerIndex());
             if (board.getPlayers().size() == 1){
+                getCaseInteractor().getListener().writeIfMultiplayer("COMPLETE");
                 return getFactory().getNode(NodeNames.FINISH_GAME);
             }
         }

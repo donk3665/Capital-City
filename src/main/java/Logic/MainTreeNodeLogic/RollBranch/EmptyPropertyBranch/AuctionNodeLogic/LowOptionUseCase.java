@@ -26,6 +26,7 @@ public class LowOptionUseCase extends AuctionTreeNode {
     @Override
     public NodeInterface performInput(InputInformation input) {
         auctionStates[potIndex] += LOW_OPTION;
+        getCaseInteractor().getListener().writeIfMultiplayer("AUCTION LOW");
         switchPlayersAuction();
         return getFactory().getNode(NodeNames.AUCTION_PARENT, this);
     }

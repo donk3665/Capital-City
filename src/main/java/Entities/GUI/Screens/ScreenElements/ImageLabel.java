@@ -75,7 +75,7 @@ public class ImageLabel extends JLabel {
         return new Dimension(image.getWidth(), image.getHeight());
     }
 
-    private void changeSize(int width, int height){
+    protected void changeSize(int width, int height){
         this.image =  ImageCreator.getAndScaleImage(path, width, height);
     }
 

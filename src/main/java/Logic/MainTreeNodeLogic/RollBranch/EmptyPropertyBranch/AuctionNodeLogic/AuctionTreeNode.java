@@ -12,9 +12,9 @@ import java.util.List;
  * This class handles the logic for the auction tree nodes.
  */
 public abstract class AuctionTreeNode extends GeneralGameNode {
-    final int LOW_OPTION = 20;
-    final int MEDIUM_OPTION = 80;
-    final int HIGH_OPTION = 160;
+    final static int LOW_OPTION = 20;
+    final static int MEDIUM_OPTION = 80;
+    final static int HIGH_OPTION = 160;
     static int[] auctionStates;
     static Player playerWon;
     static Property biddingProperty;
@@ -57,12 +57,16 @@ public abstract class AuctionTreeNode extends GeneralGameNode {
     /**
      * Initialize this tree to prepare for an auction
      */
-    public void initialize() {
+    public static void initialize() {
         List<Player> players = getPlayers();
         auctionComplete = -1;
         auctionStates = new int[players.size() + 1];
         potIndex = auctionStates.length - 1;
     }
+    public static void setAuctionProperty(){
+        biddingProperty = (Property) getBoard().getCell(getCurrentPlayer().getPosition());
+    }
+
 
 
     public void switchPlayersAuction(){
@@ -71,8 +75,34 @@ public abstract class AuctionTreeNode extends GeneralGameNode {
             playerNum = (playerNum + 1) % getPlayers().size();
         } while (auctionStates[playerNum] != 0);
         setCurrentPlayer(getPlayers().get(playerNum));
+        getCaseInteractor().getListener().writeIfMultiplayer("CHANGE_PLAYER " + playerNum);
     }
     public static int[] getAuctionStates(){
         return auctionStates;
+    }
+    public static void interpretMessage(String message){
+        String[] splitMessage = message.split("\s+");
+        switch (splitMessage[1]){
+            case "FOLD" ->{
+                auctionStates[getCurrentPlayerIndex()] = 1;
+            }
+            case "HIGH" ->{
+                auctionStates[potIndex] += HIGH_OPTION;
+            }
+            case "MEDIUM" ->{
+                auctionStates[potIndex] += MEDIUM_OPTION;
+
+            }
+            case "LOW" ->{
+                auctionStates[potIndex] += LOW_OPTION;
+            }
+            case "WON" ->{
+                playerWon = getPlayers().get(Integer.parseInt(splitMessage[2]));
+                biddingProperty.setOwner(playerWon);
+//                playerWon.addProperty(biddingProperty);
+                playerWon.pay(auctionStates[potIndex]);
+            }
+        }
+
     }
 }

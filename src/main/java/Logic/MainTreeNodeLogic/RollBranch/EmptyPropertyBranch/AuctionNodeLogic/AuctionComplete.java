@@ -22,6 +22,7 @@ public class AuctionComplete extends AuctionTreeNode {
         currentState.setBiddingProperty(biddingProperty);
         currentState.addOptions("Ok");
 
+
         return currentState;
     }
 
@@ -31,6 +32,7 @@ public class AuctionComplete extends AuctionTreeNode {
         int returnPlayerIndex = getReturnPlayerIndex();
         //return to the main tree and correct player
         setCurrentPlayer(players.get(returnPlayerIndex));
+        getCaseInteractor().getListener().writeIfMultiplayer("AUCTION DONE");
         return getMainParent();
     }
 }

@@ -3,6 +3,9 @@ package Entities.GUI.Network;
 import Entities.GUI.Screens.Screen;
 import Logic.GeneralGameNode;
 import Logic.InitialNodeLogic.InitialGameNode;
+import Logic.MainTreeNodeLogic.RollBranch.EmptyPropertyBranch.AuctionNodeLogic.AuctionComplete;
+import Logic.MainTreeNodeLogic.RollBranch.EmptyPropertyBranch.AuctionNodeLogic.AuctionEntryUseCase;
+import Logic.MainTreeNodeLogic.RollBranch.EmptyPropertyBranch.AuctionNodeLogic.AuctionTreeNode;
 import Logic.NodeNames;
 
 import java.io.IOException;
@@ -89,7 +92,54 @@ public class InitialInterpreter extends NetworkInterpreter{
                     getUseCaseInteractor().interpretInnerMessages(newMessage);
                     getDisplayInteractor().refreshTurnChangeOptions();
                 }
+                case "TRADE", "CANCEL_TRADE" ->{
+                    getDisplayInteractor().getScreenFactory().getNode(NodeNames.MAIN_PARENT).handleAsynchronousInput(message);
+                }
+                case "TRADE_ACCEPT" ->{
+                    getPresenterDisplay().forceNodeSwitch(NodeNames.ACCEPT_TRADE);
+                }
+                case "TRADE_DECLINE", "TRADE_CANCELLED" ->{
+                    getPresenterDisplay().forceNodeSwitch(NodeNames.DECLINE_TRADE);
+                }
+                case "SWAP" ->{
+                    String [] propertyMessages = message.split("¶");
+                    GeneralGameNode.swapProperty(propertyMessages[1], propertyMessages[2]);
+                }
+                case "INIT_AUCTION" ->{
+                    AuctionTreeNode.initialize();
+                    AuctionTreeNode.setAuctionProperty();
+                    AuctionTreeNode.setReturnPlayerIndex(Integer.parseInt(splitMessage[1]));
+                    getPresenterDisplay().forceNodeSwitch(NodeNames.AUCTION_PARENT);
+                }
+                case "AUCTION" ->{
+                    AuctionTreeNode.interpretMessage(message);
+                    if (splitMessage[1].equals("WON")){
+                        getPresenterDisplay().forceNodeSwitch(NodeNames.AUCTION_COMPLETE);
+                    }
+                    else if(splitMessage[1].equals("DONE")){
+                        getPresenterDisplay().forceNodeSwitch(NodeNames.MAIN_PARENT);
+                    }
+                    getDisplayInteractor().refreshTurnChangeOptions();
 
+                }
+                case "BUILD" ->{
+                    GeneralGameNode.buildProperty(splitMessage[1]);
+                    getDisplayInteractor().refreshTurnChangeOptions();
+                }
+                case "MORTGAGE" ->{
+                    GeneralGameNode.mortgageProperty(splitMessage[1]);
+                    getDisplayInteractor().refreshTurnChangeOptions();
+                }
+                case "UN-MORTGAGE" ->{
+                    GeneralGameNode.unMortgageProperty(splitMessage[1]);
+                    getDisplayInteractor().refreshTurnChangeOptions();
+                }
+                case "COMPLETE" ->{
+                    getPresenterDisplay().forceNodeSwitch(NodeNames.FINISH_GAME);
+                }
+                case "BANKRUPTCY" ->{
+                    GeneralGameNode.bankrupt(Integer.parseInt(splitMessage[1]));
+                }
             }
         }
     }

@@ -48,6 +48,7 @@ public class MortgageUseCase extends MainGameNode {
             Property targetProperty = currentPlayer.getProperties().get(Integer.parseInt(selectedOptions.get(NodeNames.SELECT_PROPERTY)));
             if (!targetProperty.getMortgageStatus()){
                 currentPlayerLogic.mortgage(targetProperty);
+                getCaseInteractor().getListener().writeIfMultiplayer("MORTGAGE " + targetProperty.getName());
             }
         }
 

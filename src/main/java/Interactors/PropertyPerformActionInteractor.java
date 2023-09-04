@@ -26,10 +26,18 @@ public class PropertyPerformActionInteractor implements PropertyPerformActionUse
             return " You landed on a property you own";
         } else {
             currentPlayer.pay(property.getOwner(), property.getRent());
-            listener.writeIfMultiplayer("INFO: PAID " + property.getRent() + " " + property.getOwner().getPlayerIndex());
+            listener.writeIfMultiplayer("INFO: PAID_RENT ");
 
             return " Paid $" + property.getRent() + " to " + property.getOwner().getName() +
                     " for landing on " + property.getName();
         }
     }
+
+    @Override
+    public String payExact(Property property, Player currentPlayer) {
+        currentPlayer.pay(property.getOwner(), property.getRent());
+        return currentPlayer.getName() + " paid $" + property.getRent() + " to " + property.getOwner().getName() +
+                " for landing on " + property.getName();
+    }
+
 }

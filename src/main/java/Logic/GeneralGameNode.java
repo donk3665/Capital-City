@@ -2,7 +2,13 @@ package Logic;
 
 import Entities.Game.Board;
 import Entities.Game.Player;
+import Entities.Game.Property;
+import Interactors.PerformActionSpaceCardInteractor;
+import Interactors.PropertyPerformActionInteractor;
+import UseCases.PerformActionSpaceUseCase;
+import UseCases.PropertyPerformActionUseCase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,7 +21,6 @@ public abstract class GeneralGameNode extends GameNode {
     private static Player currentPlayer;
     private static Player clientPlayer;
     private static Board board;
-//    private static final HashMap<String, Integer> selectedOptions = new HashMap<>();
     private static int returnPlayerIndex = -1;
     private static String answer;
     private static boolean multiplayer = false;
@@ -38,7 +43,7 @@ public abstract class GeneralGameNode extends GameNode {
     public String getAnswer(){
         return answer;
     }
-    public List<Player> getPlayers(){
+    public static List<Player> getPlayers(){
         return board.getPlayers();
     }
     public static void setReturnPlayerIndex(int index){
@@ -129,10 +134,56 @@ public abstract class GeneralGameNode extends GameNode {
         }
     }
 
-
-
     public GameNode getMainParent(){
         return getFactory().getNode(NodeNames.MAIN_PARENT,null);
     }
 
+    public static String performAction(int cardIndex){
+        PerformActionSpaceUseCase actionSpaceInteractor = new PerformActionSpaceCardInteractor(getCaseInteractor().getListener());
+        return actionSpaceInteractor.performExactAction(currentPlayer, board, cardIndex);
+    }
+    public static String payProperty( Player currentPlayer){
+        Property property = (Property) board.getCell(currentPlayer.getPosition());
+        PropertyPerformActionUseCase propertyPerformInteractor = new PropertyPerformActionInteractor(getCaseInteractor().getListener());
+        return propertyPerformInteractor.payExact(property,currentPlayer);
+    }
+    public static void buyProperty(Player currentPlayer){
+        Property targetProperty = (Property) board.getCell(currentPlayer.getPosition());
+
+        //indicates that the player can afford it and sets the property owner as the current player and
+        //deducts the player's money.
+        currentPlayer.pay(targetProperty.getPrice());
+//        currentPlayer.getProperties().add(targetProperty);
+        targetProperty.setOwner(currentPlayer);
+    }
+    public static void swapProperty(String propertyName1, String propertyName2){
+        Property property1 = board.getPropertyFromName(propertyName1);
+        Property property2 = board.getPropertyFromName(propertyName2);
+        Player property1Player = property1.getOwner();
+        property1.setOwner(property2.getOwner());
+        property2.setOwner(property1Player);
+    }
+    public static void buildProperty(String propertyName){
+        Property property = board.getPropertyFromName(propertyName);
+        PlayerLogic playerLogic = new PlayerLogic(getCurrentPlayer());
+        playerLogic.buildHouse(property,1);
+    }
+    public static void mortgageProperty(String propertyName){
+        Property property = board.getPropertyFromName(propertyName);
+        PlayerLogic playerLogic = new PlayerLogic(getCurrentPlayer());
+        playerLogic.mortgage(property);
+    }
+    public static void unMortgageProperty(String propertyName){
+        Property property = board.getPropertyFromName(propertyName);
+        PlayerLogic playerLogic = new PlayerLogic(getCurrentPlayer());
+        playerLogic.unmortgage(property);
+    }
+    public static void bankrupt(int playerIndex){
+        Player player = getBoard().getPlayers().get(playerIndex);
+        ArrayList<Property> currentPlayerProperties = player.getProperties();
+        for (Property targetedProperty : currentPlayerProperties) {
+            targetedProperty.resetProperty();
+        }
+        board.removePlayer(player);
+    }
 }

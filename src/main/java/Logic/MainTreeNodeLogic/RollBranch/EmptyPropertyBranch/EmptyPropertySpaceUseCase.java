@@ -48,6 +48,8 @@ public class EmptyPropertySpaceUseCase extends MainGameNode {
         currentState.setCurrentPlayerProperty(targetProperty);
         currentState.addOptions(options.getKeys());
 
+
+
         return currentState;
     }
 

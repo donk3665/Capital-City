@@ -139,12 +139,12 @@ public class Player implements BasicPlayer {
 //        return utility;
 //    }
 
-    /**
-     * Changes the jail status of the player
-     */
-    public void changeJailStatus() {
-        this.inJail = !this.inJail;
-    }
+//    /**
+//     * Changes the jail status of the player
+//     */
+//    public void changeJailStatus() {
+//        this.inJail = !this.inJail;
+//    }
 
 
     /**

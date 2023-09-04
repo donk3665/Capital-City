@@ -12,8 +12,8 @@ import Logic.NodeNames;
  */
 public class SendTradeUseCase extends MainGameNode {
 
-    public SendTradeUseCase(GameNode previousNode) {
-        super(NodeNames.SEND_TRADE, previousNode);
+    public SendTradeUseCase() {
+        super(NodeNames.SEND_TRADE, null);
     }
 
     String[] options = new String[]{"Yes", "No"};
@@ -32,7 +32,6 @@ public class SendTradeUseCase extends MainGameNode {
     @Override
     public NodeInterface performInput(InputInformation input) {
 
-        // if the input is 0, is if the trade is to be sent. Otherwise, the trade will not be sent.
         if (input.getInput().equals(options[0])) {
             return getFactory().getNode(NodeNames.TRADE_OPPONENT_PARENT, null);
         }

@@ -11,4 +11,5 @@ public interface PerformActionSpaceUseCase {
     
     String performAction(ActionSpace actionSpace, Player player, Board board);
 
+    String performExactAction(Player player, Board board, int cardIndex);
 }

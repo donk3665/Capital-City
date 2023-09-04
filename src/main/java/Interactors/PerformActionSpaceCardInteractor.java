@@ -24,10 +24,12 @@ public class PerformActionSpaceCardInteractor implements PerformActionSpaceUseCa
      */
     public Card generateRandomCard(ActionSpace actionSpace) {
         int random_index = new Random().nextInt(actionSpace.getCards().size());
+        listener.writeIfMultiplayer("INFO: ACTION_SPACE_CARD " + random_index);
         return actionSpace.getCards().get(random_index);
-        
     }
-
+    public Card generateCard(ActionSpace actionSpace, int index) {
+        return actionSpace.getCards().get(index);
+    }
     /**
      * Performs the advance action of the card
      * @param player the player
@@ -36,11 +38,13 @@ public class PerformActionSpaceCardInteractor implements PerformActionSpaceUseCa
      */
     public String advanceAction(Player player, Card card) {
             String action = card.getActionString();
-            int randomNumberOfSteps = new Random().nextInt(15);
-            player.move(randomNumberOfSteps);
-            action = " " + action + " " + randomNumberOfSteps + " steps.";
+            int numberOfSteps = card.getAmount();
+            player.move(numberOfSteps);
 
-            if (player.getPosition() == 0 || player.getPosition() + randomNumberOfSteps > 40) {
+
+            action = " " + action + " " + numberOfSteps + " steps.";
+
+            if (player.getPosition() == 0 || player.getPosition() + numberOfSteps > 40) {
                 player.changeMoney(200);
             }
             return action;
@@ -131,6 +135,14 @@ public class PerformActionSpaceCardInteractor implements PerformActionSpaceUseCa
      */
     public String performAction(ActionSpace actionSpace, Player player, Board board) {
         Card card = generateRandomCard(actionSpace);
+        return performCardAction(card, player, board);
+    }
+    public String performExactAction(Player player, Board board, int cardIndex) {
+        ActionSpace actionSpace = (ActionSpace) board.getCell(player.getPosition());
+        Card card = generateCard(actionSpace, cardIndex);
+        return performCardAction(card, player, board);
+    }
+    private String performCardAction(Card card, Player player, Board board){
         ActionTypeEnum actionType = card.getActionType();
 
         switch (actionType){
@@ -155,5 +167,4 @@ public class PerformActionSpaceCardInteractor implements PerformActionSpaceUseCa
         }
         return getOutOfJailAction(player, card);
     }
-
 }

@@ -22,7 +22,6 @@ public class CornerTilePerformActionInteractor implements CornerTilePerformActio
      */
     @Override
     public String performAction(Player currentPlayer, CornerTiles corner) {
-        //TODO SOMETHING WITH LISTENER
         return corner.returnMessage(currentPlayer);
     }
 }

@@ -1,11 +1,12 @@
-chance:Advance:ADVANCE:0
+chance:Advance:ADVANCE:7
 chance:Bank pays you $50 dividend:GET_PAID:50
 chance:Get out of jail free:GET_OUT_OF_JAIL_CARD:0
 chance:Speeding fine, pay $15:PAY:15
 chance:Pay each player $10:PAY_ALL:10
 chance:Building loan matures, collect $150:GET_PAID:150
 chance:Go to jail:GO_TO_JAIL:0
-comchest:Advance:ADVANCE:200
+comchest:Advance:ADVANCE:10
+comchest:Advance:ADVANCE:-3
 comchest:Bank error in your favour($200):GET_PAID:200
 comchest:Doctor's fee($50):PAY:50
 comchest:Collect $50 from sale of stock:GET_PAID:50

@@ -77,6 +77,7 @@ public enum NodeNames {
     HIGH_OPTION,
     LOW_OPTION,
     MEDIUM_OPTION,
-    JOIN_GAME, AUCTION_COMPLETE
+    JOIN_GAME,
+    AUCTION_COMPLETE
 
 }

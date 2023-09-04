@@ -90,7 +90,18 @@ public class Property extends Cell {
      * Sets the owner of this property
      * @param player the player who owns this property
      */
-    public void setOwner(Player player){ownedBy = player;}
+    public void setOwner(Player player){
+        if (ownedBy != null){
+            ownedBy.getProperties().remove(this);
+        }
+        ownedBy = player;
+        ownedBy.getProperties().add(this);
+    }
+    public void resetProperty(){
+        ownedBy = null;
+        setHouses(0);
+        setMortgageStatus(false);
+    }
 
     /**
      * Gets the property name

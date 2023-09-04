@@ -38,14 +38,18 @@ public class FoldUseCase extends AuctionTreeNode {
         auctionStates[getCurrentPlayerIndex()] = 1;
         auctionComplete = checkAuction();
 
+        getCaseInteractor().getListener().writeIfMultiplayer("AUCTION FOLD");
+
         switchPlayersAuction();
         //when the auction is complete
         if (auctionComplete != -1){
             //give the winner their property
             getSelectedOptions().put(getName(), String.valueOf(auctionComplete));
             playerWon = players.get(auctionComplete);
-            playerWon.addProperty(biddingProperty);
+            biddingProperty.setOwner(playerWon);
             playerWon.pay(auctionStates[potIndex]);
+
+            getCaseInteractor().getListener().writeIfMultiplayer("AUCTION WON " + playerWon.getPlayerIndex());
 
             return getFactory().getNode(NodeNames.AUCTION_COMPLETE, this);
         }

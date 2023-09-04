@@ -170,12 +170,14 @@ public class BoardGrid {
         // Top-right
         c.gridx = 5;
         c.gridy = 1;
-        centerPanel.add(array[1], c);
+        //centerPanel.add(array[1], c);
+        centerPanel.add(new ImageLabel(""));
 
         //Bottom-left
         c.gridx = 1;
         c.gridy = 6;
-        centerPanel.add(array[2], c);
+//        centerPanel.add(array[2], c);
+        centerPanel.add(new ImageLabel(""));
 
         //Bottom-Right
         c.gridx = 5;

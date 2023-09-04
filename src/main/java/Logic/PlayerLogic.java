@@ -54,6 +54,10 @@ public class PlayerLogic {
             }
         return (String.valueOf( roll1 + roll2));
     }
+    public String forceRoll(int roll){
+        this.player.move(roll);
+        return String.valueOf(roll);
+    }
 
     private static boolean isConsecutive(int roll1, int roll2) {
         return roll1 == roll2;

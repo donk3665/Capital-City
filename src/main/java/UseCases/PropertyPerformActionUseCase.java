@@ -8,4 +8,6 @@ import Entities.Game.Property;
  */
 public interface PropertyPerformActionUseCase {
     String performAction(Property property, Player player);
+
+    String payExact(Property property, Player currentPlayer);
 }

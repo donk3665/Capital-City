@@ -27,13 +27,14 @@ public class AuctionEntryUseCase extends AuctionTreeNode {
     @Override
     public State create_state() {
         initialize();
-        Board board = getBoard();
-        Player currentPlayer = getCurrentPlayer();
         tempNode = getFactory().getNode(NodeNames.AUCTION_PARENT, this);
         //returnPlayerAddress will hold the original player index in this.board.getPlayers()
-        biddingProperty = (Property) board.getCell(currentPlayer.getPosition());
+        setAuctionProperty();
         setReturnPlayerIndex(getCurrentPlayerIndex());
         getGameLogicInteractor().setCurrentNode(tempNode);
+
+        getCaseInteractor().getListener().writeIfMultiplayer("INIT_AUCTION " + getCurrentPlayerIndex());
+
         switchPlayersAuction();
 
         return tempNode.create_state();

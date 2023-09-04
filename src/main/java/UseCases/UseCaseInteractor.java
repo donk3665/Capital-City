@@ -1,7 +1,7 @@
 
 package UseCases;
 
-import Entities.GUI.Network.StringInterpreter;
+import Entities.GUI.Network.GameInfoInterpreter;
 import Entities.Game.Board;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
@@ -43,7 +43,7 @@ public class UseCaseInteractor{
         this.listener = listener;
     }
 
-    private StringInterpreter interpreter;
+    private GameInfoInterpreter interpreter;
 
     /**
      * Constructor for the UseCaseInteractor.
@@ -54,7 +54,7 @@ public class UseCaseInteractor{
         this.gameCreation = new GameCreation();
         this.savePackager = new SavePackager();
         this.logicInteractor = new GameLogic();
-        this.interpreter = new StringInterpreter(logicInteractor);
+        this.interpreter = new GameInfoInterpreter(logicInteractor);
         GameNode.setCaseInteractor(this);
     }
     public void interpretInnerMessages(String[] message){
@@ -66,7 +66,6 @@ public class UseCaseInteractor{
     public void beginSequence(){
         if (InitialGameNode.savedGame){
             String loadFile = InitialGameNode.saveFile;
-            //getSelectedOptions().get(NodeNames.SELECT_SAVE);
             ArrayList<String> lines = null;
             try {
                 lines = getLoadAccess().getRawData(loadFile);

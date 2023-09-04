@@ -151,8 +151,11 @@ public class NodeFactory {
                     return new SelectActionPropertyUseCase(beforeNode);
                 }
                 case SEND_TRADE -> {
-                    return new SendTradeUseCase(beforeNode);
+                    return new SendTradeUseCase();
                 }
+//                case WAIT_TRADE -> {
+//                    return new WaitingTradeUseCase();
+//                }
 //                case SETTINGS -> {
 //                    return new SettingsMenuUseCase(beforeNode);
 //                }

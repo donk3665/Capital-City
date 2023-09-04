@@ -35,6 +35,7 @@ public class GridOverlayCreator {
     }
     private void rectangleTileOverlay(WeightlessPanel panel, boolean[] playersArray, Cell cell, int direction){
         panel.removeAll();
+
         panel.setLayout(new GridBagLayout());
 
         if (cell.getType() == CellEnum.PROPERTY){
@@ -89,9 +90,11 @@ public class GridOverlayCreator {
             drawBottomPart(bottomPanel, cell, direction, playersArray);
         }
         else{
-            drawPropertyIcons(panel, direction%2 == 0, playersArray);
+            drawPlayerIcons(panel, direction%2 == 0, playersArray);
         }
-        panel.validate();
+
+
+
     }
     private void drawBottomPart(WeightlessPanel panel, Cell cell, int direction, boolean[] playersArray){
         panel.setLayout(new GridBagLayout());
@@ -110,10 +113,11 @@ public class GridOverlayCreator {
 
         WeightlessPanel panel1 = new WeightlessPanel();
         panel1.setLayout(new BorderLayout());
-        panel1.setBackground(Color.BLUE);
+        panel1.setOpaque(true);
         panel.add(panel1, constraints);
 
         JTextArea area = new JTextArea();
+        area.setOpaque(true);
         area.setLineWrap(true);
         area.setEditable(false);
         area.setWrapStyleWord(true);
@@ -144,9 +148,10 @@ public class GridOverlayCreator {
         JTextField area2 = new JTextField();
         area2.setHorizontalAlignment(SwingConstants.CENTER);
         area2.setBorder(new EmptyBorder(0,0,0,0));
-        area2.setBackground(new Color(0,0,0,0)); ;
+        area2.setBackground(new Color(0,0,0,0));
+        area2.setForeground(Color.RED);
         area2.setEditable(false);
-        area2.setFont(FontCreator.getFontAharoni(12));
+        area2.setFont(FontCreator.getFontAharoni(16));
         area2.setText(String.valueOf( ((Property) cell).getPrice()));
 
         panel2.add(area2);
@@ -157,8 +162,8 @@ public class GridOverlayCreator {
 
 
         WeightlessPanel panel3 = new WeightlessPanel();
-        panel3.setBackground(Color.WHITE);
-        drawPropertyIcons(panel3, direction%2 == 0, playersArray);
+        panel3.setOpaque(false);
+        drawPlayerIcons(panel3, direction%2 == 0, playersArray);
         panel.add(panel3, constraints);
 
         panel.validate();
@@ -195,7 +200,7 @@ public class GridOverlayCreator {
         }
     }
 
-    private void drawPropertyIcons(WeightlessPanel panel, boolean isCellVertical, boolean[] playersArray){
+    private void drawPlayerIcons(WeightlessPanel panel, boolean isCellVertical, boolean[] playersArray){
         panel.setLayout(new GridBagLayout());
 
         GridBagConstraints constraints = new GridBagConstraints();
@@ -217,12 +222,20 @@ public class GridOverlayCreator {
     }
     private void drawIcons(GridBagConstraints constraints, int columnCount, boolean [] playersArray, WeightlessPanel panel ){
         for (int i = 0; i<playersArray.length; i++){
+
             if (playersArray[i]) {
+                JPanel wrapperPanel = new JPanel();
+                wrapperPanel.setBackground(new Color(2,2,2,0));
+                wrapperPanel.setLayout(new BorderLayout());
+
                 constraints.gridx = i % columnCount;
                 constraints.gridy = i / columnCount;
-                ImageLabel image = new ImageLabel("");
+                LayeredImageLabel image = new LayeredImageLabel("");
                 image.setImage("/Images/InGameAssets/Icons/Picture" + (i) + ".png");
+                image.setImage2("/Images/InGameAssets/MainScreenAssets/IconContainer.png");
                 image.setPreserveRatio(true);
+
+
                 panel.add(image, constraints);
             }
         }

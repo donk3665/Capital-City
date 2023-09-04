@@ -24,4 +24,5 @@ public interface GUIInterface {
     Player getClientPlayer();
     boolean isTurn();
 
+    Player getTradingOpponent();
 }

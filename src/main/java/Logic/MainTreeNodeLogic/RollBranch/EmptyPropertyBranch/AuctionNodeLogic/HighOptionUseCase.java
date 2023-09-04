@@ -27,6 +27,7 @@ public class HighOptionUseCase extends AuctionTreeNode {
     @Override
     public NodeInterface performInput(InputInformation input) {
         auctionStates[potIndex] += HIGH_OPTION;
+        getCaseInteractor().getListener().writeIfMultiplayer("AUCTION HIGH");
         switchPlayersAuction();
         return getFactory().getNode(NodeNames.AUCTION_PARENT, this);
     }

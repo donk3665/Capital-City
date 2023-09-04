@@ -42,7 +42,10 @@ public class AuctionScreen extends Screen{
 
     @Override
     public void attachNonStaticComponents() {
-        textArea.setText(description.getDescription().getText());
+        textArea.setText("");
+       // if (getState().isTurn() || getState().getId() == NodeNames.AUCTION_COMPLETE){
+            textArea.setText(description.getDescription().getText());
+       // }
         addPlayers(middlePanel);
         addOptionBox(secondMiddlePanel);
         addCard(cardPanel);
@@ -244,6 +247,9 @@ public class AuctionScreen extends Screen{
 
 
     public void connectButtons(JLayeredPane layeredPanel){
+        if (!getState().isTurn()){
+            return;
+        }
         if (optionPanel != null) {
             layeredPanel.remove(optionPanel);
         }

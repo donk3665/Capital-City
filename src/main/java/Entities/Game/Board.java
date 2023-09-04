@@ -22,6 +22,17 @@ public class Board implements BasicBoard {
         this.players = players;
         this.cells = cells;
     }
+    public Property getPropertyFromName(String name){
+        for (int i = 0; i<cells.size(); i++){
+            if (cells.get(i) instanceof Property){
+                if (((Property) cells.get(i)).getName().equals(name)){
+                    return (Property) cells.get(i);
+                }
+            }
+        }
+        System.err.println("Could not find property");
+        return null;
+    }
 
 //    public Player getPlayer(String name){
 //        for (Player player : players) {

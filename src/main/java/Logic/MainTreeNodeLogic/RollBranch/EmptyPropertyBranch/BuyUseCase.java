@@ -6,6 +6,7 @@ import Entities.Game.Property;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Logic.GameNode;
+import Logic.GeneralGameNode;
 import Logic.MainTreeNodeLogic.MainGameNode;
 import Logic.MainTreeNodeLogic.MainParentNodeUseCase;
 import Logic.NodeInterface;
@@ -30,21 +31,15 @@ public class BuyUseCase extends MainGameNode {
      */
     @Override
     public State create_state() {
-        Board board = getBoard();
+
         Player currentPlayer = getCurrentPlayer();
-        Property targetProperty;
-
         State currentState = new State();
-        //player buys the property that the player lands on
-        targetProperty = (Property) board.getCell(currentPlayer.getPosition());
 
-        //indicates that the player can afford it and sets the property owner as the current player and
-        //deducts the player's money.
-        currentPlayer.pay(targetProperty.getPrice());
-        currentPlayer.getProperties().add(targetProperty);
-        targetProperty.setOwner(currentPlayer);
+        GeneralGameNode.buyProperty(currentPlayer);
 
         currentState.addOptions("ok");
+
+        getCaseInteractor().getListener().writeIfMultiplayer("INFO: BUY ");
 
         return currentState;
     }

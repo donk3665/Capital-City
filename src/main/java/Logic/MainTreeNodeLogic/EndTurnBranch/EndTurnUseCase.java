@@ -32,6 +32,7 @@ public class EndTurnUseCase extends MainGameNode {
             mainStates[3] += 1;
             if (mainStates[3] >= mainStates[4] && mainStates[4] != -1){
                 node = new FinishGameUseCase();
+                getCaseInteractor().getListener().writeIfMultiplayer("COMPLETE");
                 return node.create_state();
             }
             //changing the player and turning the state back to normal

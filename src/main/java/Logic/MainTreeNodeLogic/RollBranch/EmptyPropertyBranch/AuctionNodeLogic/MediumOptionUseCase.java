@@ -27,6 +27,7 @@ public class MediumOptionUseCase extends AuctionTreeNode {
     @Override
     public NodeInterface performInput(InputInformation input) {
         auctionStates[potIndex] += MEDIUM_OPTION;
+        getCaseInteractor().getListener().writeIfMultiplayer("AUCTION MEDIUM");
         switchPlayersAuction();
         return getFactory().getNode(NodeNames.AUCTION_PARENT, this);
     }

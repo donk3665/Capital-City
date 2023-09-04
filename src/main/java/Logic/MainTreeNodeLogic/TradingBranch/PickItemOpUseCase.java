@@ -38,9 +38,9 @@ public class PickItemOpUseCase extends MainGameNode {
 
         int input = Integer.parseInt(getSelectedOptions().get(NodeNames.PICK_PLAYER));
 
-        if (input >= getCurrentPlayerIndex()) {
-            input += 1;
-        }
+//        if (input >= getCurrentPlayerIndex()) {
+//            input += 1;
+//        }
 
         //provide item options from the inventory of the selected player
         Player selectedPlayer = getBoard().getPlayers().get(input);

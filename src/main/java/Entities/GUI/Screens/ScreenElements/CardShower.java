@@ -55,8 +55,7 @@ public class CardShower implements ContentPanelInterface {
                 if (property.getOwner()!= null){
                     propertyOwner = property.getOwner().getName();
                 }
-
-                area.setText("Owner: " + propertyOwner + "\nHouses: " + property.getHouses() + "\nPlayers on:" + numPlayersTile);
+                area.setText("Owner: " + propertyOwner + "\nHouses: " + property.getHouses() + "\nPlayers on:" + numPlayersTile + "\nMortgaged?:"+ property.getMortgageStatus());
             }
             case CORNER_TILE, ACTION_SPACE -> {
                 area.setText("Players on:" + numPlayersTile);

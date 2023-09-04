@@ -35,6 +35,7 @@ public class RollUseCase extends MainGameNode {
             //roll the dice and update the position
             PlayerLogic playerLogic = new PlayerLogic(currentPlayer);
             diceRoll = playerLogic.rollDice(0);
+            //diceRoll = playerLogic.forceRoll(7);
 
             //get the space landed on
             Cell landedOnCell = board.getCell(currentPlayer.getPosition());
@@ -43,8 +44,7 @@ public class RollUseCase extends MainGameNode {
             getCaseInteractor().getListener().writeIfMultiplayer("INFO: MOVE " + currentPlayer.getPosition());
 
             /*
-            if the space is a property and has no owner, transverse to a branch, otherwise,
-            transverse to another
+            transverse to another node based on position of player
             */
             mainStates[1] = 1;
 
@@ -70,6 +70,11 @@ public class RollUseCase extends MainGameNode {
                         assert landedOnCell instanceof CornerTiles;
                         CornerTiles cornerTile = (CornerTiles) landedOnCell;
                         setAnswer(cornerTileInteractor.performAction(currentPlayer, cornerTile));
+
+                        if (cornerTile instanceof GoToJail){
+                            currentPlayer.setInJail(true);
+                            currentPlayer.setPosition(10);
+                        }
                     }
                     case ACTION_SPACE -> {
                         PerformActionSpaceUseCase actionSpaceInteractor = new PerformActionSpaceCardInteractor(getCaseInteractor().getListener());

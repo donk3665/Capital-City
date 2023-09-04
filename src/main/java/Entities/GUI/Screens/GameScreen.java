@@ -4,11 +4,14 @@ import Entities.ExternalDataTransfer.BasicPlayer;
 import Entities.GUI.Screens.ScreenElements.*;
 import Entities.GUI.Screens.ScreenElements.Popup;
 import Entities.GUI.SettingsController.SettingsFunction;
+import Logic.NodeNames;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -38,11 +41,19 @@ public class GameScreen extends Screen{
 
     }
 
-    public boolean connectButtons(JLayeredPane connect){
+    public boolean connectGameButtons(JLayeredPane connect){
         if (!getState().isTurn()){
             return false;
         }
-        optionPanel.removeAll();
+        connectButtons(optionPanel, options.getButtons());
+
+        connect.add(optionPanel);
+        return true;
+
+    }
+    public void connectButtons(JPanel panel, List<ImageButton> buttons){
+
+        panel.removeAll();
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -50,34 +61,29 @@ public class GameScreen extends Screen{
         c.weighty = 1;
         c.weightx = 1;
         c.ipady = 24;
-        optionPanel.setBorder(new EmptyBorder(30,40,30,40));
+        panel.setBorder(new EmptyBorder(30,40,30,40));
 
         c.insets = new Insets(6, 6,6,6);
-        optionPanel.setOpaque(false);
-
+        panel.setOpaque(false);
 
         String [] paths = getImagePathFactory().getButtonPaths();
 
-        JPanel[] panelList = new JPanel[options.getButtons().size()];
+        JPanel[] panelList = new JPanel[buttons.size()];
 
 
-        for (int i = 0; i < options.getButtons().size(); i++){
+        for (int i = 0; i < buttons.size(); i++){
             panelList[i] = new WeightlessPanel();
             panelList[i].setLayout(new BorderLayout());
             c.gridy = i%4;
             c.gridx =  i/4;
             //System.out.println(options.getButtons().get(i).getText());
-            options.getButtons().get(i).setImage(paths[i]);
-            panelList[i].add(options.getButtons().get(i));
-            options.getButtons().get(i).setFontSizeAndColour(24, Color.white);
-            optionPanel.add(panelList[i],c );
+            buttons.get(i).setImage(paths[i]);
+            panelList[i].add(buttons.get(i));
+            buttons.get(i).setFontSizeAndColour(24, Color.white);
+            panel.add(panelList[i],c );
             //panelList[i].validate();
         }
-
-        optionPanel.validate();
-
-        connect.add(optionPanel);
-        return true;
+        panel.validate();
 
     }
 
@@ -212,7 +218,7 @@ public class GameScreen extends Screen{
         JPanel gridPanel = new JPanel();
         gridPanel.setLayout(new GridBagLayout());
         gridPanel.setBounds(0,0, board.getWidth(), board.getHeight());
-        board.add(gridPanel, JLayeredPane.PALETTE_LAYER);
+        board.add(gridPanel, JLayeredPane.MODAL_LAYER);
         gridPanel.setOpaque(false);
 
         buttonGrid = new BoardGrid(gridPanel, false, board);
@@ -221,11 +227,20 @@ public class GameScreen extends Screen{
         overlayPanel.setLayout(new GridBagLayout());
         overlayPanel.setBounds(0,0, board.getWidth(), board.getHeight());
         overlayPanel.setOpaque(false);
-        board.add(overlayPanel, JLayeredPane.DEFAULT_LAYER);
+        board.add(overlayPanel, JLayeredPane.PALETTE_LAYER);
         overlayGrid = new BoardGrid(overlayPanel, true, board);
 
+//        JPanel backgroundPanel = new JPanel();
+//        backgroundPanel.setLayout(new GridBagLayout());
+//        backgroundPanel.setBounds(0,0, board.getWidth(), board.getHeight());
+//        backgroundPanel.setOpaque(false);
+//        board.add(backgroundPanel, JLayeredPane.DEFAULT_LAYER);
+//        BoardGrid backgroundGrid = new BoardGrid(backgroundPanel, true, board);
+//        paintBackgroundElements(backgroundGrid);
     }
-
+//    private void paintBackgroundElements(BoardGrid overlayGrid){
+//        GridBackgroundCreator backgroundCreator = new GridBackgroundCreator(overlayGrid.getPanelGrid());
+//    }
     private void paintHousesAndHotels(BoardGrid overlayGrid){
         GridOverlayCreator overlayCreator = new GridOverlayCreator(overlayGrid.getPanelGrid(), getCurrentBoard());
     }
@@ -369,7 +384,52 @@ public class GameScreen extends Screen{
             case "UNLOCK_CHAT" ->{
                 actualChatBox.addMultiplayerSupport(getListener());
             }
+            case "TRADE" ->{
+                String[] tradeSplit = input.split("¶");
+                addTradePopup(tradeSplit[1], tradeSplit[2]);
+            }
+            case "CANCEL_TRADE" ->{
+                if (!trade_reacted){
+                    gamePane.remove(tradePopupPanel);
+                    gamePane.validate();
+                    gamePane.repaint();
+
+                    getListener().write("TRADE_CANCELLED " + currentPlayer.getPlayerIndex());
+                }
+            }
+
         }
+    }
+    private volatile boolean trade_reacted = false;
+    JPanel tradePopupPanel = new WeightlessPanel();;
+    public void addTradePopup(String currentPropertyName, String tradingPropertyName){
+        trade_reacted = false;
+        tradePopupPanel.setBounds(gamePane.getWidth()/4, gamePane.getHeight()/4, gamePane.getWidth()/2, gamePane.getHeight()/2);
+        gamePane.add(tradePopupPanel, JLayeredPane.MODAL_LAYER);
+
+        List<String> list = new ArrayList<>();
+        list.add("yes");
+        list.add("no");
+        OptionPanel optionPanel1 = new OptionPanel(list, getCurrentPlayer().getName() + " is requesting for " +tradingPropertyName + " in exchange for " + currentPropertyName
+        + ". Accept?");
+        optionPanel1.getButtonList().get(0).addActionListener(e ->{
+            getListener().write("TRADE_ACCEPT " + currentPlayer.getPlayerIndex());
+            trade_reacted = true;
+            gamePane.remove(tradePopupPanel);
+            gamePane.validate();
+            gamePane.repaint();
+        });
+        optionPanel1.getButtonList().get(1).addActionListener(e ->{
+            getListener().write("TRADE_DECLINE " + currentPlayer.getPlayerIndex());
+            trade_reacted = true;
+            gamePane.remove(tradePopupPanel);
+            gamePane.validate();
+            gamePane.repaint();
+        });
+        Popup popup = new Popup(tradePopupPanel, optionPanel1.getContentPanel() ,false);
+
+        gamePane.validate();
+        gamePane.repaint();
     }
 
     @Override
@@ -379,12 +439,66 @@ public class GameScreen extends Screen{
         for (Component component: optionBox.getComponentsInLayer(JLayeredPane.DEFAULT_LAYER)){
             optionBox.remove(component);
         }
-        if (connectButtons(optionBox)){
+        for (Component component: optionBox.getComponentsInLayer(JLayeredPane.POPUP_LAYER)){
+            optionBox.remove(component);
+        }
+        for (Component component: optionBox.getComponentsInLayer(JLayeredPane.MODAL_LAYER)){
+            optionBox.remove(component);
+        }
+        if (connectGameButtons(optionBox)){
             textArea.setText(description.getDescription().getText());
+        }
+        else {
+            if (getState().getId() == NodeNames.TRADE_OPPONENT_PARENT){
+                addWaitCancelPanel(optionBox);
+            }
+            else {
+                addPlayerViewerPanel(optionBox);
+            }
         }
         paintHousesAndHotels(overlayGrid);
         connectBoardButtons(board, buttonGrid);
         setRecentChatBox(actualChatBox);
+    }
+    public void addPlayerViewerPanel(JLayeredPane pane){
+        List<ImageButton> playerButtons = new ArrayList<>();
+
+        ImagePanel panel = new ImagePanel();
+        pane.add(panel, JLayeredPane.POPUP_LAYER);
+        panel.setOpaque(false);
+        panel.setBorder(new EmptyBorder(40,40,40,40));
+        panel.setBounds(0,0, pane.getWidth(), pane.getHeight());
+
+        for (int i = 0; i<currentBoard.getBasicPlayers().size(); i++){
+            ImageButton tempButton = new ImageButton(currentBoard.getBasicPlayers().get(i).getName());
+            playerButtons.add(tempButton);
+
+            int finalI = i;
+            tempButton.addActionListener(e->{
+                panel.removeAll();
+                Popup popup = new Popup(panel, new PlayerShower(getCurrentBoard().getBasicPlayers().get(finalI)).getContentPanel(),true);
+            });
+
+        }
+        JPanel asyncOptionPanel = new WeightlessPanel();
+
+        asyncOptionPanel.setBounds(0,0,optionBox.getWidth(), optionBox.getHeight());
+        asyncOptionPanel.setLayout(new GridBagLayout());
+        connectButtons(asyncOptionPanel, playerButtons);
+
+        pane.add(asyncOptionPanel, JLayeredPane.MODAL_LAYER);
+    }
+
+    public void addWaitCancelPanel(JLayeredPane pane){
+        OptionPanel optionPanel1 = new OptionPanel(Collections.singletonList("Cancel"), "Sending trade...");
+
+        optionPanel1.getButtonList().get(0).addActionListener(e->{
+            getListener().write("CANCEL_TRADE " + currentPlayer.getPlayerIndex());
+
+        });
+        optionPanel1.getContentPanel().setBounds(pane.getWidth()/4,pane.getHeight()/4, pane.getWidth()/2, pane.getHeight()/2);
+        pane.add(optionPanel1.getContentPanel());
+
     }
 
 
