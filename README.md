@@ -29,11 +29,20 @@ The Logic pertaining to storing game data in and getting game data from a file
 ## GUI
 The front end of the program.
 
-## Network
-The functions used for multiplayer connectivity.
+### resources
+All of the assets and resources used in the program
 
-## resources
-All of the assets and resources used in the program.
+### Buttons
+Classes which control buttons used in the program
+
+### GUIDataTransfer
+Interfaces used for transfering data to the GUI
+
+### GUIInteractors
+Logic pertaining to transfering info from the back end to the front end
+
+## Network
+The functions used for multiplayer connectivity
 
 ## Test
 Tests are out of date, and not implemented.
