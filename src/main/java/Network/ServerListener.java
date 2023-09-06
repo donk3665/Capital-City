@@ -24,6 +24,10 @@ public class ServerListener implements Runnable{
         return active;
     }
     private final Object syncObject;
+    private static String SERVER_LOCATION;
+    public static void setServerLocation(String location){
+        SERVER_LOCATION = location;
+    }
 
     public void setActive(boolean active) {
         this.active = active;
@@ -44,11 +48,8 @@ public class ServerListener implements Runnable{
             socket = SocketChannel.open();
 
             try {
-                //this line is for local testing of the online multiplayer
-                //socket.socket().connect((new InetSocketAddress("127.0.0.1", 60000)));
-
                 //this line connects to the (not always running) server hosted on aws
-                socket.socket().connect((new InetSocketAddress("18.191.135.21", 60000)));
+                socket.socket().connect((new InetSocketAddress(SERVER_LOCATION, 60000)));
             }
             catch (IOException e){
                 System.out.println("Server is not up!");

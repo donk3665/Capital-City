@@ -29,8 +29,6 @@ public class InitialGameScreen extends Screen {
     }
 
 
-
-
     public void connectButtons(JPanel connect){
         JPanel panel = new JPanel();
         panel.setBorder(new EmptyBorder(200, 200, 200, 200));
@@ -140,7 +138,9 @@ public class InitialGameScreen extends Screen {
             synchronized (getPresenterDisplay().getWaitingObject()){
                 getPresenterDisplay().getWaitingObject().notify();
             }
-
+        }
+        else {
+            getPresenterDisplay().setReadyToSwitch();
         }
     }
 

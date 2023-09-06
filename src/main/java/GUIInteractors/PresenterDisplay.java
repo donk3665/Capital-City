@@ -26,6 +26,7 @@ public class PresenterDisplay implements GameLoop{
 
     final Object waitingObject;
     private boolean waiting = false;
+    private boolean readyToSwitch = false;
 
     public PresenterDisplay(){
         syncObject = new Object();
@@ -110,16 +111,23 @@ public class PresenterDisplay implements GameLoop{
     public void switchIfConnected(){
         if (inputControl.getCurrentState().getId() == NodeNames.MULTIPLAYER_STALL){
             waiting = true;
-            synchronized (waitingObject){
-                try {
-                waitingObject.wait();
-                } catch (InterruptedException e) {
-                // Happens if someone interrupts your thread.
+            if (!readyToSwitch) {
+                synchronized (waitingObject) {
+                    try {
+                        waitingObject.wait();
+                    } catch (InterruptedException e) {
+                        // Happens if someone interrupts your thread.
+                    }
                 }
             }
+            readyToSwitch = false;
             waiting = false;
             forceNodeSwitch(NodeNames.MULTIPLAYER_LOBBY);
+
         }
+    }
+    public void setReadyToSwitch(){
+        readyToSwitch = true;
     }
     public boolean isWaiting() {
         return waiting;

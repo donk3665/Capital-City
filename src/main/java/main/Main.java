@@ -1,6 +1,7 @@
 package main;
 
 import GUIInteractors.PresenterDisplay;
+import Network.ServerListener;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -14,8 +15,10 @@ public class Main {
      * Entry point to the application
      */
     public static void main(String[] args) throws URISyntaxException {
-
         PresenterDisplay display = new PresenterDisplay();
+
+        ServerListener.setServerLocation(args[0]);
+
         File customDir = new File(persistenceFilePath);
         if (!customDir.exists()){
             if (customDir.mkdirs()){
