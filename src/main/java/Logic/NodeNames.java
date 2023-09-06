@@ -20,7 +20,7 @@ public enum NodeNames {
     NUMBER_OF_ROUNDS,
     NO_SAVES,
 
-    // Main Node Names
+    // main.Main Node Names
     MAIN_PARENT,
 
     // Bankruptcy nodes
@@ -78,6 +78,6 @@ public enum NodeNames {
     LOW_OPTION,
     MEDIUM_OPTION,
     JOIN_GAME,
-    AUCTION_COMPLETE
+    SOUND_INITIAL, AUCTION_COMPLETE
 
 }

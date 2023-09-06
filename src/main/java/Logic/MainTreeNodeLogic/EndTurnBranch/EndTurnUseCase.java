@@ -39,6 +39,7 @@ public class EndTurnUseCase extends MainGameNode {
             changePlayers();
             mainStates[0] = 0;
             mainStates[1] = 0;
+            mainStates[3] = 0;
             node = getMainParent();
             getGameLogicInteractor().setCurrentNode(node);
             return getMainParent().create_state();

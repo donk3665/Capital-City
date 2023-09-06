@@ -43,14 +43,13 @@ public class AuctionScreen extends Screen{
     @Override
     public void attachNonStaticComponents() {
         textArea.setText("");
-       // if (getState().isTurn() || getState().getId() == NodeNames.AUCTION_COMPLETE){
-            textArea.setText(description.getDescription().getText());
-       // }
+        textArea.setText(description.getDescription().getText());
         addPlayers(middlePanel);
         addOptionBox(secondMiddlePanel);
         addCard(cardPanel);
         gameFrame.getContentPane().validate();
         setRecentChatBox(auctionChatBox);
+        getSoundController().playAuctionMusic();
     }
 
     @Override
@@ -262,7 +261,6 @@ public class AuctionScreen extends Screen{
         c.weighty = 1;
         c.weightx = 1;
         c.gridy = 0;
-        //c.ipady = 24;
         optionPanel.setBorder(new EmptyBorder(30,40,10,40));
 
         c.insets = new Insets(6, 6,6,6);
@@ -277,6 +275,11 @@ public class AuctionScreen extends Screen{
             panelList[i].setLayout(new BorderLayout());
             c.gridx =  i;
             options.getButtons().get(i).setImage(paths[i]);
+            if (i<3) {
+                options.getButtons().get(i).addActionListener(e -> {
+                    Screen.getSoundController().playClip(1);
+                });
+            }
             panelList[i].add(options.getButtons().get(i));
             options.getButtons().get(i).setFontSizeAndColour(24, Color.white);
             optionPanel.add(panelList[i],c );

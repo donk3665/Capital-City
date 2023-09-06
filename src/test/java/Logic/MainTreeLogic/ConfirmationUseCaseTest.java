@@ -28,7 +28,7 @@
 //        GeneralGameNode.initialize(playerOne, board, gameLogic);
 //        ConfirmationUseCase confirmationUseCase = new ConfirmationUseCase();
 //        State actual = confirmationUseCase.create_state(1);
-//        Assertions.assertEquals(actual.getId(), "Main Tree Parent Node");
+//        Assertions.assertEquals(actual.getId(), "main.Main Tree Parent Node");
 //    }
 //
 //}

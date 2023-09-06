@@ -17,8 +17,8 @@ import UseCases.PropertyPerformActionUseCase;
  */
 public class RollUseCase extends MainGameNode {
 
-    public RollUseCase(GameNode previousNode) {
-        super(NodeNames.ROLL, previousNode);
+    public RollUseCase() {
+        super(NodeNames.ROLL, null);
     }
     GameNode tempNode;
     /**
@@ -30,72 +30,51 @@ public class RollUseCase extends MainGameNode {
     public State create_state() {
         Board board = getBoard();
         Player currentPlayer = getCurrentPlayer();
-
+        State currentState = new State();
+        currentState.addOptions("Okay");
         if (mainStates[1] == 0) {
             //roll the dice and update the position
             PlayerLogic playerLogic = new PlayerLogic(currentPlayer);
-            diceRoll = playerLogic.rollDice(0);
+            diceRoll = playerLogic.rollDice(mainStates[3]);
+
+            String stateMessage = "You rolled a " + diceRoll + ".";
+            if (playerLogic.isRolledDouble()){
+                mainStates[3] = mainStates[3] + 1;
+                stateMessage = stateMessage.concat("This is a double, so you can roll again. You have rolled " + mainStates[3] + " doubles in a row.");
+            }
+            else{
+                mainStates[1] = 1;
+            }
+            currentState.setDescription(stateMessage);
+
             //diceRoll = playerLogic.forceRoll(7);
-
-            //get the space landed on
-            Cell landedOnCell = board.getCell(currentPlayer.getPosition());
-
 
             getCaseInteractor().getListener().writeIfMultiplayer("INFO: MOVE " + currentPlayer.getPosition());
 
             /*
             transverse to another node based on position of player
             */
-            mainStates[1] = 1;
-
+            Cell landedOnCell = board.getCell(currentPlayer.getPosition());
             if (landedOnCell instanceof Property &&
                     ((Property) landedOnCell).getOwner() == null) {
                 tempNode = getFactory().getNode(NodeNames.EMPTY_PROPERTY,this);
             } else {
-                //perform the action on the space as well
-                switch (landedOnCell.getType()) {
-                    case PROPERTY -> {
-                        PropertyPerformActionUseCase propertyInteractor = new PropertyPerformActionInteractor(getCaseInteractor().getListener());
-                        assert landedOnCell instanceof Property;
-                        Property property = (Property) landedOnCell;
-                        if (property.getMortgageStatus()) {
-                            setAnswer("This property is mortgaged, don't need to pay rent.");
-                        } else {
-                            setAnswer(propertyInteractor.performAction(property, currentPlayer));
-                        }
 
-                    }
-                    case CORNER_TILE -> {
-                        CornerTilePerformActionUseCase cornerTileInteractor = new CornerTilePerformActionInteractor(getCaseInteractor().getListener());
-                        assert landedOnCell instanceof CornerTiles;
-                        CornerTiles cornerTile = (CornerTiles) landedOnCell;
-                        setAnswer(cornerTileInteractor.performAction(currentPlayer, cornerTile));
-
-                        if (cornerTile instanceof GoToJail){
-                            currentPlayer.setInJail(true);
-                            currentPlayer.setPosition(10);
-                        }
-                    }
-                    case ACTION_SPACE -> {
-                        PerformActionSpaceUseCase actionSpaceInteractor = new PerformActionSpaceCardInteractor(getCaseInteractor().getListener());
-                        assert landedOnCell instanceof ActionSpace;
-                        ActionSpace actionSpace = (ActionSpace) landedOnCell;
-                        setAnswer(actionSpaceInteractor.performAction(actionSpace, currentPlayer, board));
-                    }
-                }
                 tempNode = getFactory().getNode(NodeNames.CALL_ACTION,this);
             }
         }
         else{
             tempNode = getFactory().getNode(NodeNames.ALREADY_ROLLED,this);
+            getGameLogicInteractor().setCurrentNode(tempNode);
+            return tempNode.create_state();
             //go to a node where it tells the user that they cannot roll
         }
-        getGameLogicInteractor().setCurrentNode(tempNode);
-        return tempNode.create_state();
+        //getGameLogicInteractor().setCurrentNode(tempNode);
+        return currentState;
     }
 
     @Override
     public NodeInterface performInput(InputInformation input) {
-        return null;
+        return tempNode;
     }
 }

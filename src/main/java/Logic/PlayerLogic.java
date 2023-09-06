@@ -23,8 +23,10 @@ public class PlayerLogic {
     public PlayerLogic(Player player) {
         this.player = player;
     }
-
-
+    private boolean rolledDouble = false;
+    public boolean isRolledDouble() {
+        return rolledDouble;
+    }
     /**
      * This method rolls the dice for the player. The dice result can indicate this player's movement while
      * they are not in jail. If they are in jail, the dice result can determine if the player can get out of jail
@@ -36,6 +38,9 @@ public class PlayerLogic {
         int min = 1;
         int roll1 =  (int) Math.floor(Math.random() * (max - min + 1) + min);
         int roll2 = (int) Math.floor(Math.random() * (max - min + 1) + min);
+        if (isConsecutive(roll1, roll2)){
+            rolledDouble = true;
+        }
         if (player.isInJail() && isConsecutive(roll1, roll2)){
                 this.player.setInJail(false);
                 this.player.move(roll1 + roll2);

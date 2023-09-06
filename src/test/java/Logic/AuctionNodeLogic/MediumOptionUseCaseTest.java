@@ -32,7 +32,7 @@
 //        new GameLogic(playerOne, board);
 //        MediumOptionUseCase mediumOptionUseCase = new MediumOptionUseCase();
 //        State actual = mediumOptionUseCase.create_state(0);
-//        Assertions.assertEquals(actual.getId(), "Main Tree Parent Node");
+//        Assertions.assertEquals(actual.getId(), "main.Main Tree Parent Node");
 //    }
 //
 //}

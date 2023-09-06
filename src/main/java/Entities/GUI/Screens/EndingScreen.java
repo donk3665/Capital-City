@@ -44,6 +44,8 @@ public class EndingScreen extends Screen{
         icon.setImage(ImagePathFactory.getPlayerIconPath(getState().getPlayer().getPlayerIndex()));
         gameFrame.getContentPane().validate();
         setRecentChatBox(endingChatBox);
+        getSoundController().playWinMusic();
+
     }
 
     @Override

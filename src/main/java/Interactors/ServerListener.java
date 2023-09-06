@@ -23,11 +23,13 @@ public class ServerListener implements Runnable{
     public boolean isActive() {
         return active;
     }
+    private final Object syncObject;
 
     public void setActive(boolean active) {
         this.active = active;
     }
-    public ServerListener (UseCaseInteractor useCaseInteractor, GameDisplayInteractor displayInteractor, PresenterDisplay display){
+    public ServerListener (UseCaseInteractor useCaseInteractor, GameDisplayInteractor displayInteractor, PresenterDisplay display, Object syncObject){
+        this.syncObject = syncObject;
         NetworkInterpreter.setUseCaseInteractor(useCaseInteractor);
         NetworkInterpreter.setDisplayInteractor(displayInteractor);
         NetworkInterpreter.setPresenterDisplay(display);
@@ -40,7 +42,12 @@ public class ServerListener implements Runnable{
         try {
             selector = Selector.open();
             socket = SocketChannel.open();
-            socket.socket().connect((new InetSocketAddress("127.0.0.1", 60000)));
+
+            //this line is for local testing of the online multiplayer
+            //socket.socket().connect((new InetSocketAddress("127.0.0.1", 60000)));
+
+            //this line connects to the (not always running) server hosted on aws
+            socket.socket().connect((new InetSocketAddress("18.191.135.21", 60000)));
             socket.configureBlocking(false);
             socket.register(selector, SelectionKey.OP_READ);
             SocketChannel finalSocket = socket;
@@ -81,21 +88,38 @@ public class ServerListener implements Runnable{
 
     @Override
     public void run() {
-        init();
-        while (true) {
-            try {
-                selector.select();
-            } catch (IOException e) {
-                System.err.println("Selector failed");
-            }
-            Set<SelectionKey> selectedKeys = selector.selectedKeys();
-            Iterator<SelectionKey> iter = selectedKeys.iterator();
-            while (iter.hasNext()) {
-                SelectionKey key = iter.next();
-                if (key.isReadable()) {
-                    handleReadableKeys(key);
+        while(true) {
+            setActive(false);
+            synchronized (syncObject) {
+                try {
+                    // Calling wait() will block this thread until another thread
+                    // calls notify() on the object.
+                    syncObject.wait();
+                } catch (InterruptedException e) {
+                    // Happens if someone interrupts your thread.
                 }
-                iter.remove();
+            }
+            init();
+            while (active) {
+                try {
+                    selector.select();
+                } catch (IOException e) {
+                    System.err.println("Selector failed");
+                }
+                Set<SelectionKey> selectedKeys = selector.selectedKeys();
+                Iterator<SelectionKey> iter = selectedKeys.iterator();
+                while (iter.hasNext()) {
+                    SelectionKey key = iter.next();
+                    if (key.isReadable()) {
+                        handleReadableKeys(key);
+                    }
+                    iter.remove();
+                }
+            }
+            try {
+                socket.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }

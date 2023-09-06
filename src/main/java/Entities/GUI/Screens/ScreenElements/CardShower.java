@@ -2,6 +2,7 @@ package Entities.GUI.Screens.ScreenElements;
 
 import Entities.GUI.Screens.ContentPanelInterface;
 import Entities.Game.Cell;
+import Entities.Game.CellEnum;
 import Entities.Game.Property;
 
 import javax.swing.*;
@@ -55,10 +56,18 @@ public class CardShower implements ContentPanelInterface {
                 if (property.getOwner()!= null){
                     propertyOwner = property.getOwner().getName();
                 }
-                area.setText("Owner: " + propertyOwner + "\nHouses: " + property.getHouses() + "\nPlayers on:" + numPlayersTile + "\nMortgaged?:"+ property.getMortgageStatus());
+                if (((Property) currentCell).getSpecialType() == CellEnum.RAILROAD){
+                    area.setText("Owner: " + propertyOwner + "\nOther Railroads: " + property.getHouses() + "\nPlayers on: " + numPlayersTile + "\nMortgaged?: "+ property.getMortgageStatus());
+                }
+                else if (((Property) currentCell).getSpecialType() == CellEnum.UTILITY){
+                    area.setText("Owner: " + propertyOwner + "\nOther Utility: " + property.getHouses() + "\nPlayers on: " + numPlayersTile + "\nMortgaged?: "+ property.getMortgageStatus());
+                }
+                else {
+                    area.setText("Owner: " + propertyOwner + "\nHouses: " + property.getHouses() + "\nPlayers on: " + numPlayersTile + "\nMortgaged?: "+ property.getMortgageStatus());
+                }
             }
             case CORNER_TILE, ACTION_SPACE -> {
-                area.setText("Players on:" + numPlayersTile);
+                area.setText("Players on: " + numPlayersTile);
             }
         }
         panel.add(area);

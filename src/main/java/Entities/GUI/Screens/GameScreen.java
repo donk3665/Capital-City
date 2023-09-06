@@ -76,12 +76,10 @@ public class GameScreen extends Screen{
             panelList[i].setLayout(new BorderLayout());
             c.gridy = i%4;
             c.gridx =  i/4;
-            //System.out.println(options.getButtons().get(i).getText());
             buttons.get(i).setImage(paths[i]);
             panelList[i].add(buttons.get(i));
             buttons.get(i).setFontSizeAndColour(24, Color.white);
             panel.add(panelList[i],c );
-            //panelList[i].validate();
         }
         panel.validate();
 
@@ -145,6 +143,7 @@ public class GameScreen extends Screen{
         settingsButtonPanel.setOpaque(false);
         settingsButtonPanel.setLayout(new BorderLayout());
         ImageButton settingsButton = new ImageButton("");
+
         addSettingsButton(settingsButton);
         settingsButton.setImage(gameImages[5]);
         c.insets = new Insets(0,0,50,0);
@@ -186,6 +185,7 @@ public class GameScreen extends Screen{
 
         SettingsFunction function = new SettingsFunction(popupPanel, this);
         button.addActionListener(e ->{
+            Screen.getSoundController().playClip(0);
             function.createPopup(null);
         });
     }
@@ -230,17 +230,8 @@ public class GameScreen extends Screen{
         board.add(overlayPanel, JLayeredPane.PALETTE_LAYER);
         overlayGrid = new BoardGrid(overlayPanel, true, board);
 
-//        JPanel backgroundPanel = new JPanel();
-//        backgroundPanel.setLayout(new GridBagLayout());
-//        backgroundPanel.setBounds(0,0, board.getWidth(), board.getHeight());
-//        backgroundPanel.setOpaque(false);
-//        board.add(backgroundPanel, JLayeredPane.DEFAULT_LAYER);
-//        BoardGrid backgroundGrid = new BoardGrid(backgroundPanel, true, board);
-//        paintBackgroundElements(backgroundGrid);
     }
-//    private void paintBackgroundElements(BoardGrid overlayGrid){
-//        GridBackgroundCreator backgroundCreator = new GridBackgroundCreator(overlayGrid.getPanelGrid());
-//    }
+
     private void paintHousesAndHotels(BoardGrid overlayGrid){
         GridOverlayCreator overlayCreator = new GridOverlayCreator(overlayGrid.getPanelGrid(), getCurrentBoard());
     }
@@ -459,6 +450,7 @@ public class GameScreen extends Screen{
         paintHousesAndHotels(overlayGrid);
         connectBoardButtons(board, buttonGrid);
         setRecentChatBox(actualChatBox);
+        getSoundController().playGameMusic();
     }
     public void addPlayerViewerPanel(JLayeredPane pane){
         List<ImageButton> playerButtons = new ArrayList<>();

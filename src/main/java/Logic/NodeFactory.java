@@ -84,6 +84,9 @@ public class NodeFactory {
                 case NO_SAVES -> {
                     return new NoSavesUseCase();
                 }
+                case SOUND_INITIAL -> {
+                    return new SoundInitialUseCase(beforeNode);
+                }
 
 
                 //game nodes
@@ -142,7 +145,7 @@ public class NodeFactory {
                     return new PickItemSelfUseCase(beforeNode);
                 }
                 case ROLL -> {
-                    return new RollUseCase(beforeNode);
+                    return new RollUseCase();
                 }
 //                case SAVE_GAME -> {
 //                    return new SaveGameUseCase(beforeNode);

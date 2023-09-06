@@ -6,12 +6,13 @@ import Entities.GUI.Description;
 import Entities.GUI.Options;
 import Entities.GUI.Screens.ScreenElements.ChatBox;
 import Entities.GUI.Screens.ScreenElements.ImagePathFactory;
+import Entities.GUI.Screens.ScreenElements.SoundController;
 import Entities.GUIDataTransfer.GUIInterface;
 import Entities.Game.Cell;
-import Entities.Stupid;
 import GUI.PresenterDisplay;
 import Interactors.ServerListener;
 import Logic.NodeNames;
+import javafx.embed.swing.JFXPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +24,7 @@ public abstract class Screen {
      * InstanceVar gameFrame: JFrame that contains all the contents of the game
      */
     protected static JFrame gameFrame;
-    static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[Stupid.getMonitorAppear()];
+    static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
     static Dimension screenSize = new Dimension(device.getDisplayMode().getWidth(), device.getDisplayMode().getHeight());
 
     public static final double width = screenSize.getWidth();
@@ -120,11 +121,22 @@ public abstract class Screen {
 
     public static ChatBox recentChatBox;
 
+    static{
+        JFXPanel fxPanel = new JFXPanel();
 
+    }
+
+    public static SoundController getSoundController() {
+        return musicController;
+    }
+
+    public static SoundController musicController = new SoundController();
     /**
      * Constructor that configures the JFrame
      */
     public Screen() {
+
+
     }
     public static void setPresenterDisplay(PresenterDisplay display){
         presenterDisplay = display;
@@ -197,6 +209,7 @@ public abstract class Screen {
      * Refresh the screen
      */
     public void refresh() {
+        gameFrame.validate();
         gameFrame.repaint();
     }
 

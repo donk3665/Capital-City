@@ -77,6 +77,9 @@ public class OutputInteractor {
             case AUCTION_PARENT:
                 updateAuctionTree();
                 break;
+            case ROLL:
+                updateRollTree();
+                break;
             case AUCTION_COMPLETE:
                 updateAuctionComplete();
                 break;
@@ -105,6 +108,10 @@ public class OutputInteractor {
         String currString = this.currentState.getDescription();
         this.output.modifyStateOutput(NodeNames.FINISH_GAME, currString);
     }
+    public void updateRollTree(){
+        String currString = this.currentState.getDescription();
+        this.output.modifyStateOutput(NodeNames.ROLL, currString);
+    }
 //    public void updateSteal(){
 //        String currString = this.currentState.getDescription();
 //        this.output.modifyStateOutput(NodeNames.STEAL, currString);
@@ -121,11 +128,11 @@ public class OutputInteractor {
     }
 
     public void updateCallAction(){
-        String currString =  "You rolled a " + currentState.getRoll()+ currentState.getDescription();
+        String currString =  currentState.getDescription();
         this.output.modifyStateOutput(NodeNames.CALL_ACTION, currString);
     }
     public void updateEmptyPropertySpace(){
-        String currString = "You rolled a " + currentState.getRoll() + " You have landed on " +
+        String currString = " You have landed on " +
                 currentState.getCurrentPlayerProperty().getName() + " and no ones owns this. It costs " +
                 currentState.getCurrentPlayerProperty().getPrice() + " What do you want to do?";
         this.output.modifyStateOutput(NodeNames.EMPTY_PROPERTY, currString);

@@ -24,6 +24,7 @@ public class SettingsMenuUseCase implements GUINodeInterface {
         this.currentScreen = currentScreen;
         options = new OrderedStringHashmap<>(){
             {
+                put("SOUND", new SoundGameUseCase(currentScreen));
                 put("SAVE", new SaveGameUseCase(currentScreen));
                 put("EXIT_GAME", new ExitGameUseCase(currentScreen));
                 put("BACK", null);

@@ -39,6 +39,7 @@ public class InitialInterpreter extends NetworkInterpreter{
                     getDisplayInteractor().getScreenFactory().getNode(NodeNames.HOST_GAME).handleAsynchronousInput(message);
                 }
                 case "KICK" ->{
+                    getPresenterDisplay().stopListener();
                     getPresenterDisplay().exitToMenu();
                 }
                 case "STATES" ->{
@@ -112,7 +113,10 @@ public class InitialInterpreter extends NetworkInterpreter{
                     getPresenterDisplay().forceNodeSwitch(NodeNames.AUCTION_PARENT);
                 }
                 case "AUCTION" ->{
-                    AuctionTreeNode.interpretMessage(message);
+                    if (AuctionTreeNode.interpretMessage(message)){
+                        Screen.getSoundController().playClip(1);
+                    }
+
                     if (splitMessage[1].equals("WON")){
                         getPresenterDisplay().forceNodeSwitch(NodeNames.AUCTION_COMPLETE);
                     }

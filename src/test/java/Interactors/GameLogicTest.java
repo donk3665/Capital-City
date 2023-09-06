@@ -37,7 +37,7 @@
 //        Board board = new Board(players, cells);
 //        GameLogic gameLogic = new GameLogic(playerOne, board);
 //        State actual = gameLogic.handleTree(0);
-//        Assertions.assertEquals(actual.getId(), "Main Tree Parent Node");
+//        Assertions.assertEquals(actual.getId(), "main.Main Tree Parent Node");
 //    }
 //
 //    @Test

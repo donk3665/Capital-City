@@ -34,7 +34,7 @@
 //        generalGameLogic.getSelectedOptions().put("PropertySelected", 0);
 //        UnMortgageUseCase unMortgage = new UnMortgageUseCase();
 //        State actual = unMortgage.create_state(0);
-//        Assertions.assertEquals(actual.getId(), "Main Tree Parent Node");
+//        Assertions.assertEquals(actual.getId(), "main.Main Tree Parent Node");
 //    }
 //
 //}

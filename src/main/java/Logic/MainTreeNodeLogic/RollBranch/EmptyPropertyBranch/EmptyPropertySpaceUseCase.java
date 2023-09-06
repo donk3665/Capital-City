@@ -42,8 +42,8 @@ public class EmptyPropertySpaceUseCase extends MainGameNode {
         Property targetProperty;
 
         State currentState = new State();
+
         //gets the response and options from rolling on an empty property
-        currentState.setRoll(diceRoll);
         targetProperty = (Property) board.getCell(currentPlayer.getPosition());
         currentState.setCurrentPlayerProperty(targetProperty);
         currentState.addOptions(options.getKeys());

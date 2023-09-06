@@ -2,6 +2,7 @@ package GUI;
 
 import Entities.GUI.Description;
 import Entities.GUI.Options;
+import Entities.GUI.Screens.Screen;
 import Entities.GUI.Screens.ScreenElements.ImageButton;
 
 import javax.swing.*;
@@ -75,6 +76,9 @@ public class GameDisplayOutputInteractor {
     public void createOptionSegment(){
         this.buttonDisplayHandler.setButtonFactory(this.options);
         for (ImageButton button: this.buttonDisplayHandler.getButtons()){
+            button.addActionListener(e->{
+                Screen.getSoundController().playClip(0);
+            });
             this.optionSegment.add(button);
         }
         //TODO:  REMOVE THIS AFTER GOOD IMPLEMENTATION

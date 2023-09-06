@@ -26,6 +26,11 @@ public class PresenterDisplay implements GameLoop{
     UseCaseInteractor interactor;
     ServerListener listener;
     Thread listenerThread;
+    final Object syncObject;
+
+    public PresenterDisplay(){
+        syncObject = new Object();
+    }
     /**
      * Function that runs the game loop by getting game data from the OutputInteractor and presenting that to the
      * user as their options on each turn through Conversion in the GameDisplayInteractor,
@@ -37,8 +42,10 @@ public class PresenterDisplay implements GameLoop{
         inputControl = new InputInteractor(interactor);
         outputControl = new OutputInteractor(interactor);
         gameFrame = new GameDisplayInteractor(this);
-        listener = new ServerListener(interactor, gameFrame, this);
+        listener = new ServerListener(interactor, gameFrame, this, syncObject);
         listenerThread = new Thread(listener);
+        listenerThread.start();
+
 
         Screen.initializeScreen();
         Screen.setPresenterDisplay(this);
@@ -89,17 +96,17 @@ public class PresenterDisplay implements GameLoop{
         outputControl.updateStateOptions();
         gameFrame.setOutputs(outputControl.getCurrentState(), outputControl.getOutputMessage());
     }
-    public void refreshTurnChangeOptions(){
-        gameFrame.refreshTurnChangeOptions();
-    }
     public void startListener(){
-        if (!listenerThread.isAlive()){
-            listenerThread.start();
+        if (!listener.isActive()){
+            synchronized (syncObject){
+                syncObject.notify();
+            }
         }
     }
-//    public boolean isTurn(){
-//        return interactor.isTurn();
-//    }
+    public void stopListener(){
+        listener.setActive(false);
+    }
+
 
 
 }

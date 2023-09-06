@@ -31,7 +31,7 @@
 //        new GameLogic(playerOne, board);
 //        AuctionParent auctionParentNode = new AuctionParent();
 //        State actual = auctionParentNode.create_state(0);
-//        Assertions.assertEquals(actual.getId(), "Main Tree Parent Node");
+//        Assertions.assertEquals(actual.getId(), "main.Main Tree Parent Node");
 //        Assertions.assertEquals(actual.getPlayer(), playerOne);
 //        Assertions.assertEquals(actual.getBiddingPot(), 0);
 //        Assertions.assertNull(actual.getBiddingProperty());

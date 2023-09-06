@@ -27,6 +27,6 @@
 //        new GameLogic(playerOne, board);
 //        BuyUseCase buyUseCase = new BuyUseCase();
 //        State actual = buyUseCase.create_state(0);
-//        Assertions.assertEquals(actual.getId(), "Main Tree Parent Node");
+//        Assertions.assertEquals(actual.getId(), "main.Main Tree Parent Node");
 //    }
 //}

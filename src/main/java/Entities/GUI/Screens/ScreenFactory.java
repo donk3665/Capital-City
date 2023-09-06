@@ -1,11 +1,8 @@
 package Entities.GUI.Screens;
 
-import Entities.GUI.Screens.ScreenElements.InitialGameScreen;
 import Logic.NodeNames;
 
 public class ScreenFactory {
- //   private int lastScreen = 0;
-    //private GameScreen gameScreen = new GameScreen();
 
     private Screen [] screenArray = new Screen[7];
 
@@ -32,7 +29,7 @@ public class ScreenFactory {
         switch (name){
             // Initial nodes
             case INITIAL_PARENT, SETTINGS_INITIAL, QUIT_INITIAL,SELECT_GAME_LOBBY, SELECT_GAME_TYPE, SELECT_NUMBER_OF_PLAYERS,
-                    CONFIRM_LOADED_GAME, CONFIRM_NEW_GAME, SELECT_SAVE, SELECT_GAME_MODE, NUMBER_OF_ROUNDS, NO_SAVES, MULTIPLAYER_LOBBY-> {
+                    CONFIRM_LOADED_GAME, CONFIRM_NEW_GAME, SELECT_SAVE, SELECT_GAME_MODE, NUMBER_OF_ROUNDS, NO_SAVES, MULTIPLAYER_LOBBY, SOUND_INITIAL-> {
        //         lastScreen = 1;
                 return screenArray[0];
             }
@@ -54,36 +51,9 @@ public class ScreenFactory {
                      MAIN_PARENT, SELECT_PROPERTY, MORTGAGE, NO_PROPERTIES, NOTHING_TO_TRADE, PICK_PLAYER, PICK_ITEM_OPPONENT, PICK_ITEM_SELF, ROLL,
                     SAVE_GAME, SELECT_ACTION_PROPERTY, SEND_TRADE, SETTINGS, STEAL, UN_MORTGAGE, TRADE, TRADE_OPPONENT_PARENT, ACCEPT_TRADE, DECLINE_TRADE
                     -> {
-//                if (lastScreen == 3){
-//                    ((GameScreen)screenArray[2]).setRenderMode(1);
-//                }
-//                else {
-//                    ((GameScreen)screenArray[2]).setRenderMode(0);
-//                }
-//                lastScreen = 4;
                 screenArray[2].setName(name);
                 return screenArray[2];
             }
-
-
-//
-//            //Trade tree nodes
-//            case TRADE, PICK_PLAYER -> {
-//                return new PickPlayerUseCase(beforeNode);
-//            }
-//            case ACCEPT_TRADE -> {
-//                return new AcceptTradeUseCase();
-//            }
-//            case DECLINE_TRADE -> {
-//                return new DeclineTradeUseCase();
-//            }
-//            case FOLD -> {
-//                return new FoldUseCase();
-//            }
-//            case TRADE_OPPONENT_PARENT -> {
-//                return new TradingOpponentParentNodeUseCase();
-//            }
-//
             //Auction tree nodes
             case AUCTION_PARENT, LOW_OPTION, MEDIUM_OPTION, HIGH_OPTION, AUCTION_COMPLETE -> {
                 return screenArray[3];

@@ -38,7 +38,7 @@
 //        options.add("End Turn");
 //        options.add("Settings Menu");
 //        options.add("Bankruptcy");
-//        Assertions.assertEquals(actual.getId(), "Main Tree Parent Node");
+//        Assertions.assertEquals(actual.getId(), "main.Main Tree Parent Node");
 //        Assertions.assertEquals(actual.getPlayer(), playerOne);
 //        Assertions.assertEquals(actual.getOptions(), options);
 //    }

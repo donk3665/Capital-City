@@ -20,6 +20,7 @@ public class Property extends Cell {
     private final int houseCost;
     private int houses;
     private boolean mortgaged;
+    private CellEnum specialType;
 
     /**
      * A constructor method for new Property instances
@@ -38,6 +39,11 @@ public class Property extends Cell {
                      Player owner, int mortgageValue, int houses, boolean mortgaged) {
         this.name = name;
         this.colour = colour;
+        if (colour.equals("Utility")){
+            specialType = CellEnum.UTILITY;
+        } else if (colour.equals("Railroad")) {
+            specialType = CellEnum.RAILROAD;
+        }
         this.cost = cost;
         this.houseCost = houseCost;
         for (int i = 0; i < 6; i++){
@@ -246,4 +252,9 @@ public class Property extends Cell {
     public CellEnum getType() {
         return CellEnum.PROPERTY;
     }
+
+    public CellEnum getSpecialType() {
+        return specialType;
+    }
+
 }

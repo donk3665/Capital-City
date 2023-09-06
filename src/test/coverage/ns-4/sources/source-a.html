@@ -130,7 +130,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     */
 &nbsp;    public void updateLogicStates(String state){
 <b class="nc">&nbsp;        switch (state) {</b>
-&nbsp;            case &quot;Main Tree Parent Node&quot;:
+&nbsp;            case &quot;main.Main Tree Parent Node&quot;:
 <b class="nc">&nbsp;                updateMainTree();</b>
 <b class="nc">&nbsp;                break;</b>
 &nbsp;            case &quot;Send The Trade&quot;:
@@ -166,7 +166,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    public void updateMainTree(){
 <b class="nc">&nbsp;        String currString = this.currentState.getPlayer().getName() + &quot; It&#39;s your turn! What do you want to do? You currently have &quot; +</b>
 <b class="nc">&nbsp;                this.currentState.getPlayer().getMoney() + &quot; dollars&quot;;</b>
-<b class="nc">&nbsp;        this.output.modifyStateOutput(&quot;Main Tree Parent Node&quot;, currString);</b>
+<b class="nc">&nbsp;        this.output.modifyStateOutput(&quot;main.Main Tree Parent Node&quot;, currString);</b>
 &nbsp;    }
 &nbsp;    public void updateSave(){
 <b class="nc">&nbsp;        String currString = this.currentState.getDescription();</b>

@@ -74,7 +74,7 @@
 //        new GameLogic(playerOne, board);
 //        SendTradeUseCase sendTrade = new SendTradeUseCase();
 //        State actual = sendTrade.create_state(1);
-//        Assertions.assertEquals(actual.getId(), "Main Tree Parent Node");
+//        Assertions.assertEquals(actual.getId(), "main.Main Tree Parent Node");
 //    }
 //
 //}

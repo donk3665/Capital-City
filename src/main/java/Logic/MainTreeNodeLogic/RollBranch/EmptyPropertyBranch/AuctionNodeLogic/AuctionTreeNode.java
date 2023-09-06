@@ -28,10 +28,6 @@ public abstract class AuctionTreeNode extends GeneralGameNode {
     }
 
 
-//    public static void array_init(int playerLength){
-//        auctionStates = new int[playerLength + 1];
-//    }
-
     /**
      * Check if the auction is complete
      * @return an integer representing the index of the player in the array who won.
@@ -80,11 +76,12 @@ public abstract class AuctionTreeNode extends GeneralGameNode {
     public static int[] getAuctionStates(){
         return auctionStates;
     }
-    public static void interpretMessage(String message){
+    public static boolean interpretMessage(String message){
         String[] splitMessage = message.split("\s+");
         switch (splitMessage[1]){
             case "FOLD" ->{
                 auctionStates[getCurrentPlayerIndex()] = 1;
+                return false;
             }
             case "HIGH" ->{
                 auctionStates[potIndex] += HIGH_OPTION;
@@ -99,10 +96,10 @@ public abstract class AuctionTreeNode extends GeneralGameNode {
             case "WON" ->{
                 playerWon = getPlayers().get(Integer.parseInt(splitMessage[2]));
                 biddingProperty.setOwner(playerWon);
-//                playerWon.addProperty(biddingProperty);
                 playerWon.pay(auctionStates[potIndex]);
             }
         }
+        return true;
 
     }
 }

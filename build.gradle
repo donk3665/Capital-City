@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
 }
 
 repositories {
@@ -11,10 +12,21 @@ dependencies {
    testImplementation('org.junit.jupiter:junit-jupiter:5.9.0')
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
 }
-
+javafx {
+    version = "20"
+    modules = [ 'javafx.swing','javafx.controls', 'javafx.fxml',  'javafx.media']
+}
 test {
     useJUnitPlatform()
     testLogging {
         events "passed", "skipped", "failed"
+    }
+}
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' '),
+                'Main-Class': 'main.Main'
+        )
     }
 }

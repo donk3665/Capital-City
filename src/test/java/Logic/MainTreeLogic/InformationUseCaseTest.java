@@ -26,7 +26,7 @@
 //        new GameLogic(playerOne, board);
 //        InformationUseCase informationUseCase = new InformationUseCase();
 //        State actual =  informationUseCase.create_state(0);
-//        Assertions.assertEquals(actual.getId(), "Main Tree Parent Node");
+//        Assertions.assertEquals(actual.getId(), "main.Main Tree Parent Node");
 //    }
 //
 //}

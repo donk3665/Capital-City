@@ -1,7 +1,7 @@
 # Captital City
 
 ## How to play the game
-In the ```src/main/java/Main``` click the play button or run the file and a popup window 
+In the ```src/main/java/main.Main``` click the play button or run the file and a popup window 
 with a monopoly board with ```New Game``` and ```Load Game``` buttons showing up. Note: If
 your compile is not working, try using corretto 11.
 ## Playing the game

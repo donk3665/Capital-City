@@ -35,40 +35,44 @@ public class GridOverlayCreator {
     }
     private void rectangleTileOverlay(WeightlessPanel panel, boolean[] playersArray, Cell cell, int direction){
         panel.removeAll();
-
         panel.setLayout(new GridBagLayout());
+
 
         if (cell.getType() == CellEnum.PROPERTY){
             WeightlessPanel topPanel = new WeightlessPanel();
-            topPanel.setBackground(MyColor.getColor(((Property)cell).getColour()));
-
             WeightlessPanel bottomPanel = new WeightlessPanel();
-
             GridBagConstraints constraints = new GridBagConstraints();
             constraints.gridx = 0;
             constraints.gridy = 0;
-
-            if (direction%2 == 0) {
-                constraints.weighty = 0.2;
-                constraints.weightx = 1;
-                if (direction == 2){
-                    constraints.gridy = 1;
-                }
-            }
-            else{
-                constraints.weighty = 1;
-                constraints.weightx = 0.2;
-
-                if (direction == 1){
-                    constraints.gridx = 1;
-                }
-            }
-
             constraints.fill = GridBagConstraints.BOTH;
 
-            panel.add(topPanel, constraints);
-            drawHouses(topPanel, ((Property) cell).getHouses(), direction%2 == 0);
+            if (((Property)cell).getSpecialType() != CellEnum.UTILITY && ((Property)cell).getSpecialType() != CellEnum.RAILROAD) {
 
+                topPanel.setBackground(MyColor.getColor(((Property) cell).getColour()));
+
+
+
+
+
+                if (direction % 2 == 0) {
+                    constraints.weighty = 0.2;
+                    constraints.weightx = 1;
+                    if (direction == 2) {
+                        constraints.gridy = 1;
+                    }
+                } else {
+                    constraints.weighty = 1;
+                    constraints.weightx = 0.2;
+
+                    if (direction == 1) {
+                        constraints.gridx = 1;
+                    }
+                }
+
+
+                panel.add(topPanel, constraints);
+                drawHouses(topPanel, ((Property) cell).getHouses(), direction % 2 == 0);
+            }
 
             constraints.weighty = 1;
             constraints.weightx = 1;

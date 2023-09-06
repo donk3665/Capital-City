@@ -10,7 +10,7 @@ CONFIRM_NEW_GAME,Create the game?
 SELECT_SAVE,What save do you want to load?
 CONFIRM_LOADED_GAME,Confirm the load?
 //
-// <Main node names>
+// <main.Main node names>
 //
 MAIN_PARENT,""
 //
