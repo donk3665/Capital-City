@@ -3,6 +3,7 @@ package Interactors;
 import Logic.NodeNames;
 
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.io.File;
@@ -26,10 +27,11 @@ public class StateOutputReader {
      * throws an exception if the file is not found
      */
     public void initStateHash(){
-        try {
+        //try {
 
-            File stateFile = new File(Objects.requireNonNull(getClass().getResource(stateString)).toURI());
-            Scanner stateFileReader = new Scanner(stateFile);
+            InputStream stream = getClass().getResourceAsStream(stateString);
+        assert stream != null;
+        Scanner stateFileReader = new Scanner(stream);
             while (stateFileReader.hasNextLine()){
                 String stateString = stateFileReader.nextLine();
                 if (stateString.contains("//")){
@@ -39,12 +41,12 @@ public class StateOutputReader {
                 this.stateMap.put(NodeNames.valueOf(stateMapping[0]), stateMapping[1]);
             }
 
-        } catch (FileNotFoundException e){
-            System.out.println("The file is not found");
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
+//        } catch (FileNotFoundException e){
+//            System.out.println("The file is not found");
+//            e.printStackTrace();
+//        } catch (URISyntaxException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     /**

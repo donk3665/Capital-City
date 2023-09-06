@@ -223,29 +223,21 @@ public class Property extends Cell {
      */
     public String addHouse(Player currentPlayer, int houses) {
         PlayerLogic logic = new PlayerLogic(currentPlayer);
-//        if (!currentPlayer.getProperties().contains(this)) {
-//            return ("not owned");
-//        } else if (!logic.ownedPropertySets().contains(this.colour)) {
-//            return ("not owned set");
-//        } else if (currentPlayer.getMoney() < this.houseCost * houses) {
-//            return ("not enough money");
-//        } else {
-//            this.houses += houses;
-//            currentPlayer.pay(getHouseCost());
-//            if (this.houses == 5) {
-//                return ("hotel");
-//            } else {
-//                return ("house");
-//            }
-//        }
-        this.houses += houses;
-        currentPlayer.pay(getHouseCost());
-        if (this.houses == 5) {
-            return ("hotel");
+        if (!currentPlayer.getProperties().contains(this)) {
+            return ("not owned");
+        } else if (!logic.ownedPropertySets().contains(this.colour)) {
+            return ("not owned set");
+        } else if (currentPlayer.getMoney() < this.houseCost * houses) {
+            return ("not enough money");
         } else {
-            return ("house");
+            this.houses += houses;
+            currentPlayer.pay(getHouseCost());
+            if (this.houses == 5) {
+                return ("hotel");
+            } else {
+                return ("house");
+            }
         }
-        //TODO: IMPLEMENT THIS FUNCTION
     }
 
     @Override

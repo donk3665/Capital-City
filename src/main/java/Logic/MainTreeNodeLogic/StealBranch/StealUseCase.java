@@ -32,8 +32,12 @@ public class StealUseCase extends MainGameNode {
     public State create_state() {
         State currentState = new State();
         currentState.setBackEnable(true);
+        currentState.setDescription("Who do you want to steal from?");
         //provide options of which players we can steal from
         for (int i = 0; i < getPlayers().size(); i++){
+            if (getCurrentPlayerIndex() == i){
+                continue;
+            }
             String temp = getPlayers().get(i).getName();
             options.put(temp, i);
             currentState.addOptions(temp);

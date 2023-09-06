@@ -2,6 +2,7 @@ package Logic.InitialNodeLogic;
 
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
+import Logic.GameNode;
 import Logic.NodeInterface;
 import Logic.NodeNames;
 
@@ -10,11 +11,13 @@ import Logic.NodeNames;
  * game.
  */
 public class ConfirmNewGameUseCase extends InitialGameNode {
-    public ConfirmNewGameUseCase() {
+    public ConfirmNewGameUseCase(GameNode previousNode) {
         super(NodeNames.CONFIRM_NEW_GAME, null);
+        this.previousNode = previousNode;
     }
 
 
+    private GameNode previousNode;
     @Override
     public State create_state() {
         savedGame = false;
@@ -49,7 +52,7 @@ public class ConfirmNewGameUseCase extends InitialGameNode {
             return getFactory().getNode(NodeNames.MAIN_PARENT, this);
         }
         else {
-            return getFactory().getNode(NodeNames.SELECT_GAME_TYPE);
+            return previousNode;
         }
     }
 }

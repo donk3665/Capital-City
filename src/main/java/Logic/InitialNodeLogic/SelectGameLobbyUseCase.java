@@ -16,7 +16,7 @@ public class SelectGameLobbyUseCase extends InitialGameNode {
     OrderedStringHashmap<NodeNames> options = new OrderedStringHashmap<>(){
         {
             put("SINGLE_PLAYER", NodeNames.SELECT_GAME_TYPE);
-            put("MULTIPLAYER", NodeNames.MULTIPLAYER_LOBBY);
+            put("MULTIPLAYER", NodeNames.MULTIPLAYER_STALL);
         }
     };
     @Override

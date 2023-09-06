@@ -19,7 +19,10 @@ public class PlayerLogic {
     public static final double STEAL_JAIL_CHANCE = 0.6;
     public static final int STEAL_MONEY = 100;
     static final double MORTGAGE_INTEREST = 1.1;
-
+    private boolean[] stealBoolean = new boolean[2];
+    public boolean[] getStealBoolean() {
+        return stealBoolean;
+    }
     public PlayerLogic(Player player) {
         this.player = player;
     }
@@ -140,12 +143,30 @@ public class PlayerLogic {
     public String stealUnsuccessful() {
         double jail = Math.random();
         if (jail <= STEAL_JAIL_CHANCE) {
-            player.setInJail(true);
-            player.setPosition(10);
-            return ("The police are looking for " + player.getName() + "\n" + player.getName() + " is put in jail");
+            return stealVeryUnsuccessful();
         } else {
-            return ("The police are looking for " + player.getName() + "\n" + player.getName() +
-                    " escaped from the police");
+            return stealMildlyUnsuccessful();
+        }
+    }
+    private String stealVeryUnsuccessful(){
+        player.setInJail(true);
+        player.setPosition(10);
+        return ("The police are looking for " + player.getName() + "\n" + player.getName() + " is put in jail");
+    }
+    private String stealMildlyUnsuccessful(){
+        stealBoolean[1] = true;
+        return ("The police are looking for " + player.getName() + "\n" + player.getName() +
+                " escaped from the police");
+    }
+    public String forceSteal(Player victim, boolean firstChance, boolean secondChance){
+        if (firstChance){
+            return stealSuccessful(victim);
+        }
+        else if (secondChance){
+            return stealMildlyUnsuccessful();
+        }
+        else {
+            return stealVeryUnsuccessful();
         }
     }
 
@@ -159,6 +180,7 @@ public class PlayerLogic {
     public String steal(Player victim) {
         double success = Math.random();
         if (success <= STEAL_CHANCE) {
+            stealBoolean[0] = true;
             return stealSuccessful(victim);
         } else {
             return stealUnsuccessful();

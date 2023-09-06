@@ -14,8 +14,8 @@ import Logic.PlayerLogic;
  */
 public class PerformStealUseCase extends MainGameNode {
 
-    public PerformStealUseCase(GameNode previousNode) {
-        super(NodeNames.PERFORM_STEAL, previousNode);
+    public PerformStealUseCase() {
+        super(NodeNames.PERFORM_STEAL, null);
     }
 
     /**
@@ -35,6 +35,10 @@ public class PerformStealUseCase extends MainGameNode {
         PlayerLogic playerLogic = new PlayerLogic(currentPlayer);
 
         String stealStatus = playerLogic.steal(stealPlayer);
+
+        getCaseInteractor().getListener().writeIfMultiplayer("STEAL " + stealPlayer.getPlayerIndex() + " " + playerLogic.getStealBoolean()[0] + " "
+        + playerLogic.getStealBoolean()[1]);
+
         currentState.setDescription(stealStatus);
         currentState.addOptions("Ok");
         return currentState;

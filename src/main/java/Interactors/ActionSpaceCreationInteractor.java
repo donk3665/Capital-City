@@ -32,7 +32,7 @@ public class ActionSpaceCreationInteractor implements ActionSpaceCreationUseCase
      */
     public ActionSpace loadJailCards() throws IOException {
         CardMapperInteractor cardMapperInteractor = new CardMapperInteractor();
-        HashMap<String, List<Card>> cards = cardMapperInteractor.cardMapperJailCards(loadAccess.loadCards());
+        HashMap<String, List<Card>> cards = cardMapperInteractor.cardMapperJailCards(loadAccess.loadCards("/save/cards.txt"));
         return new ActionSpace(cards);
 
     }
@@ -44,7 +44,7 @@ public class ActionSpaceCreationInteractor implements ActionSpaceCreationUseCase
      */
     public ActionSpace loadChanceCards() throws IOException {
         CardMapperInteractor cardMapperInteractor = new CardMapperInteractor();
-        HashMap<String, List<Card>> cards = cardMapperInteractor.cardMapperChanceCards(loadAccess.loadCards());
+        HashMap<String, List<Card>> cards = cardMapperInteractor.cardMapperChanceCards(loadAccess.loadCards("/save/cards.txt"));
         return new ActionSpace(cards);
     }
 
@@ -55,7 +55,7 @@ public class ActionSpaceCreationInteractor implements ActionSpaceCreationUseCase
      */
     public ActionSpace loadComChestCards() throws IOException {
         CardMapperInteractor cardMapperInteractor = new CardMapperInteractor();
-        HashMap<String, List<Card>> cards = cardMapperInteractor.cardMapperComChest(loadAccess.loadCards());
+        HashMap<String, List<Card>> cards = cardMapperInteractor.cardMapperComChest(loadAccess.loadCards("/save/cards.txt"));
         return new ActionSpace(cards);
     }
 }

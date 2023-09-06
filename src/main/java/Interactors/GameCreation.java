@@ -36,6 +36,7 @@ public class GameCreation {
         // This method is to create a brand-new game and initialize a new Board.
         ArrayList<Cell> propertiesSoFar;
         propertiesSoFar = parsePropertyData(properties);
+
         List<Cell> cells = createCells(propertiesSoFar, propertiesSoFar);
 
         return new Board(players, cells);
@@ -148,8 +149,12 @@ public class GameCreation {
         CornerTiles jail = new JailSpace();
         CornerTiles freeParking = new FreeParking();
         CornerTiles goJail = new GoToJail();
-        LoadAccess loadAccess = new LoadFile(new File(Objects.requireNonNull(getClass().getResource("/save/cards.txt")).getFile()));
-        loadAccess.loadCards();
+
+
+        LoadAccess loadAccess = new LoadFile(null);
+
+        loadAccess.loadCards("/save/cards.txt");
+
         ActionSpaceCreationInteractor actionSpaceCreationInteractor = new ActionSpaceCreationInteractor(loadAccess);
         ActionSpace communityChest = actionSpaceCreationInteractor.loadComChestCards();
         ActionSpace chance = actionSpaceCreationInteractor.loadChanceCards();

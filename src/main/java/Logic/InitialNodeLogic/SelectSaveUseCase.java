@@ -6,6 +6,9 @@ import Logic.GameNode;
 import Logic.NodeInterface;
 import Logic.NodeNames;
 import Persistence.LoadAccess;
+
+import java.io.File;
+
 /**
  * This class represents the use case where the player has chosen to load a game.
  */
@@ -16,12 +19,13 @@ public class SelectSaveUseCase extends InitialGameNode {
     GameNode node;
     private String[] getSavesWithoutTemp(String[] saves){
         String [] returnStrings;
-        returnStrings = new String[saves.length];
+        int length = saves.length;
         for (String str: saves){
             if (str.equals("temp.txt")){
-                returnStrings = new String[saves.length-1];
+                length -= 1;
             }
         }
+        returnStrings = new String[length];
         int counter = 0;
         for (String save : saves) {
             if (!save.equals("temp.txt")) {
@@ -40,7 +44,7 @@ public class SelectSaveUseCase extends InitialGameNode {
         //options associated with the next node
         LoadAccess load = getCaseInteractor().getLoadAccess();
 
-        String[] allSaves = load.checkSaves(load.getFile().getAbsolutePath());
+        String[] allSaves = load.checkSaves();
         if (allSaves.length == 0){
             node = getFactory().getNode(NodeNames.NO_SAVES);
             state = node.create_state();

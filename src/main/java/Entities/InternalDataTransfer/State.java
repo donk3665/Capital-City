@@ -2,7 +2,7 @@
 package Entities.InternalDataTransfer;
 
 import Entities.ExternalDataTransfer.BasicBoard;
-import Entities.GUIDataTransfer.GUIInterface;
+import GUIDataTransfer.GUIInterface;
 import Entities.Game.Player;
 import Entities.Game.Property;
 import Logic.NodeNames;

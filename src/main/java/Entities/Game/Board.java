@@ -34,14 +34,7 @@ public class Board implements BasicBoard {
         return null;
     }
 
-//    public Player getPlayer(String name){
-//        for (Player player : players) {
-//            if (player.getName().equals(name)) {
-//                return player;
-//            }
-//        }
-//        return null;
-//    }
+
     /**
      * This method is used to return a List of all the Player instances that are in Board.
      * @return A List of all the Player instances stored in Board.

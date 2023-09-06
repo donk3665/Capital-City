@@ -23,7 +23,6 @@ public class SelectGameTypeUseCase extends InitialGameNode {
     };
     @Override
     public State create_state() {
-        //TODO: REMOVE SETBACKENABLE IN OTHER NODES
         State currentState = new State();
         currentState.addOptions(options.getKeys());
         return currentState;

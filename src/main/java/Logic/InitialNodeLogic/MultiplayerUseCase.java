@@ -8,6 +8,7 @@ import Logic.NodeInterface;
 import Logic.NodeNames;
 
 public class MultiplayerUseCase extends InitialGameNode {
+    //TODO: MAKE IT SO IT STALLS WHEN YOU CLICK MULTIPLAYER AND THE SERVER IS NOT UP
 
     public MultiplayerUseCase(GameNode beforeNode) {
         super(NodeNames.MULTIPLAYER_LOBBY, beforeNode);
@@ -23,7 +24,7 @@ public class MultiplayerUseCase extends InitialGameNode {
     public State create_state() {
         State currentState = new State();
         currentState.addOptions(options.getKeys());
-        currentState.setStartConnection(true);
+
         return currentState;
     }
 

@@ -9,8 +9,6 @@ repositories {
 
 dependencies {
     implementation('junit:junit:4.13.2')
-   testImplementation('org.junit.jupiter:junit-jupiter:5.9.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
 }
 javafx {
     version = "20"
@@ -23,10 +21,11 @@ test {
     }
 }
 jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
-        attributes(
-                'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' '),
-                'Main-Class': 'main.Main'
-        )
+        attributes 'Main-Class': 'main.Main'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }

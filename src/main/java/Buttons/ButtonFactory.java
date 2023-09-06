@@ -1,7 +1,7 @@
 package Buttons;
 
-import Entities.GUI.Screens.ScreenElements.ImageButton;
-import GUI.GameLoop;
+import GUI.Screens.ScreenElements.ImageButton;
+import GUIInteractors.GameLoop;
 
 import java.util.ArrayList;
 import java.util.HashMap;

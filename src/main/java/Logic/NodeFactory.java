@@ -11,9 +11,6 @@ import Logic.MainTreeNodeLogic.RollBranch.AlreadyRolledUseCase;
 import Logic.MainTreeNodeLogic.RollBranch.EmptyPropertyBranch.AuctionNodeLogic.*;
 import Logic.MainTreeNodeLogic.RollBranch.EmptyPropertyBranch.BuyUseCase;
 import Logic.MainTreeNodeLogic.RollBranch.EmptyPropertyBranch.EmptyPropertySpaceUseCase;
-import Entities.GUI.SettingsBranch.ExitGameUseCase;
-import Entities.GUI.SettingsBranch.SaveGameUseCase;
-import Entities.GUI.SettingsBranch.SettingsMenuUseCase;
 import Logic.MainTreeNodeLogic.StealBranch.PerformStealUseCase;
 import Logic.MainTreeNodeLogic.StealBranch.StealUseCase;
 import Logic.MainTreeNodeLogic.TradingBranch.*;
@@ -48,6 +45,9 @@ public class NodeFactory {
                 case SELECT_GAME_LOBBY -> {
                     return new SelectGameLobbyUseCase(beforeNode);
                 }
+                case MULTIPLAYER_STALL -> {
+                    return new MultiplayerStallUseCase(beforeNode);
+                }
                 case MULTIPLAYER_LOBBY -> {
                     return new MultiplayerUseCase(beforeNode);
                 }
@@ -76,10 +76,10 @@ public class NodeFactory {
                     return new SelectNumberOfPlayersUseCase(beforeNode);
                 }
                 case CONFIRM_NEW_GAME -> {
-                    return new ConfirmNewGameUseCase();
+                    return new ConfirmNewGameUseCase(beforeNode);
                 }
                 case CONFIRM_LOADED_GAME -> {
-                    return new ConfirmLoadedGameUseCase();
+                    return new ConfirmLoadedGameUseCase(beforeNode);
                 }
                 case NO_SAVES -> {
                     return new NoSavesUseCase();
@@ -109,7 +109,7 @@ public class NodeFactory {
                     return new CallActionUseCase();
                 }
                 case PERFORM_STEAL -> {
-                    return new PerformStealUseCase(beforeNode);
+                    return new PerformStealUseCase();
                 }
                 case EMPTY_PROPERTY -> {
                     return new EmptyPropertySpaceUseCase();
@@ -117,9 +117,7 @@ public class NodeFactory {
                 case END_TURN -> {
                     return new EndTurnUseCase(beforeNode);
                 }
-//                case EXIT_GAME -> {
-//                    return new ExitGameUseCase(beforeNode);
-//                }
+
                 case FINISH_GAME -> {
                     return new FinishGameUseCase();
                 }

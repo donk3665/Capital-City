@@ -28,7 +28,7 @@ public class GameLogic {
     public GameLogic(Player currentPlayer, Board board){
         initialize(currentPlayer, board);
     }
-    public void initialize(Player currentPlayer, Board board){
+    private void initialize(Player currentPlayer, Board board){
         GeneralGameNode.initialize(currentPlayer,board);
         GameNode.setGameLogicInteractor(this);
     }
@@ -36,6 +36,7 @@ public class GameLogic {
         this.currentNode = currentNode;
     }
     public GameLogic(){
+        GameNode.setGameLogicInteractor(this);
         currentNode = GeneralGameNode.getFactory().getNode(NodeNames.INITIAL_PARENT);
     }
     /**

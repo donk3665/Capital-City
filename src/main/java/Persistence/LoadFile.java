@@ -3,7 +3,10 @@ package Persistence;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,27 +25,23 @@ public class LoadFile implements LoadAccess{
         file = new File(newFile);
     }
 
-    public File getFile(){
-        return file;
-    }
 
     /**
      * Searches the given folder denoted by folderPath and returns an array
      * of Files inside the given folder. Used by UseCaseInteractor to display
      * a selection of save files to the user when selecting which file to load a game from.
      *
-     * @param folderPath  is the folder path to the folder which stores the user's save files.
      * @return  an array of the user's save files.
      */
 
-    public String[] checkSaves(String folderPath){
+    public String[] checkSaves(){
         // checkSaves searches the given folder and returns an array of file names
         // the user selects the save file from the list of file names
         // loadGame takes in the filePath of the selected file name
         // and returns a String array of Player and Board data
         // the GameCreationInteractor will handle creating the class instances
 
-        File folder = new File(folderPath);
+        File folder = new File(file.getAbsolutePath());
         return folder.list();
     }
 
@@ -133,7 +132,8 @@ public class LoadFile implements LoadAccess{
         // return array of all properties in txt file as Strings
         // GameCreationInteractor will parse Strings to create Property instances
         ArrayList<String[]> allProperties = new ArrayList<>();
-        File properties = new File(Objects.requireNonNull(getClass().getResource("/save/properties.txt")).getFile());
+        InputStream properties = getClass().getResourceAsStream("/save/properties.txt");
+        assert properties != null;
         Scanner scan = new Scanner(properties);
 
         while (scan.hasNextLine()) {
@@ -151,10 +151,19 @@ public class LoadFile implements LoadAccess{
      * @throws IOException in case there was an error reading the file
      *
      */
-    @Override
-    public List<String> loadCards() throws IOException {
 
-        return Files.readAllLines(this.file.toPath());
+    @Override
+    public List<String> loadCards(String place){
+        InputStream stream = getClass().getResourceAsStream(place);
+        ArrayList<String> data = new ArrayList<>();
+        Scanner scan = new Scanner(stream);
+
+        while (scan.hasNextLine()) {
+            String line =scan.nextLine();
+            data.add(line);
+        }
+
+        return data;
 
     }
 }

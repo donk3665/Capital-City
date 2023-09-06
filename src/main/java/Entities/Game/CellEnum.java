@@ -6,5 +6,4 @@ public enum CellEnum {
     PROPERTY,
     UTILITY,
     RAILROAD
-    //TODO IMPLEMENT THESE ENUMS
 }

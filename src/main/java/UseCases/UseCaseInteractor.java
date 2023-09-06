@@ -1,13 +1,13 @@
 
 package UseCases;
 
-import Entities.GUI.Network.GameInfoInterpreter;
+import Network.GameInfoInterpreter;
 import Entities.Game.Board;
 import Entities.InternalDataTransfer.InputInformation;
 import Entities.InternalDataTransfer.State;
 import Interactors.GameCreation;
 import Interactors.SavePackager;
-import Interactors.ServerListener;
+import Network.ServerListener;
 import Logic.GameNode;
 import Logic.GeneralGameNode;
 import Logic.InitialNodeLogic.InitialGameNode;
@@ -88,16 +88,12 @@ public class UseCaseInteractor{
         getListener().write("READY");
     }
 
-//    public boolean isTurn(){
-//        return GeneralGameNode.isTurn();
-//    }
+
     public void setMultiplayer(boolean multiplayer) {
         this.multiplayer = multiplayer;
         logicInteractor.setMultiplayer(multiplayer);
     }
-//    public static void setClient(String name){
-//        GeneralGameNode.setClientPlayer(name);
-//    }
+
     public void setClient(int index){
         GeneralGameNode.setClientPlayer(index);
     }
@@ -141,11 +137,7 @@ public class UseCaseInteractor{
     }
 
 
-//    public void createNewGame(int[] states){
-//        Board loadedBoard;
-//        loadedBoard = loadFiles(states[0], states[2]);
-//        createGame(loadedBoard, states);
-//    }
+
 
     /**
      * This method allows the user to create a game, new or loaded, by loading the files
@@ -174,6 +166,7 @@ public class UseCaseInteractor{
             return newBoard;
         }
         catch (Exception IOException){
+            System.err.println("BOARD CREATION FAILED");
             return null;
         }
     }

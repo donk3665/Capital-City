@@ -67,13 +67,6 @@ public abstract class GeneralGameNode extends GameNode {
         clientPlayer = currentPlayer;
         board = board1;
     }
-//    public static void setClientPlayer(String name){
-//        for (Player player: board.getPlayers()){
-//            if (player.getName().equals(name)){
-//                clientPlayer = player;
-//            }
-//        }
-//    }
 
     public static boolean isTurn(){
         return currentPlayer == clientPlayer;
@@ -185,5 +178,9 @@ public abstract class GeneralGameNode extends GameNode {
             targetedProperty.resetProperty();
         }
         board.removePlayer(player);
+    }
+    public static void steal(int playerIndex, boolean firstCheck, boolean secondCheck){
+        PlayerLogic playerLogic = new PlayerLogic(getCurrentPlayer());
+        String message = playerLogic.forceSteal(getPlayers().get(playerIndex), firstCheck, secondCheck);
     }
 }
