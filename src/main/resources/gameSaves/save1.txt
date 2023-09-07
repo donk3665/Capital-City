@@ -1,9 +1,0 @@
-playerStart
-Player 0,2500,false,0,0
-Player 1,2500,false,0,0
-Player 2,2500,false,0,0
-Player 3,2500,false,0,0
-playerEnd
-treeStart
-4,90,1,0,0,0
-treeEnd

@@ -42,6 +42,7 @@ public class AuctionScreen extends Screen{
 
     @Override
     public void attachNonStaticComponents() {
+        cardPanel.removeAll();
         textArea.setText("");
         textArea.setText(description.getDescription().getText());
         addPlayers(middlePanel);

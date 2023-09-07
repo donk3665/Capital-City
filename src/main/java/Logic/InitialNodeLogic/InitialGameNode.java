@@ -20,8 +20,8 @@ public abstract class InitialGameNode extends GameNode {
     }
     public static void loadStatesNetwork(String message){
         String[] splitMessage = message.split("\s+");
+        states = new int[7];
         for (int i = 1; i<splitMessage.length; i++){
-            states = new int[6];
             states[i-1] = Integer.parseInt(splitMessage[i]);
         }
     }

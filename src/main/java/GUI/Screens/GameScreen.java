@@ -376,7 +376,7 @@ public class GameScreen extends Screen{
                 actualChatBox.addMultiplayerSupport(getListener());
             }
             case "TRADE" ->{
-                String[] tradeSplit = input.split("¶");
+                String[] tradeSplit = input.split("#1839673858#");
                 addTradePopup(tradeSplit[1], tradeSplit[2]);
             }
             case "CANCEL_TRADE" ->{

@@ -35,11 +35,11 @@ public class RollUseCase extends MainGameNode {
         if (mainStates[1] == 0) {
             //roll the dice and update the position
             PlayerLogic playerLogic = new PlayerLogic(currentPlayer);
-            diceRoll = playerLogic.rollDice(mainStates[3]);
+            diceRoll = playerLogic.rollDice(mainStates[5]);
 
             String stateMessage = "You rolled a " + diceRoll + ".";
             if (playerLogic.isRolledDouble()){
-                mainStates[3] = mainStates[3] + 1;
+                mainStates[5] = mainStates[5] + 1;
                 stateMessage = stateMessage.concat("This is a double, so you can roll again. You have rolled " + mainStates[3] + " doubles in a row.");
             }
             else{

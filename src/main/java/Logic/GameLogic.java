@@ -10,15 +10,8 @@ import Logic.MainTreeNodeLogic.MainGameNode;
  * This class creates a GameLogic instance which coordinates the flow of the game.
  */
 public class GameLogic {
-    public boolean isMultiplayer() {
-        return multiplayer;
-    }
 
-    public void setMultiplayer(boolean multiplayer) {
-        this.multiplayer = multiplayer;
-    }
 
-    private boolean multiplayer;
     private GameNode currentNode;
     /**
      * This is the constructor for creating a GameLogic instance.
@@ -47,14 +40,15 @@ public class GameLogic {
     public void setUpGame(Board board, int[] states, boolean multiplayer){
         Player currentPlayer = board.getPlayers().get(states[4]);
         initialize(currentPlayer,board);
-        int [] gameStates = new int[5];
+        int [] gameStates = new int[6];
         gameStates[0] = 0;
         gameStates[1] = states[5];
         gameStates[2] = states[2];
         gameStates[3] = states[3];
         gameStates[4] = states[1];
+        gameStates[5] = states[6];
         MainGameNode.initializeStates(gameStates);
-        GeneralGameNode.setMultiplayer(multiplayer);
+        GameNode.setMultiplayer(multiplayer);
     }
 
     public State getCurrentState(){
@@ -64,7 +58,6 @@ public class GameLogic {
     public void returnToMenu(){
         currentNode= GeneralGameNode.getFactory().getNode(NodeNames.INITIAL_PARENT);
         GeneralGameNode.setCurrentPlayer(GeneralGameNode.getClientPlayer());
-        //TODO: FIX THIS ITS HACKY
     }
 
     public void forceNodeSwitch(NodeNames node){

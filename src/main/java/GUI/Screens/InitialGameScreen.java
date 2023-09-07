@@ -71,8 +71,6 @@ public class InitialGameScreen extends Screen {
             c.gridy = 1;
             options.getButtons().get(0).setImage(paths[0]);
             panel.add(options.getButtons().get(0), c);
-
-
         }
         else {
 

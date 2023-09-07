@@ -47,7 +47,7 @@ public class TradingOpponentParentNodeUseCase extends TradingTreeNode {
         //returnPlayerAddress will hold the original player index in this.board.getPlayers()
         setCurrentPlayer(currentPlayer);
 
-        getCaseInteractor().getListener().writeIfMultiplayer("TRADE " + currentPlayer.getPlayerIndex() +" ¶"+  currentPlayerProperty.getName() + "¶"  + tradingOpponentProperty.getName());
+        getCaseInteractor().getListener().writeIfMultiplayer("TRADE " + currentPlayer.getPlayerIndex() +" #1839673858#"+  currentPlayerProperty.getName() + "#1839673858#"  + tradingOpponentProperty.getName());
         return currentState;
     }
 

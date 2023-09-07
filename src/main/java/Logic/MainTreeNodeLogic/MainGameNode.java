@@ -24,9 +24,10 @@ public abstract class MainGameNode extends GeneralGameNode {
     [2]: Game mode
     [3]: Turn counter
     [4]: Game Length
+    [5]: consecutive rolls
 
      */
-    public static int[] mainStates = new int[5];
+    public static int[] mainStates = new int[6];
     public static String diceRoll;
 
     /**

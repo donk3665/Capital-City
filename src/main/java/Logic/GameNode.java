@@ -43,7 +43,16 @@ public abstract class GameNode implements NodeInterface{
         return previousNode;
     }
 
+    public static boolean isMultiplayer() {
+        return multiplayer;
+    }
+
+    public static void setMultiplayer(boolean multiplayer) {
+        GameNode.multiplayer = multiplayer;
+    }
+
     public static boolean multiplayer = false;
+
     GameNode previousNode;
     public GameNode(NodeNames name, GameNode previousNode){
         this.name = name;

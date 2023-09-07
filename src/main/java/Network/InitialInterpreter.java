@@ -1,6 +1,7 @@
 package Network;
 
 import GUI.Screens.Screen;
+import Logic.GameNode;
 import Logic.GeneralGameNode;
 import Logic.InitialNodeLogic.InitialGameNode;
 import Logic.MainTreeNodeLogic.RollBranch.EmptyPropertyBranch.AuctionNodeLogic.AuctionTreeNode;
@@ -35,13 +36,14 @@ public class InitialInterpreter extends NetworkInterpreter{
                 Screen.setTempName(splitMessage[1]);
             }
             case "RECEIVE_TEXT" ->{
-                splitMessage = message.split("¶");
+                splitMessage = message.split("#1839673858#");
                 Screen.getRecentChatBox().addExternalMessage(splitMessage[1], Integer.parseInt(splitMessage[2]), splitMessage[3]);
             }
             case "CURRENT_LOBBY" ->{
                 getDisplayInteractor().getScreenFactory().getNode(NodeNames.HOST_GAME).handleAsynchronousInput(message);
             }
             case "DISCONNECT" ->{
+                GameNode.setMultiplayer(false);
                 getPresenterDisplay().stopListener();
             }
             case "KICK" ->{
@@ -52,11 +54,11 @@ public class InitialInterpreter extends NetworkInterpreter{
                 InitialGameNode.loadStatesNetwork(message);
             }
             case "LOAD_DATA" ->{
-                String [] doubleSplit = message.split("¶");
+                String [] doubleSplit = message.split("#1839673858#");
                 getUseCaseInteractor().getSaveAccess().addTempLine(doubleSplit[1] + "\n");
             }
             case "INITIALIZE_GAME" ->{
-                getUseCaseInteractor().setMultiplayer(true);
+                GameNode.setMultiplayer(true);
                 if (Boolean.parseBoolean(splitMessage[1])){
                     try {
                         getUseCaseInteractor().getSaveAccess().writeTempFile();
@@ -109,7 +111,7 @@ public class InitialInterpreter extends NetworkInterpreter{
                 getPresenterDisplay().forceNodeSwitch(NodeNames.DECLINE_TRADE);
             }
             case "SWAP" ->{
-                String [] propertyMessages = message.split("¶");
+                String [] propertyMessages = message.split("#1839673858#");
                 GeneralGameNode.swapProperty(propertyMessages[1], propertyMessages[2]);
             }
             case "INIT_AUCTION" ->{

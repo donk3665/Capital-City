@@ -32,7 +32,6 @@ public class UseCaseInteractor{
     private final SaveAccess saveAccess;
     private final GameCreation gameCreation;
     private final SavePackager savePackager;
-    private boolean multiplayer = false;
     private ServerListener listener;
 
     public ServerListener getListener() {
@@ -75,24 +74,23 @@ public class UseCaseInteractor{
                 System.exit(1);
             }
             for (String line: lines){
-                getListener().write("LOAD_DATA ¶" + line);
+                getListener().write("LOAD_DATA #1839673858#" + line);
             }
         }
         else {
             int [] states = InitialGameNode.states;
-            getListener().write("STATES " +states[0] + " " + states[1] + " " + states[2] + " " + states[3] + " " + states[4] + " " + states[5]);
+            getListener().write("STATES " +states[0] + " " + states[1] + " " + states[2] + " " + states[3] + " " + states[4] + " " + states[5]
+                    + " " + states[6]);
+            InitialGameNode.createNewBoard();
         }
-        setMultiplayer(true);
+        GameNode.setMultiplayer(true);
         getListener().write("INITIALIZE_GAME");
         InitialGameNode.createGame();
         getListener().write("READY");
     }
 
 
-    public void setMultiplayer(boolean multiplayer) {
-        this.multiplayer = multiplayer;
-        logicInteractor.setMultiplayer(multiplayer);
-    }
+
 
     public void setClient(int index){
         GeneralGameNode.setClientPlayer(index);
@@ -146,7 +144,7 @@ public class UseCaseInteractor{
      * @param states is an int[] containing save file information
      */
     public void createGame(Board board, int[] states){
-        logicInteractor.setUpGame(board, states, multiplayer);
+        logicInteractor.setUpGame(board, states, GameNode.isMultiplayer());
     }
 
     /**

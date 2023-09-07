@@ -17,7 +17,7 @@ public class SavePackager {
      * @return an int array which is formatted correctly for the SaveAccess interface
      */
     public int[] getStates(){
-        int[] saveStates = new int[6];
+        int[] saveStates = new int[7];
         int[] gameStates = MainGameNode.getStates();
         saveStates[0] = GeneralGameNode.getBoard().getPlayers().size();
         saveStates[1] = gameStates[4];
@@ -25,6 +25,7 @@ public class SavePackager {
         saveStates[3] = gameStates[3];
         saveStates[4] = GeneralGameNode.getCurrentPlayerIndex();
         saveStates[5] = gameStates[1];
+        saveStates[6] = gameStates[5];
 
         return saveStates;
     }

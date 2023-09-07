@@ -23,7 +23,6 @@ public abstract class GeneralGameNode extends GameNode {
     private static Board board;
     private static int returnPlayerIndex = -1;
     private static String answer;
-    private static boolean multiplayer = false;
 
     public static void setClientPlayer(int index){
         clientPlayer = board.getPlayers().get(index);
@@ -34,9 +33,7 @@ public abstract class GeneralGameNode extends GameNode {
         super(name, previousNode);
     }
 
-    public static void setMultiplayer(boolean multiplayer) {
-        GeneralGameNode.multiplayer = multiplayer;
-    }
+
     public void setAnswer(String answer1){
         answer = answer1;
     }
@@ -91,7 +88,7 @@ public abstract class GeneralGameNode extends GameNode {
      * @param player - the player to set
      */
     public static void setCurrentPlayer(Player player){currentPlayer = player;
-        if (!multiplayer){
+        if (!GameNode.isMultiplayer()){
             clientPlayer = currentPlayer;
         }
     }
@@ -119,7 +116,7 @@ public abstract class GeneralGameNode extends GameNode {
      */
     public static void changePlayers(){
         currentPlayer = board.getPlayers().get((getCurrentPlayerIndex() + 1) % board.getPlayers().size());
-        if (!multiplayer){
+        if (!GameNode.isMultiplayer()){
             clientPlayer = currentPlayer;
         }
         else {

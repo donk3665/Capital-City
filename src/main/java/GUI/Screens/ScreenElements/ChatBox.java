@@ -117,7 +117,7 @@ public class ChatBox {
         ChatLine chatLine = new ChatLine(field.getText(), new Dimension(finalWidth, finalHeight/3),
                 ImagePathFactory.getPlayerIconPath(Screen.getClientPlayer().getPlayerIndex()), Screen.getClientPlayer().getName(), MyColor.getColor(Screen.getClientPlayer().getPlayerIndex()));
         if (listener != null){
-            listener.write("TEXT_MESSAGE ¶" + field.getText() + "¶" + Screen.getClientPlayer().getPlayerIndex() + "¶"  + Screen.getClientPlayer().getName());
+            listener.write("TEXT_MESSAGE #1839673858#" + field.getText() + "#1839673858#" + Screen.getClientPlayer().getPlayerIndex() + "#1839673858#"  + Screen.getClientPlayer().getName());
         }
         addChatLine(chatLine);
     }
@@ -125,7 +125,7 @@ public class ChatBox {
         ChatLine chatLine = new ChatLine(field.getText(), new Dimension(finalWidth, finalHeight/3),
                 ImagePathFactory.getPlayerIconPath(Screen.getTempIndex()), Screen.getTempName(), MyColor.getColor(Screen.getTempIndex()));
         if (listener != null){
-            listener.write("TEXT_MESSAGE ¶" + field.getText() + "¶" + Screen.getTempIndex() + "¶"  + Screen.getTempName());
+            listener.write("TEXT_MESSAGE #1839673858#" + field.getText() + "#1839673858#" + Screen.getTempIndex() + "#1839673858#"  + Screen.getTempName());
         }
         addChatLine(chatLine);
     }

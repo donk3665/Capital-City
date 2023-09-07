@@ -48,7 +48,7 @@ public class AcceptTradeUseCase extends TradingTreeNode {
         //goes back to initial tree
         setCurrentPlayer(getPlayers().get(returnPlayerIndex));
 
-        getCaseInteractor().getListener().writeIfMultiplayer("SWAP " + " ¶" + firstTraderProperty.getName() + "¶"+ secondTraderProperty.getName());
+        getCaseInteractor().getListener().writeIfMultiplayer("SWAP " + " #1839673858#" + firstTraderProperty.getName() + "#1839673858#"+ secondTraderProperty.getName());
 
         //option for return node
         currentState.addOptions("Ok");
