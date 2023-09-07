@@ -135,7 +135,6 @@ public abstract class Screen {
      * Constructor that configures the JFrame
      */
     public Screen() {
-        System.out.println(screenSize);
 
     }
     public static void setPresenterDisplay(PresenterDisplay display){

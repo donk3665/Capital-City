@@ -129,6 +129,7 @@ public class InitialInterpreter extends NetworkInterpreter{
                     getPresenterDisplay().forceNodeSwitch(NodeNames.AUCTION_COMPLETE);
                 }
                 else if(splitMessage[1].equals("DONE")){
+                    GeneralGameNode.changePlayerBack();
                     getPresenterDisplay().forceNodeSwitch(NodeNames.MAIN_PARENT);
                 }
                 getDisplayInteractor().refreshTurnChangeOptions();

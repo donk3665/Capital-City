@@ -180,4 +180,10 @@ public abstract class GeneralGameNode extends GameNode {
         PlayerLogic playerLogic = new PlayerLogic(getCurrentPlayer());
         String message = playerLogic.forceSteal(getPlayers().get(playerIndex), firstCheck, secondCheck);
     }
+    public static void changePlayerBack(){
+        List<Player> players = getPlayers();
+        int returnPlayerIndex = getReturnPlayerIndex();
+        //return to the main tree and correct player
+        setCurrentPlayer(players.get(returnPlayerIndex));
+    }
 }
