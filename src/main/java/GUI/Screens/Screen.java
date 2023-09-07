@@ -25,7 +25,7 @@ public abstract class Screen {
      */
     protected static JFrame gameFrame;
     static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
-    static Dimension screenSize = new Dimension(device.getDisplayMode().getWidth(), device.getDisplayMode().getHeight());
+    static Dimension screenSize = new Dimension((int) device.getDefaultConfiguration().getBounds().getWidth(), (int) device.getDefaultConfiguration().getBounds().getHeight());
 
     public static final double width = screenSize.getWidth();
     public static final double height = screenSize.getHeight();
@@ -135,7 +135,7 @@ public abstract class Screen {
      * Constructor that configures the JFrame
      */
     public Screen() {
-
+        System.out.println(screenSize);
 
     }
     public static void setPresenterDisplay(PresenterDisplay display){
