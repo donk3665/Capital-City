@@ -43,7 +43,6 @@ public class ConnectionScreen extends Screen{
 
     @Override
     public void attachNonStaticComponents() {
-        //textArea.setText(description.getDescription().getText());
         addOptionBox(startPanel);
         gameFrame.getContentPane().validate();
         setRecentChatBox(connectionChatBox);
