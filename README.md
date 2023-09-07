@@ -1,8 +1,12 @@
 # Capital City
 
 ## How to play the game
+If you want to manually build the code:
 In the ```src/main/java/main.Main``` click the play button or run the file and a popup window 
 should show. If the program seems unresponsive/slow during the game phase of the program, restart the program with the following vm argument: -Dsun.java2d.d3d=false
+
+If you want the easier way:
+Go to the releases panel on the right of the github page, and download the latest release. Run the file using the bat file.
 
 ## Playing the game
 Playing the Game is straight forward, there is a context of text explaning what is happening
