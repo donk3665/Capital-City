@@ -4,6 +4,7 @@ import GUI.Screens.Screen;
 import Logic.GameNode;
 import Logic.GeneralGameNode;
 import Logic.InitialNodeLogic.InitialGameNode;
+import Logic.MainTreeNodeLogic.MainGameNode;
 import Logic.MainTreeNodeLogic.RollBranch.EmptyPropertyBranch.AuctionNodeLogic.AuctionTreeNode;
 import Logic.NodeNames;
 
@@ -76,6 +77,9 @@ public class InitialInterpreter extends NetworkInterpreter{
             }
             case "BEGIN" ->{
                 getUseCaseInteractor().setClient(Screen.getTempIndex());
+                if (GeneralGameNode.getCurrentPlayer() != GeneralGameNode.getClientPlayer()){
+                    MainGameNode.setStatesNotCurrentPlayer();
+                }
                 getPresenterDisplay().forceNodeSwitch(NodeNames.MAIN_PARENT);
             }
             case "UNLOCK_CHATS" ->{

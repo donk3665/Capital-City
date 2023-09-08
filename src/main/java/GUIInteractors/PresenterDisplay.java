@@ -1,5 +1,6 @@
 package GUIInteractors;
 import GUI.Screens.Screen;
+import Logic.GeneralGameNode;
 import Network.ServerListener;
 import Logic.NodeNames;
 import Persistence.LoadFile;
@@ -79,6 +80,9 @@ public class PresenterDisplay implements GameLoop{
         return interactor.saveGame();
     }
     public void exitToMenu(){
+        if (GeneralGameNode.multiplayer){
+            stopListener();
+        }
         interactor.exitToMenu();
         inputControl.setCurrentStateFromInteractor();
 

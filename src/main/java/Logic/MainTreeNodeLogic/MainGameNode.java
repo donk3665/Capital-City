@@ -27,6 +27,12 @@ public abstract class MainGameNode extends GeneralGameNode {
     [5]: consecutive rolls
 
      */
+
+    public static void setStatesNotCurrentPlayer(){
+        mainStates[0] = 0;
+        mainStates[1] = 0;
+        mainStates[5] = 0;
+    }
     public static int[] mainStates = new int[6];
     public static String diceRoll;
 
@@ -37,13 +43,7 @@ public abstract class MainGameNode extends GeneralGameNode {
     public static void initializeStates(int[] states){
         mainStates = states;
     }
-//    /**
-//     * This method is used to initialize the auctionTreeHandler to prepare for an auction scenario.
-//     */
-//    public void setupAuction(){
-//        AuctionTreeNodeLogic temp = new AuctionTreeNodeLogic("temp");
-//        temp.initialize();
-//    }
+
     public static int[] getStates(){
         return mainStates;
     }
