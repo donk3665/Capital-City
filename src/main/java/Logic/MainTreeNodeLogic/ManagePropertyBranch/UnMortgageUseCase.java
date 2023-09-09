@@ -35,6 +35,7 @@ public class UnMortgageUseCase extends MainGameNode {
         Property targetProperty = currentPlayer.getProperties().get(Integer.parseInt(selectedOptions.get(NodeNames.SELECT_ACTION_PROPERTY)));
         if (targetProperty.getMortgageStatus()){
             currentPlayerLogic.unmortgage(targetProperty);
+            getCaseInteractor().getListener().writeIfMultiplayer("UN-MORTGAGE #1839673858#" + targetProperty.getName() + "#1839673858#");
         }
         return currentState;
     }

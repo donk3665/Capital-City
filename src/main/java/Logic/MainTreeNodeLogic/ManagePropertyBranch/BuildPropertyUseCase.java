@@ -36,11 +36,11 @@ public class BuildPropertyUseCase extends MainGameNode {
 
         //builds a house on the chosen property
         PlayerLogic playerLogic = new PlayerLogic(currentPlayer);
-        playerLogic.buildHouse(targetProperty,1);
+        currentState.setDescription(playerLogic.buildHouse(targetProperty,1));
         currentState.setCurrentPlayerProperty(targetProperty);
         currentState.addOptions("Ok");
 
-        getCaseInteractor().getListener().writeIfMultiplayer("BUILD " + targetProperty.getName());
+        getCaseInteractor().getListener().writeIfMultiplayer("BUILD #1839673858#" + targetProperty.getName() + "#1839673858#");
         return currentState;
     }
 

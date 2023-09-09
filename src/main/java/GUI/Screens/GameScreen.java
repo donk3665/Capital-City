@@ -451,6 +451,9 @@ public class GameScreen extends Screen{
         connectBoardButtons(board, buttonGrid);
         setRecentChatBox(actualChatBox);
         getSoundController().playGameMusic();
+
+        board.validate();
+        board.repaint();
     }
     public void addPlayerViewerPanel(JLayeredPane pane){
         List<ImageButton> playerButtons = new ArrayList<>();

@@ -133,7 +133,7 @@ public class OutputInteractor {
         this.output.modifyStateOutput(NodeNames.TRADE_OPPONENT_PARENT, currString);
     }
     public void updateBuildProperty(){
-        String currString = currentState.getCurrentPlayerProperty().getHouses() + " houses built on this property";
+        String currString = currentState.getDescription();
         this.output.modifyStateOutput(NodeNames.BUILD_PROPERTY, currString);
     }
 

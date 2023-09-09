@@ -36,6 +36,7 @@ public class RollUseCase extends MainGameNode {
             //roll the dice and update the position
             PlayerLogic playerLogic = new PlayerLogic(currentPlayer);
             diceRoll = playerLogic.rollDice(mainStates[5]);
+            //diceRoll = playerLogic.forceRoll(9);
 
             String stateMessage = "You rolled a " + diceRoll + ".";
             if (playerLogic.isRolledDouble()){
@@ -47,7 +48,7 @@ public class RollUseCase extends MainGameNode {
             }
             currentState.setDescription(stateMessage);
 
-            //diceRoll = playerLogic.forceRoll(7);
+
 
             getCaseInteractor().getListener().writeIfMultiplayer("INFO: MOVE " + currentPlayer.getPosition());
 

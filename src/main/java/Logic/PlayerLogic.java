@@ -1,5 +1,6 @@
 package Logic;
 
+import Entities.Game.CellEnum;
 import Entities.Game.Player;
 import Entities.Game.Property;
 
@@ -79,13 +80,13 @@ public class PlayerLogic {
     private HashMap<String, Integer> createSetMap() {
         HashMap<String, Integer> sets = new HashMap<>();
         sets.put("Brown", 0);
-        sets.put("Light Blue", 0);
+        sets.put("Light_Blue", 0);
         sets.put("Pink", 0);
         sets.put("Orange", 0);
         sets.put("Red", 0);
         sets.put("Yellow", 0);
         sets.put("Green", 0);
-        sets.put("Dark Blue", 0);
+        sets.put("Dark_Blue", 0);
         return sets;
     }
 
@@ -97,7 +98,7 @@ public class PlayerLogic {
     public HashMap<String, Integer> countPropertySets() {
         HashMap<String, Integer> sets = createSetMap();
         for (Property property : player.getProperties()) {
-            if (!Objects.equals(property.getColour(), "Railroad") && !Objects.equals(property.getColour(), "Utility")){
+            if (!Objects.equals(property.getSpecialType(), CellEnum.RAILROAD) && !Objects.equals(property.getSpecialType(), CellEnum.UTILITY)){
                 sets.put(property.getColour(), sets.get(property.getColour()) + 1);
             }
         }
@@ -113,7 +114,7 @@ public class PlayerLogic {
         ArrayList<String> ownedSets = new ArrayList<>();
         HashMap<String, Integer> sets = countPropertySets();
         for (Map.Entry<String, Integer> colour : sets.entrySet()) {
-            if (colour.getKey().equals("Brown") || colour.getKey().equals("Dark Blue")) {
+            if (colour.getKey().equals("Brown") || colour.getKey().equals("Dark_Blue")) {
                 if (colour.getValue() == BROWN_DARKBLUE_SETSIZE) {
                     ownedSets.add(colour.getKey());
                 }

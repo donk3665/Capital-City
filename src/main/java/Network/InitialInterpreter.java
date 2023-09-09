@@ -140,15 +140,18 @@ public class InitialInterpreter extends NetworkInterpreter{
 
             }
             case "BUILD" ->{
-                GeneralGameNode.buildProperty(splitMessage[1]);
+                String [] propertyMessages = message.split("#1839673858#");
+                GeneralGameNode.buildProperty(propertyMessages[1]);
                 getDisplayInteractor().refreshTurnChangeOptions();
             }
             case "MORTGAGE" ->{
-                GeneralGameNode.mortgageProperty(splitMessage[1]);
+                String [] propertyMessages = message.split("#1839673858#");
+                GeneralGameNode.mortgageProperty(propertyMessages[1]);
                 getDisplayInteractor().refreshTurnChangeOptions();
             }
             case "UN-MORTGAGE" ->{
-                GeneralGameNode.unMortgageProperty(splitMessage[1]);
+                String [] propertyMessages = message.split("#1839673858#");
+                GeneralGameNode.unMortgageProperty(propertyMessages[1]);
                 getDisplayInteractor().refreshTurnChangeOptions();
             }
             case "COMPLETE" ->{
