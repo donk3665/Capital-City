@@ -53,3 +53,9 @@ Tests are out of date, and not implemented.
 
 ## Deprecated
 Files that were possibly used in a previous build, but are no longer used.
+
+## Demo Video:
+(had to compress with clideo because github free :< )
+https://github.com/donk3665/Capital-City/assets/55457782/49b09664-d1cf-49ae-acb3-78ac9df18939
+
+
