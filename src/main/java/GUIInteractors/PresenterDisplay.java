@@ -29,7 +29,8 @@ public class PresenterDisplay implements GameLoop{
     private boolean waiting = false;
     private boolean readyToSwitch = false;
 
-    public PresenterDisplay(){
+    public PresenterDisplay(int displayIndex){
+        Screen.initDisplayMonitor(displayIndex);
         syncObject = new Object();
         waitingObject = new Object();
     }

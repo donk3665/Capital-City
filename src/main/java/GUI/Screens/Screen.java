@@ -27,15 +27,23 @@ public abstract class Screen {
     static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
     static Dimension screenSize = new Dimension((int) device.getDefaultConfiguration().getBounds().getWidth(), (int) device.getDefaultConfiguration().getBounds().getHeight());
 
-    public static final double width = screenSize.getWidth();
-    public static final double height = screenSize.getHeight();
-    public static final double widthAdjust = Math.min(screenSize.getWidth() / 1920.0, screenSize.getHeight() / 1080.0);
-    public static final double heightAdjust = Math.min(screenSize.getWidth() / 1920.0, screenSize.getHeight() / 1080.0);
+    public static double width = screenSize.getWidth();
+    public static double height = screenSize.getHeight();
+    public static double widthAdjust = Math.min(screenSize.getWidth() / 1920.0, screenSize.getHeight() / 1080.0);
+    public static double heightAdjust = Math.min(screenSize.getWidth() / 1920.0, screenSize.getHeight() / 1080.0);
     protected static Options options;
     protected static Description description;
     private static final ImagePathFactory imagePathFactory = new ImagePathFactory();
     private static GUIInterface state;
 
+    public static void initDisplayMonitor(int screenID){
+        device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[screenID];
+        screenSize  = new Dimension((int) device.getDefaultConfiguration().getBounds().getWidth(), (int) device.getDefaultConfiguration().getBounds().getHeight());
+        width = screenSize.getWidth();
+        height = screenSize.getHeight();
+        widthAdjust = Math.min(screenSize.getWidth() / 1920.0, screenSize.getHeight() / 1080.0);
+        heightAdjust = Math.min(screenSize.getWidth() / 1920.0, screenSize.getHeight() / 1080.0);
+    }
     public GUIInterface getState() {
         return state;
     }

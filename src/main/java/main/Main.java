@@ -1,5 +1,6 @@
 package main;
 
+import GUI.Screens.Screen;
 import GUIInteractors.PresenterDisplay;
 import Network.ServerListener;
 
@@ -15,9 +16,9 @@ public class Main {
      * Entry point to the application
      */
     public static void main(String[] args) throws URISyntaxException {
-        PresenterDisplay display = new PresenterDisplay();
+        PresenterDisplay display = new PresenterDisplay(Integer.parseInt(args[0]));
 
-        ServerListener.setServerLocation(args[0]);
+        ServerListener.setServerLocation(args[1]);
 
         File customDir = new File(persistenceFilePath);
         if (!customDir.exists()){
