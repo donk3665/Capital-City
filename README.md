@@ -54,6 +54,9 @@ Tests are out of date, and not implemented.
 ## Deprecated
 Files that were possibly used in a previous build, but are no longer used.
 
+## Server code:
+https://github.com/donk3665/Capital-City-Server
+
 ## Demo Video:
 (had to compress with clideo because github free :< ) 
 
