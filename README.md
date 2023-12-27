@@ -46,7 +46,7 @@ Interfaces used for transfering data to the GUI
 Logic pertaining to transfering info from the back end to the front end
 
 ## Network
-The functions used for multiplayer connectivity
+The functions used for multiplayer connectivity. The networking is done through sockets.
 
 ## Test
 Tests are out of date, and not implemented.
