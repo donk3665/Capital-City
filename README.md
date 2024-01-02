@@ -9,7 +9,7 @@ If you want the easier way:
 Go to the releases panel on the right of the github page, and download the latest release. Run the file using the bat file.
 
 ## Playing the game
-Playing the Game is straight forward, there is a context of text explaning what is happening
+Playing the Game is self-explanatory; there is a context of text explaning what is happening
 on the current state of the game and option buttons presenting choices of what the player can do.
 * IMPORTANT NOTE: This is still an initial creation of a monopoly game, there are likely bugs that need to be fixed/improvments that can be made
 
@@ -58,7 +58,7 @@ Files that were possibly used in a previous build, but are no longer used.
 https://github.com/donk3665/Capital-City-Server
 
 ## Demo Video:
-(had to compress with clideo because github free :< ) 
+(had to compress with clideo because github free restrictions :< ) 
 
 https://github.com/donk3665/Capital-City/assets/55457782/49b09664-d1cf-49ae-acb3-78ac9df18939
 
